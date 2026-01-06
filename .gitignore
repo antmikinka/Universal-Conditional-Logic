@@ -13,3 +13,7 @@
 # Whitelist: ONLY the 00_ARXiv_Code folder and all its contents
 !/00_ARXiv_Code/
 !/00_ARXiv_Code/**
+
+# SECURITY: Always exclude .env files (API keys, secrets)
+**/.env
+*.env
