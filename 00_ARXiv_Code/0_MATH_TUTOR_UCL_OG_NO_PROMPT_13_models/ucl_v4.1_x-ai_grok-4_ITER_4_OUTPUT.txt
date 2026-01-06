@@ -1,0 +1,65 @@
+============================================================
+ MODEL: x-ai/grok-4
+ PROMPT: ucl_v4.1 (ucl)
+ ITERATION: 4
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3192
+Completion Tokens: 1342
+Total Tokens: 4534
+Reasoning Tokens: 958
+Duration: 35.91s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1896
+Words: 272
+Lines: 28
+TTS Keywords: 38
+TTS Keyword Density: 13.97%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.42
+Reasoning Overhead: 71.39%
+Speed: 126.3 tok/s
+Cost Proxy: 7218.0
+
+=== FINAL RESPONSE ===
+{
+    "problem_number": "",
+    "problem_statement": "Evaluate the line integral of x squared ds, where C is the line segment from the point zero comma six comma four to the point six comma three comma three.",
+    "question_type": "evaluate_integral",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "expression",
+            "values": ["twelve square root of forty six"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "To evaluate the line integral of x squared ds over the line segment C from open parenthesis zero comma six comma four close parenthesis to open parenthesis six comma three comma three close parenthesis.",
+                "Parametrize the curve: let t go from zero to one, x equals six t, y equals six minus three t, z equals four minus t.",
+                "The derivative r prime of t is open bracket six comma negative three comma negative one close bracket.",
+                "The norm of r prime of t is square root of thirty six plus nine plus one, which is square root of forty six.",
+                "Thus, ds equals square root of forty six dt.",
+                "The integral becomes integral from zero to one of open parenthesis six t close parenthesis squared times square root of forty six dt.",
+                "That is, integral from zero to one of thirty six t squared square root of forty six dt.",
+                "Factor out constants: thirty six square root of forty six times integral from zero to one of t squared dt.",
+                "The integral of t squared is t cubed over three, evaluated from zero to one, which is one third.",
+                "So, thirty six square root of forty six times one third equals twelve square root of forty six."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}

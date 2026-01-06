@@ -1,0 +1,15 @@
+# =============================================================================
+# WHITELIST .gitignore - Only 00_ARXiv_Code folder is pushed
+# =============================================================================
+# This repository is configured to ONLY track the paper-related work in
+# 00_ARXiv_Code. All other files (UCL_LINTER, docs, etc.) are excluded.
+
+# Ignore everything in the root directory
+/*
+
+# But don't ignore .gitignore itself (required for git to work)
+!.gitignore
+
+# Whitelist: ONLY the 00_ARXiv_Code folder and all its contents
+!/00_ARXiv_Code/
+!/00_ARXiv_Code/**

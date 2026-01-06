@@ -1,0 +1,66 @@
+============================================================
+ MODEL: x-ai/grok-4
+ PROMPT: ucl_v2 (ucl)
+ ITERATION: 1
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 5071
+Completion Tokens: 1286
+Total Tokens: 6357
+Reasoning Tokens: 874
+Duration: 37.63s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2142
+Words: 291
+Lines: 29
+TTS Keywords: 55
+TTS Keyword Density: 18.9%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.254
+Reasoning Overhead: 67.96%
+Speed: 168.9 tok/s
+Cost Proxy: 8929.0
+
+=== FINAL RESPONSE ===
+{
+    "problem_number": "unknown",
+    "problem_statement": "Evaluate the line integral of z squared ds where C is the line segment from open parenthesis zero comma six comma four close parenthesis to open parenthesis six comma three comma three close parenthesis",
+    "question_type": "vector_calculus",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "single_value",
+            "values": ["thirty-seven over three times square root of forty-six"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "Parametrize the line segment C from open parenthesis zero comma six comma four close parenthesis to open parenthesis six comma three comma three close parenthesis",
+                "Let r of t equal open parenthesis six t comma six minus three t comma four minus t close parenthesis for t from zero to one",
+                "Then r prime of t equals open parenthesis six comma negative three comma negative one close parenthesis",
+                "The magnitude of r prime of t is square root of thirty-six plus nine plus one which is square root of forty-six",
+                "z equals four minus t",
+                "So z squared equals open parenthesis four minus t close parenthesis squared which is sixteen minus eight t plus t squared",
+                "The integral is integral from zero to one of open parenthesis sixteen minus eight t plus t squared close parenthesis times square root of forty-six dt",
+                "Factor out square root of forty-six to get square root of forty-six times integral from zero to one of sixteen minus eight t plus t squared dt",
+                "The antiderivative is sixteen t minus four t squared plus one third t cubed",
+                "Evaluate from zero to one: sixteen minus four plus one third minus zero equals twelve plus one third equals thirty-seven over three",
+                "Multiply by square root of forty-six to get thirty-seven over three times square root of forty-six"
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}

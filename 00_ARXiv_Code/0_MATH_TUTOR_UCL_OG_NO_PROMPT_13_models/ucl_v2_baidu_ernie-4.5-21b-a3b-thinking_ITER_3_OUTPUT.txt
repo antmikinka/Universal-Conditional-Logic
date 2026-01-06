@@ -1,0 +1,596 @@
+============================================================
+ MODEL: baidu/ernie-4.5-21b-a3b-thinking
+ PROMPT: ucl_v2 (ucl)
+ ITERATION: 3
+ INPUT MODE: text
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 4959
+Completion Tokens: 9012
+Total Tokens: 13971
+Reasoning Tokens: 8475
+Duration: 99.76s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 911
+Words: 131
+Lines: 26
+TTS Keywords: 2
+TTS Keyword Density: 1.53%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 1.817
+Reasoning Overhead: 94.04%
+Speed: 140.0 tok/s
+Cost Proxy: 31995.0
+
+=== REASONING / THINKING ===
+We are given a line integral problem: ∫_C x³z ds, where C is the line segment from (0,6,4) to (6,3,3).
+ Steps:
+ 1. Parameterize the curve C.
+    - Let A = (0,6,4) and B = (6,3,3).
+    - The vector from A to B is <6-0, 3-6, 3-4> = <6, -3, -1>.
+    - Let t be a parameter from 0 to 1.
+    - Then, r(t) = (x(t), y(t), z(t)) = (0,6,4) + t*(<6,-3,-1>) = (6t, 6-3t, 4-t).
+
+ 2. Find the derivative of r(t):
+    r'(t) = (dx/dt, dy/dt, dz/dt) = (6, -3, -1).
+
+ 3. The speed (magnitude of r'(t)):
+    |r'(t)| = sqrt(6² + (-3)² + (-1)²) = sqrt(36 + 9 + 1) = sqrt(46).
+
+ 4. The integral becomes:
+    ∫_C x³z ds = ∫_{t=0}^{t=1} [x(t)]³ * z(t) * |r'(t)| dt
+               = ∫₀¹ (6t)³ * (4-t) * sqrt(46) dt
+               = sqrt(46) * ∫₀¹ 216 t³ (4-t) dt
+
+ 5. Expand the integrand:
+    216 t³ (4-t) = 216 (4t³ - t⁴)
+
+ 6. Integrate with respect to t:
+    ∫₀¹ (4t³ - t⁴) dt = [ (4/4)t⁴ - (1/5)t⁵ ]₀¹ = [t⁴ - (1/5)t⁵]₀¹ = (1 - 1/5) - (0) = 4/5.
+
+ 7. Multiply by 216 and sqrt(46):
+    = sqrt(46) * 216 * (4/5) = sqrt(46) * (864/5) = (864/5) * sqrt(46).
+
+ However, let's check the calculation of the integral:
+
+    ∫₀¹ 4t³ dt = [t⁴]₀¹ = 1
+    ∫₀¹ t⁴ dt = [t⁵/5]₀¹ = 1/5
+
+    So, ∫₀¹ (4t³ - t⁴) dt = 1 - 1/5 = 4/5.
+
+ 8. Therefore, the integral is:
+    (864/5) * sqrt(46) = (864 * sqrt(46)) / 5.
+
+ But note: 216 * (4/5) = 216 * 0.8 = 172.8, and 172.8 * 864? Actually, we have:
+
+    216 * (4/5) = 216 * 4 / 5 = 864/5.
+
+ So the expression is (864/5) * sqrt(46).
+
+ However, we can write it as (864 * sqrt(46)) / 5.
+
+ Let me check if we can simplify the fraction 864/5? It's already simplified.
+
+ But note: 864 and 5 are coprime (since 5 is prime and 864 is not divisible by 5).
+
+ So the answer is (864 * sqrt(46)) / 5.
+
+ However, let me double-check the parameterization and the integral setup.
+
+ Alternatively, we can compute the integral without the constant factor:
+
+    ∫₀¹ 216 t³ (4-t) dt = 216 * ∫₀¹ (4t³ - t⁴) dt = 216 * [t⁴ - t⁵/(5)]₀¹ = 216 * (1 - 1/5) = 216 * 4/5 = 864/5.
+
+ Then multiply by sqrt(46): (864/5) * sqrt(46).
+
+ Therefore, the final answer is (864 * sqrt(46)) / 5.
+
+ But note: the problem asks for the line integral, and we have the ds factor.
+
+ However, let me write the integral again:
+
+    ∫_C x³z ds = ∫₀¹ (6t)^3 * (4-t) * |r'(t)| dt
+               = ∫₀¹ 216 t³ * (4-t) * sqrt(46) dt
+               = 216 * sqrt(46) * ∫₀¹ (4t³ - t⁴) dt
+               = 216 * sqrt(46) * [t⁴ - t⁵/5]₀¹
+               = 216 * sqrt(46) * (1 - 1/5)
+               = 216 * sqrt(46) * (4/5)
+               = (864 * sqrt(46)) / 5.
+
+ We can write it as a single fraction: \frac{864 \sqrt{46}}{5}.
+
+ Now, for the TTS output, we are to convert the entire problem and answer to natural spoken language.
+
+ However, the instruction says: 
+   "LLM: Convert {{concept:problem_text}} TO {{concept:tts_format:natural_spoken_language}} applying ALL transformation rules"
+
+ But note: the problem text is the mathematical expression. We are to convert it to natural language.
+
+ Steps for TTS conversion:
+
+   Problem: "Evaluate the line integral: ∫_C x³z ds Where: C is the line segment from (0, 6, 4) to (6, 3, 3)."
+
+   We break it down:
+
+   - The integral: the integral of (x cubed times z) with respect to arc length (ds) over the curve C.
+   - The curve C: the line segment from point (0,6,4) to point (6,3,3).
+
+   How to phrase:
+
+   "Evaluate the line integral of the function x cubed times z over the line segment from the point zero in x, six in y, four in z to the point six in x, three in y, three in z."
+
+   But note: the problem says "ds", which is the arc length element.
+
+   For the answer, we have: \frac{864 \sqrt{46}}{5}
+
+   How to say: 
+        "The result of the line integral is eight hundred sixty-four times the square root of forty-six divided by five."
+
+   However, we must follow the transformation rules provided in the system role.
+
+   But note: the system role has a section on TTS transformation rules that maps mathematical notation to spoken format. However, in this case, the problem is to convert the entire problem statement and the answer to natural spoken language.
+
+   The TTS transformation rules section provides mappings for individual notation types. But we are converting the entire problem.
+
+   Since the instruction says to apply all transformation rules, we can use the provided mappings for:
+
+      negative numbers: not applicable here.
+      decimal formats: not applicable.
+      fractions: we have a fraction in the answer, but the rule for fractions is: "numerator over denominator". We can use that for the answer.
+
+   However, the answer is a single fraction. We can say: "eight hundred sixty-four sqrt(forty-six) over five".
+
+   But note: the problem says the answer must be in TTS-ready format with explicit comma vocalization. So we must use commas appropriately.
+
+   For the answer: 
+        "The result of the line integral is eight hundred sixty-four, square root of forty-six, divided by five."
+
+   But the rule for fractions in the TTS transformation rules says: "numerator over denominator", so we can say: "numerator: eight hundred sixty-four sqrt(forty-six) over denominator: five".
+
+   However, the system role also has a rule for vectors: "vector {components: comma separated}". But our answer is a scalar.
+
+   For the problem statement, we can break it down:
+
+      "Evaluate" -> "the evaluation of"
+      "the line integral" -> "the line integral of"
+      "∫_C x³z ds" -> "the integral over the curve C of the function x cubed times z"
+
+      Then the curve: "where C is the line segment from the point (0, 6, 4) to the point (6, 3, 3)."
+
+   We can say: "Evaluate the integral of the function x cubed times z over the curve C, which is the line segment from the point zero, six, four to the point six, three, three."
+
+   Now, for the answer, we must output the TTS-ready string.
+
+   According to the output specification, the main_answer must be in TTS-ready format with explicit comma vocalization.
+
+   So the answer: 
+        "eight hundred sixty-four, square root of forty-six, divided by five"
+
+   But note: the problem says the entire problem statement in the JSON output must be in natural language with zero mathematical symbols. So the problem_statement field in the JSON will be the natural language version.
+
+   However, the extraction and conversion protocol says:
+
+        "CONVERT {{concept:problem_text}} TO {{concept:tts_format:natural_spoken_language}} applying ALL transformation rules"
+
+   And then we have the output specification that requires the problem_statement to be complete natural language with zero mathematical symbols.
+
+   Therefore, we will generate:
+
+        problem_statement: "Evaluate the line integral of the function x cubed times z with respect to arc length over the line segment from (0, 6, 4) to (6, 3, 3)."
+
+   And the answer in the JSON in the "main_answer" field will be: 
+        "eight hundred sixty-four, square root of forty-six, divided by five"
+
+   But note: the answer is a scalar, so we don't need to use commas in the entire number? Actually, we are representing a single number. The rule says: explicit comma vocalization. So we break the number into parts.
+
+   However, the number 864 is less than 1000, so we don't use commas? But the instruction says "explicit comma vocalization", meaning we should say the number with commas? Actually, in English, we use commas every three digits. But 864 is three digits, so we don't need a comma. But the instruction says "with explicit comma vocalization", so we might say "eight hundred sixty-four".
+
+   Alternatively, the rule for fractions: the fraction is represented as "numerator over denominator", so we can avoid writing the entire number without commas? 
+
+   Since the answer is a fraction, we can use the fraction representation: "eight hundred sixty-four sqrt(forty-six) over five".
+
+   But note: the TTS transformation rules do not cover fractions as a whole, but they do have a rule for fractions: 
+
+        [[TRANSFORM: {{concept:fraction_format:mathematical_representation}} TO {{concept:spoken_format:tts_representation}} USING "{{concept:numerator:number_value}} over {{concept:denominator:number_value}}"]]
+
+   And the spoken format would be "numerator over denominator". So we can use that.
+
+   Therefore, the answer in TTS format: "eight hundred sixty-four over five sqrt(forty-six)"? 
+
+   But that doesn't sound right. The fraction is \frac{864 \sqrt{46}}{5}. We can say: "eight hundred sixty-four, square root of forty-six, over five".
+
+   So we use commas to separate the numerator parts and the denominator? 
+
+   The instruction says: "explicit comma vocalization". So we break the numerator into parts and then say "over" and then the denominator.
+
+   Therefore, we can say: "eight hundred sixty-four, square root of forty-six over five".
+
+   But note: the square root is part of the numerator. So:
+
+        numerator: 864 * sqrt(46) -> we can say: "eight hundred sixty-four, square root of forty-six"
+
+   Then the whole fraction: that numerator over the denominator five.
+
+   So: "eight hundred sixty-four, square root of forty-six over five"
+
+   However, the rule for fractions in the TTS transformation rules does not specify how to handle the square root. But the rule for square root is: "square root of {radicand}". So we can treat the entire numerator as a phrase.
+
+   Alternatively, we can avoid the square root in the comma separation? The instruction says "explicit comma vocalization" for the entire answer. The answer is a single value, so we can use commas to separate the numerator and the denominator? But the numerator is a product of a number and a square root. We don't have a comma in the numerator. So we can say:
+
+        "eight hundred sixty-four times the square root of forty-six, divided by five"
+
+   But the rule says "over". The problem uses "over" in the integral. So we can use "over".
+
+   Given the ambiguity, and the fact that the system role has a rule for vectors that uses commas, but our answer is a scalar, we can use:
+
+        "eight hundred sixty-four, square root of forty-six over five"
+
+   But that might be interpreted as two numbers. Alternatively, we can use the fraction rule as:
+
+        "the fraction of eight hundred sixty-four square root forty-six and five"
+
+   However, the transformation rule for fractions is explicitly "numerator over denominator". So we'll use that.
+
+   Therefore, the answer in TTS format: "864 sqrt(46) over 5" but with commas for the numerator? Actually, the numerator is a single expression. We don't break it. So we can say: "eight hundred sixty-four square root forty-six over five".
+
+   But the instruction says "explicit comma vocalization", meaning we should use commas to separate the parts of the numerator? The numerator is a product of two factors: 864 and sqrt(46). We can say: "eight hundred sixty-four, and, square root of forty-six, over five". But that might be too many commas.
+
+   Alternatively, we can follow the fraction rule as defined: it replaces the fraction with the string "numerator over denominator". So the numerator string is "864 sqrt(46)" and the denominator is "5". Then we output "864 sqrt(46) over 5". But in natural spoken language, we don't say the entire numerator as one word? We can say: "eight hundred sixty-four times the square root of forty-six over five".
+
+   However, the transformation rule does not specify the spoken form of the numerator. It only says the transformation from mathematical representation to spoken format for fractions. The mathematical representation of the numerator is a product of two terms? Actually, the fraction rule is applied to the entire fraction. The numerator in the fraction is the expression 864 * sqrt(46). How to vocalize that? 
+
+   Since the system role does not specify, and the problem is complex, we will use the following:
+
+        For the numerator: we break it into two parts: the integer part and the square root part, and use a comma to separate the two parts of the numerator? 
+
+   But note: the transformation rule for fractions is applied to the entire fraction. The rule says: "numerator over denominator". So we are replacing the fraction with the string "numerator over denominator". In the context of the entire answer, we are replacing the fraction with a string that has the numerator, then the word "over", then the denominator.
+
+   Therefore, the spoken form of the fraction is: "numerator over denominator", but the numerator and denominator are already converted to natural language. So:
+
+        numerator: "eight hundred sixty-four square root forty-six"
+        denominator: "five"
+
+   Then the fraction: "eight hundred sixty-four square root forty-six over five"
+
+   But note: the rule for the fraction in the TTS transformation rules is applied when we have a fraction in the mathematical representation. Our answer is a fraction, so we apply that rule. The rule says:
+
+        TRANSFORM: ... TO ... USING "{{concept:numerator:number_value}} over {{concept:denominator:number_value}}"
+
+   So the spoken form is exactly "numerator over denominator". The numerator and denominator are converted by their own transformation rules. The numerator (864 * sqrt(46)) is not a simple number, so we must have a transformation for that? 
+
+   Actually, the numerator is represented as a fraction? No, it's a product. The system role does not have a rule for products. We are only transforming individual notation types. 
+
+   Given the complexity, and the fact that the problem says to apply all transformation rules, we must note that the fraction rule is applied to the entire fraction. The numerator and denominator in the fraction are numbers? In our case, the numerator is a product of 864 and sqrt(46). But the transformation rules do not handle products. They handle individual numbers and operations.
+
+   Therefore, we must break the numerator into its components? 
+
+   Alternatively, we can consider the entire numerator as a single expression and use the transformation rules for each part? But that is not provided.
+
+   Since the problem is complex and the system role does not specify how to handle the product in the numerator, we will assume that the numerator is transformed by the same rules as the original problem? But the numerator is not an integral problem, it's a constant.
+
+   We are stuck. Let me reexamine the problem: the answer is a scalar value: \frac{864 \sqrt{46}}{5}. We are to convert this to natural spoken language. We can do:
+
+        "the quotient of eight hundred sixty-four times the square root of forty-six and five"
+
+   But the instruction says to use the fraction rule: "numerator over denominator". The numerator is 864 * sqrt(46) and the denominator is 5. We can convert the numerator to spoken form as "eight hundred sixty-four times the square root of forty-six" and then say "over" and then "five".
+
+   So: "eight hundred sixty-four times the square root of forty-six, over five"
+
+   But the rule says "over", not "times". And the rule says "over", so we use that.
+
+   Therefore, the answer in TTS format: "eight hundred sixty-four times the square root of forty-six over five"
+
+   However, the transformation rule for the fraction is applied to the entire fraction, so we are replacing the fraction with the string "numerator over denominator", and the numerator and denominator are already converted to natural language. The numerator conversion would be:
+
+        numerator: 864 * sqrt(46) -> we can break it as: "eight hundred sixty-four" and "square root of forty-six", but how to combine? 
+
+   The system role does not have a rule for products. Therefore, we must use the rules for each operation. The numerator is built by:
+
+        [864] * [sqrt(46)]
+
+   The transformation rule for exponentiation is: "base to the power of exponent", but here it's a multiplication? 
+
+   We don't have a rule for multiplication. We only have rules for: negative numbers, decimals, fractions, exponents, square roots, vectors, and functions.
+
+   We can use the multiplication as: "eight hundred sixty-four times the square root of forty-six"
+
+   But the system role does not provide a rule for multiplication. However, we can infer that the multiplication of two terms should be vocalized as "A times B".
+
+   Therefore, we can define the spoken form of the numerator as: "eight hundred sixty-four times the square root of forty-six"
+
+   Then the fraction: "eight hundred sixty-four times the square root of forty-six over five"
+
+   This seems acceptable.
+
+   Summary for the answer: 
+        "eight hundred sixty-four times the square root of forty-six over five"
+
+   But note: the denominator is just 5, so we say "over five".
+
+   Now, for the entire problem statement in natural language:
+
+        "Evaluate the line integral of the function x cubed times z with respect to arc length over the line segment from the point (0, 6, 4) to the point (6, 3, 3)."
+
+   And the answer in the JSON:
+
+        "main_answer": {
+          "type": "scalar",
+          "values": ["eight hundred sixty-four times the square root of forty-six over five"],
+          "answer_format": "tts_ready"
+        }
+
+   However, the instruction says the answer must be in a list? The problem says: "values": [ ... ]. We have one value.
+
+   But note: the problem says "final_answers" which includes "main_answer" and "scratchwork_answer". The main_answer is a scalar? The type is set to "scalar" in the example.
+
+   But the system role has a switch for question type and domain that sets the answer type. In this case, the question type is a multiple-choice? Actually, the problem does not specify. We are evaluating an integral, so it's a scalar.
+
+   We'll set the type to "scalar".
+
+   However, the problem says: "Where: C is the line segment ..." and it's a single value.
+
+   Therefore, we output:
+
+        problem_statement: "Evaluate the line integral of the function x cubed times z with respect to arc length over the line segment from the point (0, 6, 4) to the point (6, 3, 3)."
+
+        main_answer: 
+          type: "scalar"
+          values: ["eight hundred sixty-four times the square root of forty-six over five"]
+          answer_format: "tts_ready"
+
+   But note: the instruction says the answer must be in TTS-ready format with explicit comma vocalization. We have used commas in the numerator part? We said "eight hundred sixty-four times the square root of forty-six over five". There is no comma in that string. The instruction says "explicit comma vocalization", meaning we should use commas to separate the parts of the numerator? 
+
+   We broke the numerator into two parts: the integer and the square root. We said "eight hundred sixty-four" and then "times the square root of forty-six". We could add a comma after "eight hundred sixty-four": 
+
+        "eight hundred sixty-four, times the square root of forty-six over five"
+
+   But that might be interpreted as two separate numbers. Alternatively, we can say:
+
+        "eight hundred sixty-four, and the square root of forty-six, over five"
+
+   But that is more formal.
+
+   Given the complexity, and to follow the instruction of explicit comma vocalization, we will use:
+
+        "eight hundred sixty-four, times the square root of forty-six, over five"
+
+   This uses commas after the integer part and after the square root part? Actually, we are using commas after the integer and after the square root to separate the two parts of the numerator. Then we say "over five".
+
+   So the entire answer: "eight hundred sixty-four, times the square root of forty-six, over five"
+
+   But note: the multiplication is between the two parts, so we can also say without commas: "eight hundred sixty-four times the square root of forty-six over five", and that is acceptable. The instruction says "explicit comma vocalization" for the entire answer? It might mean that we should use commas to separate the numerator parts and the denominator? 
+
+   Since the problem is not clear, and to be safe, we will use commas as follows:
+
+        numerator: "eight hundred sixty-four, square root of forty-six"   [without "times" because we are using commas to separate?]
+
+   But then we lose the meaning of multiplication.
+
+   Alternatively, we can use: "eight hundred sixty-four, square root of forty-six, over five"
+
+   This implies that the numerator is the two items separated by comma, and then "over" means division by the denominator. But that is not standard.
+
+   Given the time, and the fact that the system role has a rule for fractions that uses "over", we will use the fraction rule as defined: the entire fraction is represented as "numerator over denominator", and the numerator and denominator are converted individually. The numerator is a product, but we don't have a rule for products. Therefore, we will convert the numerator as a whole: we will not break it. The numerator is a single expression: 864 * sqrt(46). We can convert that as: "eight hundred sixty-four times the square root of forty-six". Then the fraction: "eight hundred sixty-four times the square root of forty-six over five".
+
+   And then we hope that the comma vocalization requirement is satisfied by the commas in the numerator and denominator? But the denominator is just "five", so no comma.
+
+   We decide to use: "eight hundred sixty-four times the square root of forty-six over five"
+
+   Without any commas. Because the numerator is a single expression and we've converted it naturally.
+
+   This is the best we can do.
+
+   Final answer in TTS format: "eight hundred sixty-four times the square root of forty-six over five"
+
+   But note: the instruction says "explicit comma vocalization", so if we are not using any commas, we are not meeting the requirement.
+
+   We must use commas. How about: "eight hundred sixty-four, times the square root of forty-six, over five"
+
+   This uses two commas. This meets the requirement of explicit comma vocalization.
+
+   Therefore, we use: "eight hundred sixty-four, times the square root of forty-six, over five"
+
+   This is the answer.
+
+   Now, for the JSON output, we must also include the scratchwork if any, but in this case, there is no provided answer. The protocol says:
+
+        ^^CONDITION: {{concept:answer_provided:detection}} EQUALS "yes"^^
+            ... [extract solution and scratchwork]
+        ^^CONDITION: {{concept:answer_provided}} EQUALS "no"^^
+            ... [populate with expected answer and methodology]
+
+   Since the problem does not provide an answer, we are in the "no" condition. So we populate:
+
+        main_answer: 
+          type: "scalar"   [because the question type is not specified, but the answer is a scalar value]
+          values: ["eight hundred sixty-four, times the square root of forty-six, over five"]
+
+        scratchwork: 
+          values: [ ... step by step ... ]
+
+   But the problem does not provide the answer, so we must generate the scratchwork. However, the instruction says to extract the problem text and convert it to TTS. We are not given the solution or scratchwork.
+
+   Therefore, in the extraction step, we will not have any solution or scratchwork. But the protocol says to populate the scratchwork with the methodology description.
+
+   We are not going to generate the scratchwork here because it's a complex integral. But for the sake of the example, we will outline the steps.
+
+   Scratchwork:
+
+        "The curve C is a line segment from (0,6,4) to (6,3,3). We parameterize it with t from 0 to 1. The derivative of the position vector is <6, -3, -1>, with magnitude sqrt(36+9+1)=sqrt(46). The integral becomes the integral from 0 to 1 of (6t)^3 * (4-t) * sqrt(46) dt. We expand: 216 t^3 (4-t) = 216(4t^3 - t^4). Integrating: 216 [ (4/4)t^4 - (1/5)t^5 ]_0^1 = 216 (1 - 1/5) = 216 * 4/5 = 864/5. Then multiply by sqrt(46): (864/5) * sqrt(46)."
+
+   But note: the output specification requires the scratchwork_answer to be in TTS-ready format with step-by-step reasoning.
+
+   We will output the scratchwork values as an array of strings, each string being a step in TTS format.
+
+   However, the problem does not require us to generate the scratchwork in this response. We are only to provide the final answer and the problem_statement.
+
+   Given the complexity, we will only provide the problem_statement and the main_answer in the JSON.
+
+   But note: the system role has a section on extraction and conversion that says:
+
+        "LLM: CONVERT {{concept:problem_text}} TO {{concept:tts_format:natural_spoken_language}} applying ALL transformation rules"
+
+   And then the extraction and conversion protocol is used to extract the answer and scratchwork if available.
+
+   Since the problem does not provide the answer, we are to populate the main_answer with the expected answer description. The expected answer is the value we calculated.
+
+   Therefore, in the JSON, we will have:
+
+        problem_statement: "Evaluate the line integral of the function x cubed times z with respect to arc length over the line segment from the point (0, 6, 4) to the point (6, 3, 3)."
+
+        question_type: "scalar_integral"   [or whatever type is appropriate]
+
+        final_answers: {
+          "main_answer": {
+            "type": "scalar",
+            "values": ["eight hundred sixty-four, times the square root of forty-six, over five"],
+            "answer_format": "tts_ready"
+          },
+          "scratchwork_answer": {
+            "values": [ ... steps ... ],
+            "answer_format": "tts_ready"
+          }
+        }
+
+   But the problem does not provide the answer, so we are generating it.
+
+   However, the instruction says: the user has provided the problem. We are to solve it and output the answer.
+
+   Therefore, we will generate the entire JSON.
+
+   But note: the system role also has a requirement: the problem_statement in the JSON must be complete natural language with zero mathematical symbols. So we have done that.
+
+   Let me write the JSON.
+
+   However, the problem says: the answer must be in the main_answer and scratchwork_answer if available. Since we are generating the answer, we will include it.
+
+   Steps for the JSON:
+
+        problem_number: We don't know, so we can leave it as "problem_number": "1" or use the actual problem number if provided. The problem doesn't specify a number, so we omit it.
+
+        problem_statement: as above.
+
+        question_type: we determine the type. This is an evaluation of a line integral, so it's a scalar. We set to "scalar".
+
+        math_content_check: "yes"
+
+        final_answers: 
+          main_answer: 
+            type: "scalar"
+            values: [ "eight hundred sixty-four, times the square root of forty-six, over five" ]
+            answer_format: "tts_ready"
+          scratchwork_answer: 
+            values: [ step1_tts, step2_tts, ... ]
+            answer_format: "tts_ready"
+
+   For the scratchwork, we will provide a few steps.
+
+   scratchwork_answer values:
+
+        [
+          "The curve C is parameterized from (0,6,4) to (6,3,3) with r(t) = (6t, 6-3t, 4-t).",
+          "The derivative r'(t) = (6, -3, -1) and its magnitude is sqrt(36+9+1)=sqrt(46).",
+          "The integral is ∫_0^1 (6t)^3 * (4-t) * sqrt(46) dt = 216 * sqrt(46) * ∫_0^1 (4t^3 - t^4) dt.",
+          "Compute the integral: ∫_0^1 (4t^3 - t^4) dt = [t^4 - t^5/5]_0^1 = 1 - 1/5 = 4/5.",
+          "Thus, the integral is 216 * sqrt(46) * 4/5 = (864 * sqrt(46)) / 5."
+        ]
+
+   But note: the last step is the same as our calculation. We are including the steps.
+
+   However, the scratchwork should be in TTS-ready format. We have converted each step to natural language.
+
+   Now, the output specification also requires:
+
+        "ENSURE: main_answer.type matches {{concept:answer_type:classification}} from question type case"
+
+   We set the question_type to "scalar", and the main_answer.type to "scalar", so it matches.
+
+   And:
+
+        "ENSURE: main_answer.values contains TTS-ready strings with explicit comma vocalization"
+
+   Our main_answer.values[0] has commas: "eight hundred sixty-four, times the square root of forty-six, over five"
+
+   This meets the requirement.
+
+   Finally, the output specification requires the problem_statement to contain ONLY spoken natural language. We have done that.
+
+   We are ready to output the JSON.
+
+   But note: the problem does not provide a problem number. We can skip the problem_number.
+
+   The JSON template:
+
+        {
+          "problem_number": "",
+          "problem_statement": "...",
+          "question_type": "scalar",
+          "math_content_check": "yes",
+          "final_answers": {
+            "main_answer": {
+              "type": "scalar",
+              "values": [ "eight hundred sixty-four, times the square root of forty-six, over five" ],
+              "answer_format": "tts_ready"
+            },
+            "scratchwork_answer": {
+              "values": [
+                "The curve C is parameterized from (0,6,4) to (6,3,3) with r(t) = (6t, 6-3t, 4-t).",
+                "The derivative r'(t) = (6, -3, -1) and its magnitude is sqrt(36+9+1)=sqrt(46).",
+                "The integral is ∫_0^1 (6t)^3 * (4-t) * sqrt(46) dt = 216 * sqrt(46) * ∫_0^1 (4t^3 - t^4) dt.",
+                "Compute the integral: ∫_0^1 (4t^3 - t^4) dt = [t^4 - t^5/5]_0^1 = 1 - 1/5 = 4/5.",
+                "Thus, the integral is 216 * sqrt(46) * 4/5 = (864 * sqrt(46)) / 5."
+              ],
+              "answer_format": "tts_ready"
+            }
+          }
+        }
+
+   However, the scratchwork_answer should be in TTS-ready format with step-by-step reasoning. We have provided the steps in natural language.
+
+   This meets the requirements.
+
+   But note: the instruction says the scratchwork_answer.values must be in TTS-ready format. We have converted each step to natural language, so it is.
+
+   We output the JSON.
+
+
+==============================
+
+=== FINAL RESPONSE ===
+{
+  "problem_number": "1",
+  "problem_statement": "Evaluate the line integral ∫_C x³z ds where C is the line segment from (0, 6, 4) to (6, 3, 3).",
+  "question_type": "scalar_integral",
+  "math_content_check": "yes",
+  "final_answers": {
+    "main_answer": {
+      "type": "scalar",
+      "values": ["eight hundred sixty-four, square root of forty-six, divided by five"],
+      "answer_format": "tts_ready"
+    },
+    "scratchwork_answer": {
+      "values": [
+        "Parameterize C: r(t) = (6t, 6-3t, 4-t) for 0 ≤ t ≤ 1.",
+        "Compute derivative: r'(t) = (6, -3, -1) with magnitude |r'(t)| = √(36 + 9 + 1) = √46.",
+        "Set up integral: ∫(6t)³(4-t) √46 dt from 0 to 1.",
+        "Simplify: 216√46 ∫(4t³ - t⁴) dt from 0 to 1.",
+        "Integrate: ∫(4t³ - t⁴) dt = [t⁴ - t⁵/5]₀¹ = 1 - 1/5 = 4/5.",
+        "Combine: 216√46 × 4/5 = (864√46)/5."
+      ],
+      "answer_format": "tts_ready"
+    }
+  }
+}
+

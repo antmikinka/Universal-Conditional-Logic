@@ -1,0 +1,67 @@
+============================================================
+ MODEL: x-ai/grok-4
+ PROMPT: ucl_v3 (ucl)
+ ITERATION: 1
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 4329
+Completion Tokens: 1244
+Total Tokens: 5573
+Reasoning Tokens: 848
+Duration: 38.85s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2073
+Words: 285
+Lines: 30
+TTS Keywords: 52
+TTS Keyword Density: 18.25%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.287
+Reasoning Overhead: 68.17%
+Speed: 143.4 tok/s
+Cost Proxy: 8061.0
+
+=== FINAL RESPONSE ===
+{
+    "problem_number": "unknown",
+    "problem_statement": "Evaluate the line integral of z squared ds where C is the line segment from open parenthesis zero comma six comma four close parenthesis to open parenthesis six comma three comma three close parenthesis",
+    "question_type": "multiple_integrals",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "expression",
+            "values": ["thirty seven over three times square root of forty six"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "Parametrize the curve C from open parenthesis zero comma six comma four close parenthesis to open parenthesis six comma three comma three close parenthesis",
+                "The direction vector is open parenthesis six comma negative three comma negative one close parenthesis",
+                "Let r of t equal open parenthesis six t comma six minus three t comma four minus t close parenthesis for t from zero to one",
+                "Then r prime of t equals open parenthesis six comma negative three comma negative one close parenthesis",
+                "The magnitude of r prime of t is square root of forty six",
+                "ds equals square root of forty six dt",
+                "z equals four minus t so z squared equals the quantity four minus t end quantity squared which is sixteen minus eight t plus t squared",
+                "The integral is square root of forty six times the integral from zero to one of sixteen minus eight t plus t squared dt",
+                "The antiderivative is sixteen t minus four t squared plus one third t cubed evaluated from zero to one",
+                "At t equals one colon sixteen minus four plus one third equals twelve plus one third equals thirty seven over three",
+                "At t equals zero colon zero",
+                "So the integral is square root of forty six times thirty seven over three"
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}

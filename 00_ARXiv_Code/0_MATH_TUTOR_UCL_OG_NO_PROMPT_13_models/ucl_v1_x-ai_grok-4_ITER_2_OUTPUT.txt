@@ -1,0 +1,62 @@
+============================================================
+ MODEL: x-ai/grok-4
+ PROMPT: ucl_v1 (ucl)
+ ITERATION: 2
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3602
+Completion Tokens: 1077
+Total Tokens: 4679
+Reasoning Tokens: 725
+Duration: 23.71s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1297
+Words: 190
+Lines: 25
+TTS Keywords: 20
+TTS Keyword Density: 10.53%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.299
+Reasoning Overhead: 67.32%
+Speed: 197.3 tok/s
+Cost Proxy: 6833.0
+
+=== FINAL RESPONSE ===
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral: integral over C of x squared ds, where C is the line segment from (0,6,4) to (6,3,3).",
+    "question_type": "calculation",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "numerical",
+            "values": ["12 times the square root of 46"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "Parametrize the line segment C from (0,6,4) to (6,3,3). Let r of t equal (6t, 6 minus 3t, 4 minus t), where t goes from 0 to 1.",
+                "The derivative r prime of t is (6, negative 3, negative 1).",
+                "The magnitude of r prime of t is the square root of 36 plus 9 plus 1, which is the square root of 46.",
+                "The integral is the integral from 0 to 1 of (6t) squared times the square root of 46 dt.",
+                "That's the square root of 46 times the integral from 0 to 1 of 36 t squared dt.",
+                "The integral of 36 t squared dt is 36 times t cubed over 3, evaluated from 0 to 1, which is 12.",
+                "So, the result is 12 times the square root of 46."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}

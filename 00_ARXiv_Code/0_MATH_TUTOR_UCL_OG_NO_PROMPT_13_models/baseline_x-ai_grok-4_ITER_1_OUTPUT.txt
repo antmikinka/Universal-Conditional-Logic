@@ -1,0 +1,59 @@
+============================================================
+ MODEL: x-ai/grok-4
+ PROMPT: baseline (baseline)
+ ITERATION: 1
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 5300
+Completion Tokens: 2131
+Total Tokens: 7431
+Reasoning Tokens: 1919
+Duration: 45.12s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 827
+Words: 105
+Lines: 22
+TTS Keywords: 13
+TTS Keyword Density: 12.38%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.402
+Reasoning Overhead: 90.05%
+Speed: 164.7 tok/s
+Cost Proxy: 11693.0
+
+=== FINAL RESPONSE ===
+{
+  "problem_number": "1",
+  "problem_statement": "Evaluate the line integral: ∫_C z² ds, where C is the line segment from (0,6,4) to (6,3,3).",
+  "question_type": "vector_calculus",
+  "math_content_check": "yes",
+  "final_answers": {
+    "main_answer": {
+      "type": "integral",
+      "values": ["thirty seven over three times square root of forty six"],
+      "answer_format": "tts_ready"
+    },
+    "scratchwork_answer": {
+      "values": [
+        "parametrization: vector six t comma six minus three t comma four minus t",
+        "magnitude of derivative: square root of forty six",
+        "integral from zero to one of the quantity four minus t squared dt equals thirty seven over three",
+        "result: thirty seven over three times square root of forty six"
+      ],
+      "answer_format": "tts_ready"
+    }
+  }
+}

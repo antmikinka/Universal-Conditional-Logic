@@ -1,0 +1,55 @@
+============================================================
+ MODEL: google/gemma-3-27b-it:free
+ PROMPT: baseline (baseline)
+ ITERATION: 1
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 4936
+Completion Tokens: 0
+Total Tokens: 4936
+Duration: 6.51s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 671
+Words: 96
+Lines: 19
+TTS Keywords: 10
+TTS Keyword Density: 10.42%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.0
+Reasoning Overhead: 0%
+Speed: 758.2 tok/s
+Cost Proxy: 4936.0
+
+=== FINAL RESPONSE ===
+```json
+{
+  "problem_number": "1",
+  "problem_statement": "Evaluate the line integral of x cubed times z with respect to ds, where C is the line segment from (0, 6, 4) to (6, 3, 3).",
+  "question_type": "multiple_integrals",
+  "math_content_check": "yes",
+  "final_answers": {
+    "main_answer": {
+      "type": "single_value",
+      "values": ["integral of x cubed times z with respect to ds along the curve C"],
+      "answer_format": "tts_ready"
+    },
+    "scratchwork_answer": {
+      "values": ["Line integral of x cubed times z with respect to ds from the point 0 comma 6 comma 4 to the point 6 comma 3 comma 3"],
+      "answer_format": "tts_ready"
+    }
+  }
+}
+```

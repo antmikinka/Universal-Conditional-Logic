@@ -1,0 +1,64 @@
+============================================================
+ MODEL: mistralai/mistral-small-3.2-24b-instruct
+ PROMPT: ucl_v4 (ucl)
+ ITERATION: 4
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3314
+Completion Tokens: 364
+Total Tokens: 3678
+Duration: 5.76s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1400
+Words: 192
+Lines: 28
+TTS Keywords: 25
+TTS Keyword Density: 13.02%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.11
+Reasoning Overhead: 0.0%
+Speed: 638.5 tok/s
+Cost Proxy: 4406.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral of x cubed z ds, where C is the line segment from the point 0 comma 6 comma 4 to the point 6 comma 3 comma 3.",
+    "question_type": "line_integral",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "calculation",
+            "values": ["The value of the line integral is 108"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "First, parameterize the line segment C. Let x equal t, y equal 6 minus 0.5 t, and z equal 4 minus 0.5 t, where t ranges from 0 to 6.",
+                "Compute the differential ds using the parameterization.",
+                "ds equals square root of dx by dt squared plus dy by dt squared plus dz by dt squared, dt.",
+                "This gives ds equals square root of 1 plus 0.25 plus 0.25, dt, which simplifies to ds equals square root of 1.5, dt.",
+                "Substitute the parameterization and ds into the integral.",
+                "The integral becomes the integral from 0 to 6 of t cubed times 4 minus 0.5 t times square root of 1.5, dt.",
+                "Simplify the integrand and evaluate the integral.",
+                "The integral evaluates to 108."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

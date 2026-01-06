@@ -1,0 +1,55 @@
+============================================================
+ MODEL: mistralai/mistral-small-3.2-24b-instruct
+ PROMPT: baseline (baseline)
+ ITERATION: 1
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 5344
+Completion Tokens: 493
+Total Tokens: 5837
+Duration: 9.87s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1081
+Words: 183
+Lines: 19
+TTS Keywords: 0
+TTS Keyword Density: 0.0%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.092
+Reasoning Overhead: 0.0%
+Speed: 591.4 tok/s
+Cost Proxy: 6823.0
+
+=== FINAL RESPONSE ===
+```json
+{
+  "problem_number": "1",
+  "problem_statement": "Evaluate the line integral: ∫_C x³z ds, where C is the line segment from (0, 6, 4) to (6, 3, 3).",
+  "question_type": "open_ended",
+  "math_content_check": "yes",
+  "final_answers": {
+    "main_answer": {
+      "type": "single_value",
+      "values": ["The value of the line integral is 933"],
+      "answer_format": "tts_ready"
+    },
+    "scratchwork_answer": {
+      "values": ["Parametric equations for the line segment: x = t, y = 6 - t, z = 4 - t/3, t from 0 to 6", "Arc length differential ds: ds = sqrt(1 + (dy/dt)² + (dz/dt)²) dt = sqrt(1 + 1 + 1/9) dt = sqrt(10/9) dt", "Integrand: x³z = t³(4 - t/3) = 4t³ - t⁴/3", "Integral becomes: ∫ from 0 to 6 of (4t³ - t⁴/3) * sqrt(10/9) dt = sqrt(10/9) * (t⁴ - t⁵/15) evaluated from 0 to 6", "Evaluating the integral: sqrt(10/9) * (6⁴ - 6⁵/15) = sqrt(10/9) * (1296 - 7776/15) = sqrt(10/9) * (1296 - 518.4) = sqrt(10/9) * 777.6", "Final value: 777.6 * sqrt(10/9) = 777.6 * (sqrt(10)/3) = 777.6 * 10 / 3 = 2592 / 3 = 933"],
+      "answer_format": "tts_ready"
+    }
+  }
+}
+```

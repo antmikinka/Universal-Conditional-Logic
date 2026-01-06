@@ -1,0 +1,38 @@
+============================================================
+ MODEL: x-ai/grok-4
+ PROMPT: no_prompt (control)
+ ITERATION: 3
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 945
+Completion Tokens: 825
+Total Tokens: 1770
+Reasoning Tokens: 808
+Duration: 17.77s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: False
+Schema Compliance: 0.0%
+Fields Present: []
+Fields Missing: []
+Has Main Answer: False
+Has Scratchwork: False
+TTS Ready: False
+
+=== CONTENT METRICS ===
+Characters: 53
+Words: 11
+Lines: 1
+TTS Keywords: 0
+TTS Keyword Density: 0.0%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.873
+Reasoning Overhead: 97.94%
+Speed: 99.6 tok/s
+Cost Proxy: 3420.0
+
+=== FINAL RESPONSE ===
+The value of the line integral is \( 39 \sqrt{46} \).

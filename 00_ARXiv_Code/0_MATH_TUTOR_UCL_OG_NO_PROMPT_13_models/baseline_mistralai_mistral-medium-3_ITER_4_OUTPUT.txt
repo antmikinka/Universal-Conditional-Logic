@@ -1,0 +1,64 @@
+============================================================
+ MODEL: mistralai/mistral-medium-3
+ PROMPT: baseline (baseline)
+ ITERATION: 4
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 5344
+Completion Tokens: 438
+Total Tokens: 5782
+Duration: 4.81s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1401
+Words: 225
+Lines: 28
+TTS Keywords: 45
+TTS Keyword Density: 20.0%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.082
+Reasoning Overhead: 0.0%
+Speed: 1202.1 tok/s
+Cost Proxy: 6658.0
+
+=== FINAL RESPONSE ===
+```json
+{
+  "problem_number": "1",
+  "problem_statement": "Evaluate the line integral: ∫_C x³z ds, where C is the line segment from (0,6,4) to (6,3,3).",
+  "question_type": "open_ended",
+  "math_content_check": "yes",
+  "final_answers": {
+    "main_answer": {
+      "type": "single_value",
+      "values": ["negative 108"],
+      "answer_format": "tts_ready"
+    },
+    "scratchwork_answer": {
+      "values": [
+        "Parametric equations for the line segment: x equals 6t, y equals 6 minus 3t, z equals 4 minus t",
+        "Derivative of r of t: 6 comma negative 3 comma negative 1",
+        "Magnitude of r prime of t: square root of the quantity 6 squared plus negative 3 squared plus negative 1 squared equals square root of 46",
+        "Integrand x cubed z: the quantity 6t cubed times the quantity 4 minus t equals 216 t cubed minus 216 t to the power of 4",
+        "Integral from 0 to 1 of the quantity 216 t cubed minus 216 t to the power of 4 times square root of 46 dt",
+        "Factor out 216 square root of 46 times the integral from 0 to 1 of the quantity t cubed minus t to the power of 4 dt",
+        "Evaluate the integral: 216 square root of 46 times the quantity one over 4 minus one over 5 equals 216 square root of 46 times one over 20 equals 54 over 5 times square root of 46",
+        "Final answer: negative 108"
+      ],
+      "answer_format": "tts_ready"
+    }
+  }
+}
+```

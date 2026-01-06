@@ -1,0 +1,43 @@
+{
+    "model": "meta-llama/llama-4-scout",
+    "prompt_label": "ucl_v4",
+    "prompt_category": "ucl",
+    "iteration": 3,
+    "input_mode": "vision",
+    "timestamp": "2025-12-15 03:54:08",
+    "usage": {
+        "prompt_tokens": 3281,
+        "completion_tokens": 570,
+        "total_tokens": 3851,
+        "reasoning_tokens": 0,
+        "duration_seconds": 2.09,
+        "input_mode": "vision",
+        "model_capability": "auto",
+        "vision_attempted": true,
+        "vision_fallback": false
+    },
+    "schema_compliance": {
+        "is_valid_json": false,
+        "schema_compliance_pct": 0.0,
+        "fields_present": [],
+        "fields_missing": [],
+        "has_main_answer": false,
+        "has_scratchwork": false,
+        "tts_ready": false
+    },
+    "content_metrics": {
+        "char_count": 1352,
+        "word_count": 238,
+        "line_count": 28,
+        "tts_keyword_count": 0,
+        "tts_keyword_density": 0.0
+    },
+    "efficiency_metrics": {
+        "token_efficiency_ratio": 0.174,
+        "reasoning_overhead_pct": 0.0,
+        "ms_per_token": 0.54,
+        "tokens_per_second": 1842.6,
+        "cost_proxy": 4991.0
+    },
+    "raw_content_length": 1352
+}

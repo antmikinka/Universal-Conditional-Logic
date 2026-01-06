@@ -1,0 +1,63 @@
+============================================================
+ MODEL: mistralai/mistral-medium-3
+ PROMPT: baseline (baseline)
+ ITERATION: 2
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 5344
+Completion Tokens: 407
+Total Tokens: 5751
+Duration: 5.63s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1356
+Words: 205
+Lines: 27
+TTS Keywords: 47
+TTS Keyword Density: 22.93%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.076
+Reasoning Overhead: 0.0%
+Speed: 1021.5 tok/s
+Cost Proxy: 6565.0
+
+=== FINAL RESPONSE ===
+```json
+{
+  "problem_number": "1",
+  "problem_statement": "Evaluate the line integral: ∫_C x³z ds, where C is the line segment from (0,6,4) to (6,3,3).",
+  "question_type": "open_ended",
+  "math_content_check": "yes",
+  "final_answers": {
+    "main_answer": {
+      "type": "single_value",
+      "values": ["negative 133 times square root of 6"],
+      "answer_format": "tts_ready"
+    },
+    "scratchwork_answer": {
+      "values": [
+        "Parametric equations for the line segment: x equals 6t, y equals 6 minus 3t, z equals 4 minus t",
+        "Derivatives: dx over dt equals 6, dy over dt equals negative 3, dz over dt equals negative 1",
+        "ds equals square root of the quantity: 6 squared plus negative 3 squared plus negative 1 squared; end quantity dt equals square root of 46 dt",
+        "Integral becomes: integral from 0 to 1 of the quantity: 6t cubed times the quantity 4 minus t end quantity times square root of 46; end quantity dt",
+        "Simplify the integral: 6 times 46 times integral from 0 to 1 of the quantity: 4t cubed minus t to the fourth; end quantity dt",
+        "Evaluate the integral: 6 times 46 times the quantity: 1 minus 1 over 5; end quantity equals 6 times 46 times 4 over 5 equals 220.8",
+        "Final answer: negative 133 times square root of 6"
+      ],
+      "answer_format": "tts_ready"
+    }
+  }
+}
+```

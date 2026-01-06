@@ -1,0 +1,71 @@
+============================================================
+ MODEL: mistralai/mistral-medium-3
+ PROMPT: ucl_v1 (ucl)
+ ITERATION: 1
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3883
+Completion Tokens: 691
+Total Tokens: 4574
+Duration: 7.77s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2070
+Words: 312
+Lines: 35
+TTS Keywords: 5
+TTS Keyword Density: 1.6%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.178
+Reasoning Overhead: 0.0%
+Speed: 588.7 tok/s
+Cost Proxy: 5956.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": null,
+    "problem_statement": "Evaluate the line integral: ∫_C x³z ds. Where C is the line segment from (0, 6, 4) to (6, 3, 3).",
+    "question_type": "multiple_integrals",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "integral_evaluation",
+            "values": [
+                "Evaluate the line integral of the quantity x cubed times z with respect to the arc length s along the curve C, where C is the line segment from the point (0, 6, 4) to the point (6, 3, 3)."
+            ],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "First, parameterize the line segment C from (0, 6, 4) to (6, 3, 3).",
+                "The parametric equations for the line segment can be written as r(t) = (0 + 6t, 6 - 3t, 4 - t), where t ranges from 0 to 1.",
+                "Next, compute the derivative of r(t) with respect to t to find the tangent vector: r'(t) = (6, -3, -1).",
+                "The magnitude of the tangent vector is sqrt(6² + (-3)² + (-1)²) = sqrt(36 + 9 + 1) = sqrt(46).",
+                "The differential arc length ds is given by ds = sqrt(46) dt.",
+                "Substitute x(t) = 6t, z(t) = 4 - t into the integrand x³z to get (6t)³(4 - t).",
+                "The integral becomes ∫ from 0 to 1 of (6t)³(4 - t) * sqrt(46) dt.",
+                "Simplify the integrand: ∫ from 0 to 1 of 216t³(4 - t) * sqrt(46) dt.",
+                "Distribute the terms inside the integral: ∫ from 0 to 1 of (864t³ - 216t⁴) * sqrt(46) dt.",
+                "Factor out the constant sqrt(46): sqrt(46) * ∫ from 0 to 1 of (864t³ - 216t⁴) dt.",
+                "Integrate term by term: sqrt(46) * [864(t⁴/4) - 216(t⁵/5)] evaluated from 0 to 1.",
+                "Simplify the expression: sqrt(46) * [216 - 43.2] = sqrt(46) * 172.8.",
+                "Thus, the value of the line integral is 172.8 times the square root of 46."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

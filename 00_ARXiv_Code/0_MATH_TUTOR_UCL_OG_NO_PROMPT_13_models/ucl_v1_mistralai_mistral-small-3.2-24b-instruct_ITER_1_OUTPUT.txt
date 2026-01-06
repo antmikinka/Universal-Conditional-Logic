@@ -1,0 +1,64 @@
+============================================================
+ MODEL: mistralai/mistral-small-3.2-24b-instruct
+ PROMPT: ucl_v1 (ucl)
+ ITERATION: 1
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3883
+Completion Tokens: 527
+Total Tokens: 4410
+Duration: 15.68s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1425
+Words: 217
+Lines: 28
+TTS Keywords: 1
+TTS Keyword Density: 0.46%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.136
+Reasoning Overhead: 0.0%
+Speed: 281.2 tok/s
+Cost Proxy: 5464.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral: ∫_C x^3 z ds, where C is the line segment from (0, 6, 4) to (6, 3, 3).",
+    "question_type": "line_integral",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "tts",
+            "values": ["the line integral of x cubed z ds along the line segment from (0, 6, 4) to (6, 3, 3) is 108"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "the line segment from (0, 6, 4) to (6, 3, 3) can be parameterized as x = t, y = 6 - 0.5t, z = 4 - 0.5t for t in [0, 6]",
+                "the derivative of the parameterization is (1, -0.5, -0.5)",
+                "the magnitude of the derivative is sqrt(1^2 + (-0.5)^2 + (-0.5)^2) = sqrt(1 + 0.25 + 0.25) = sqrt(1.5)",
+                "the integral becomes ∫ from 0 to 6 of t^3 (4 - 0.5t) sqrt(1.5) dt",
+                "this can be split into two integrals: sqrt(1.5) ∫ from 0 to 6 of 4 t^3 dt and -0.5 sqrt(1.5) ∫ from 0 to 6 of t^4 dt",
+                "evaluating these gives sqrt(1.5) [t^4 / 4] from 0 to 6 and -0.5 sqrt(1.5) [t^5 / 5] from 0 to 6",
+                "which simplifies to sqrt(1.5) (6^4 / 4) - 0.5 sqrt(1.5) (6^5 / 5)",
+                "calculating these values gives 108"
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

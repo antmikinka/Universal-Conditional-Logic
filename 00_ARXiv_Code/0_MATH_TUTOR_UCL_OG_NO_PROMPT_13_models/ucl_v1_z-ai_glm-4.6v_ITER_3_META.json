@@ -1,0 +1,43 @@
+{
+    "model": "z-ai/glm-4.6v",
+    "prompt_label": "ucl_v1",
+    "prompt_category": "ucl",
+    "iteration": 3,
+    "input_mode": "vision",
+    "timestamp": "2025-12-15 04:09:17",
+    "usage": {
+        "prompt_tokens": 3308,
+        "completion_tokens": 1284,
+        "total_tokens": 4592,
+        "reasoning_tokens": 594,
+        "duration_seconds": 45.7,
+        "input_mode": "vision",
+        "model_capability": "auto",
+        "vision_attempted": true,
+        "vision_fallback": false
+    },
+    "schema_compliance": {
+        "is_valid_json": false,
+        "schema_compliance_pct": 0.0,
+        "fields_present": [],
+        "fields_missing": [],
+        "has_main_answer": false,
+        "has_scratchwork": false,
+        "tts_ready": false
+    },
+    "content_metrics": {
+        "char_count": 1045,
+        "word_count": 141,
+        "line_count": 22,
+        "tts_keyword_count": 2,
+        "tts_keyword_density": 1.42
+    },
+    "efficiency_metrics": {
+        "token_efficiency_ratio": 0.388,
+        "reasoning_overhead_pct": 46.26,
+        "ms_per_token": 9.95,
+        "tokens_per_second": 100.5,
+        "cost_proxy": 7160.0
+    },
+    "raw_content_length": 1045
+}

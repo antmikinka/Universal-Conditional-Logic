@@ -1,0 +1,68 @@
+============================================================
+ MODEL: google/gemma-3-27b-it:free
+ PROMPT: ucl_v4.1 (ucl)
+ ITERATION: 2
+ INPUT MODE: text
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 2555
+Completion Tokens: 564
+Total Tokens: 3119
+Duration: 11.01s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2163
+Words: 389
+Lines: 32
+TTS Keywords: 61
+TTS Keyword Density: 15.68%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.221
+Reasoning Overhead: 0.0%
+Speed: 283.3 tok/s
+Cost Proxy: 4247.0
+
+=== FINAL RESPONSE ===
+
+```json
+{
+  "problem_number": "1",
+  "problem_statement": "Evaluate the line integral of x cubed z with respect to s, where C is the line segment from the point 0, 6, 4 to the point 6, 3, 3.",
+  "question_type": "line_integral",
+  "math_content_check": "yes",
+  "final_answers": {
+    "main_answer": {
+      "type": "numerical",
+      "values": [
+        "151.2"
+      ],
+      "answer_format": "tts_ready"
+    },
+    "scratchwork_answer": {
+      "values": [
+        "First, parameterize the line segment C as r of t equals t times the vector 6 minus 0, 3 minus 6, 3 minus 4, which simplifies to r of t equals 6t, 6 minus 3t, 4 minus t, where t ranges from 0 to 1.",
+        "Next, compute the derivative of r with respect to t, which is r prime of t equals 6, negative 3, negative 1.",
+        "Then, compute the magnitude of r prime of t, which is the square root of 6 squared plus negative 3 squared plus negative 1 squared, which equals the square root of 36 plus 9 plus 1, which equals the square root of 46.",
+        "Now, substitute x equals 6t and z equals 4 minus t into the integrand x cubed z, which gives us (6t) cubed times (4 minus t), which simplifies to 216 t cubed times (4 minus t), which equals 864 t cubed minus 216 t to the power of 4.",
+        "Compute the line integral by integrating from 0 to 1 the expression (864 t cubed minus 216 t to the power of 4) times the square root of 46 with respect to t.",
+        "The integral of 864 t cubed is 864 divided by 4 times t to the power of 4, which equals 216 t to the power of 4.",
+        "The integral of negative 216 t to the power of 4 is negative 216 divided by 5 times t to the power of 5.",
+        "Evaluate the definite integral from 0 to 1: 216 times 1 to the power of 4 minus 216 divided by 5 times 1 to the power of 5, which equals 216 minus 216 over 5, which equals 216 times 1 minus 1 over 5, which equals 216 times 4 over 5, which equals 864 over 5, which equals 172.8.",
+        "Finally, multiply 172.8 by the square root of 46 to get the result: 172.8 times the square root of 46, which is approximately 151.2."
+      ],
+      "answer_format": "tts_ready"
+    }
+  }
+}
+```

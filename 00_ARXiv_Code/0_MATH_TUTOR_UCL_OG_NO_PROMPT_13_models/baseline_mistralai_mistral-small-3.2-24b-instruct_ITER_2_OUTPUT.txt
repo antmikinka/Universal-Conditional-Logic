@@ -1,0 +1,55 @@
+============================================================
+ MODEL: mistralai/mistral-small-3.2-24b-instruct
+ PROMPT: baseline (baseline)
+ ITERATION: 2
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 5344
+Completion Tokens: 406
+Total Tokens: 5750
+Duration: 6.92s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 928
+Words: 154
+Lines: 19
+TTS Keywords: 1
+TTS Keyword Density: 0.65%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.076
+Reasoning Overhead: 0.0%
+Speed: 830.9 tok/s
+Cost Proxy: 6562.0
+
+=== FINAL RESPONSE ===
+```json
+{
+  "problem_number": "1",
+  "problem_statement": "Evaluate the line integral: ∫_C x³z ds, where C is the line segment from (0, 6, 4) to (6, 3, 3).",
+  "question_type": "open_ended",
+  "math_content_check": "yes",
+  "final_answers": {
+    "main_answer": {
+      "type": "single_value",
+      "values": ["The integral of x cubed z ds along the curve C from (0, 6, 4) to (6, 3, 3) is 34."],
+      "answer_format": "tts_ready"
+    },
+    "scratchwork_answer": {
+      "values": ["Parameterize the line segment: r(t) = (6t, 6 - 3t, 4 - t) for t in [0, 1].", "Compute the derivative: r'(t) = (6, -3, -1).", "Compute the magnitude of the derivative: |r'(t)| = √(6² + (-3)² + (-1)²) = √(36 + 9 + 1) = √46.", "Compute the integrand: x³z = (6t)³(4 - t) = 216t³ - 6t⁴.", "Integrate: ∫ from 0 to 1 of (216t³ - 6t⁴)√46 dt = √46 [162t⁴ - 6(1/5)t⁵] from 0 to 1 = √46 (162/5) = 34."],
+      "answer_format": "tts_ready"
+    }
+  }
+}
+```

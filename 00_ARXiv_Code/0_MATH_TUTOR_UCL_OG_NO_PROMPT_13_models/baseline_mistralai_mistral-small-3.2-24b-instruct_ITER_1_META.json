@@ -1,0 +1,49 @@
+{
+    "model": "mistralai/mistral-small-3.2-24b-instruct",
+    "prompt_label": "baseline",
+    "prompt_category": "baseline",
+    "iteration": 1,
+    "input_mode": "vision",
+    "timestamp": "2025-12-15 02:00:36",
+    "usage": {
+        "prompt_tokens": 5344,
+        "completion_tokens": 493,
+        "total_tokens": 5837,
+        "reasoning_tokens": 0,
+        "duration_seconds": 9.87,
+        "input_mode": "vision",
+        "model_capability": "auto",
+        "vision_attempted": true,
+        "vision_fallback": false
+    },
+    "schema_compliance": {
+        "is_valid_json": true,
+        "schema_compliance_pct": 100.0,
+        "fields_present": [
+            "problem_number",
+            "problem_statement",
+            "question_type",
+            "math_content_check",
+            "final_answers"
+        ],
+        "fields_missing": [],
+        "has_main_answer": true,
+        "has_scratchwork": true,
+        "tts_ready": true
+    },
+    "content_metrics": {
+        "char_count": 1081,
+        "word_count": 183,
+        "line_count": 19,
+        "tts_keyword_count": 0,
+        "tts_keyword_density": 0.0
+    },
+    "efficiency_metrics": {
+        "token_efficiency_ratio": 0.092,
+        "reasoning_overhead_pct": 0.0,
+        "ms_per_token": 1.69,
+        "tokens_per_second": 591.4,
+        "cost_proxy": 6823.0
+    },
+    "raw_content_length": 1081
+}

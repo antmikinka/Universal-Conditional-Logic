@@ -1,0 +1,55 @@
+============================================================
+ MODEL: mistralai/mistral-small-3.2-24b-instruct
+ PROMPT: baseline (baseline)
+ ITERATION: 4
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 5344
+Completion Tokens: 306
+Total Tokens: 5650
+Duration: 4.48s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 746
+Words: 109
+Lines: 19
+TTS Keywords: 0
+TTS Keyword Density: 0.0%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.057
+Reasoning Overhead: 0.0%
+Speed: 1261.2 tok/s
+Cost Proxy: 6262.0
+
+=== FINAL RESPONSE ===
+```json
+{
+  "problem_number": "1",
+  "problem_statement": "Evaluate the line integral: ∫_C x³z ds where C is the line segment from (0, 6, 4) to (6, 3, 3).",
+  "question_type": "open_ended",
+  "math_content_check": "yes",
+  "final_answers": {
+    "main_answer": {
+      "type": "single_value",
+      "values": ["The integral evaluates to 108."],
+      "answer_format": "tts_ready"
+    },
+    "scratchwork_answer": {
+      "values": ["Parametric equations: x = t, y = 6 - 0.5t, z = 4 - 0.5t for t from 0 to 6.", "Derivative ds: √(1 + 0.25t² + 0.25t²) = √(1 + 0.5t²).", "Integrand: x³z = t³(4 - 0.5t).", "Integral becomes ∫ from 0 to 6 of t³(4 - 0.5t)√(1 + 0.5t²) dt.", "Evaluated integral: 108."],
+      "answer_format": "tts_ready"
+    }
+  }
+}
+```

@@ -1,0 +1,49 @@
+{
+    "model": "mistralai/mistral-small-3.2-24b-instruct",
+    "prompt_label": "ucl_v4.1",
+    "prompt_category": "ucl",
+    "iteration": 3,
+    "input_mode": "vision",
+    "timestamp": "2025-12-15 03:56:56",
+    "usage": {
+        "prompt_tokens": 3337,
+        "completion_tokens": 484,
+        "total_tokens": 3821,
+        "reasoning_tokens": 0,
+        "duration_seconds": 10.33,
+        "input_mode": "vision",
+        "model_capability": "auto",
+        "vision_attempted": true,
+        "vision_fallback": false
+    },
+    "schema_compliance": {
+        "is_valid_json": true,
+        "schema_compliance_pct": 100.0,
+        "fields_present": [
+            "problem_number",
+            "problem_statement",
+            "question_type",
+            "math_content_check",
+            "final_answers"
+        ],
+        "fields_missing": [],
+        "has_main_answer": true,
+        "has_scratchwork": true,
+        "tts_ready": true
+    },
+    "content_metrics": {
+        "char_count": 1820,
+        "word_count": 283,
+        "line_count": 27,
+        "tts_keyword_count": 39,
+        "tts_keyword_density": 13.78
+    },
+    "efficiency_metrics": {
+        "token_efficiency_ratio": 0.145,
+        "reasoning_overhead_pct": 0.0,
+        "ms_per_token": 2.7,
+        "tokens_per_second": 369.9,
+        "cost_proxy": 4789.0
+    },
+    "raw_content_length": 1820
+}

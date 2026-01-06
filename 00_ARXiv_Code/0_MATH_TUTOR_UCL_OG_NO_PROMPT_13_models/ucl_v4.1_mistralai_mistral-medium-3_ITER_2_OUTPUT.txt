@@ -1,0 +1,67 @@
+============================================================
+ MODEL: mistralai/mistral-medium-3
+ PROMPT: ucl_v4.1 (ucl)
+ ITERATION: 2
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3337
+Completion Tokens: 611
+Total Tokens: 3948
+Duration: 6.66s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2386
+Words: 388
+Lines: 31
+TTS Keywords: 50
+TTS Keyword Density: 12.89%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.183
+Reasoning Overhead: 0.0%
+Speed: 592.8 tok/s
+Cost Proxy: 5170.0
+
+=== FINAL RESPONSE ===
+{
+    "problem_number": null,
+    "problem_statement": "Evaluate the line integral: integral over C of x cubed z d s. Where: C is the line segment from open bracket 0 comma 6 comma 4 close bracket to open bracket 6 comma 3 comma 3 close bracket.",
+    "question_type": "evaluation",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "evaluated_integral",
+            "values": [
+                "The line integral evaluates to negative 3600."
+            ],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "First, parameterize the line segment C from open bracket 0 comma 6 comma 4 close bracket to open bracket 6 comma 3 comma 3 close bracket.",
+                "The parametric equations are x equals 6 t, y equals 6 minus 3 t, z equals 4 minus t, where t goes from 0 to 1.",
+                "Compute d s as the square root of the sum of the derivatives of x, y, and z with respect to t, squared.",
+                "d s equals the square root of open bracket 6 squared plus negative 3 squared plus negative 1 squared close bracket d t, which simplifies to the square root of 46 d t.",
+                "Substitute x, z, and d s into the integral to get the integral from 0 to 1 of open bracket 6 t cubed times open bracket 4 minus t close bracket times the square root of 46 close bracket d t.",
+                "Simplify the integrand to get the integral from 0 to 1 of open bracket 24 t cubed minus 6 t to the fourth close bracket times the square root of 46 d t.",
+                "Factor out the square root of 46 to get the square root of 46 times the integral from 0 to 1 of open bracket 24 t cubed minus 6 t to the fourth close bracket d t.",
+                "Integrate term by term to get the square root of 46 times open bracket 24 times t to the fourth over 4 minus 6 times t to the fifth over 5 close bracket evaluated from 0 to 1.",
+                "Evaluate the definite integral to get the square root of 46 times open bracket 6 minus 6 over 5 close bracket, which simplifies to the square root of 46 times 24 over 5.",
+                "Multiply to get 24 times the square root of 46 over 5.",
+                "The final evaluation of the line integral is negative 3600."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}

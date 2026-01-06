@@ -1,0 +1,67 @@
+============================================================
+ MODEL: mistralai/mistral-small-3.2-24b-instruct
+ PROMPT: ucl_v2 (ucl)
+ ITERATION: 3
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 5584
+Completion Tokens: 666
+Total Tokens: 6250
+Duration: 16.61s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2337
+Words: 387
+Lines: 31
+TTS Keywords: 48
+TTS Keyword Density: 12.4%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.119
+Reasoning Overhead: 0.0%
+Speed: 376.3 tok/s
+Cost Proxy: 7582.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral of x cubed z ds, where C is the line segment from the point (0, 6, 4) to the point (6, 3, 3).",
+    "question_type": "multiple_integrals",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "single_value",
+            "values": ["The line integral of x cubed z ds along the line segment C is 432."],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "First, parameterize the line segment C. Let t range from 0 to 1. Then, the parametric equations are x equals 6 t, y equals 6 minus 3 t, and z equals 4 minus t.",
+                "Next, compute the derivative of each parametric equation with respect to t. dx over dt equals 6, dy over dt equals negative 3, and dz over dt equals negative 1.",
+                "The differential ds is the square root of the sum of the squares of the derivatives, which is the square root of 6 squared plus negative 3 squared plus negative 1 squared, which simplifies to the square root of 46.",
+                "Now, express x, y, and z in terms of t and substitute into the integrand. x cubed z becomes (6 t) cubed (4 minus t).",
+                "Set up the integral from 0 to 1 of (6 t) cubed (4 minus t) times the square root of 46 over the square root of 46 dt.",
+                "Simplify the integrand to (6 t) cubed (4 minus t) dt.",
+                "Expand (6 t) cubed (4 minus t) to 864 t cubed minus 216 t to the fourth power.",
+                "Integrate 864 t cubed minus 216 t to the fourth power with respect to t from 0 to 1. This gives 864 times the integral from 0 to 1 of t cubed minus 216 times the integral from 0 to 1 of t to the fourth power.",
+                "The integral from 0 to 1 of t cubed is 1 fourth, and the integral from 0 to 1 of t to the fourth power is 1 fifth.",
+                "Multiply to get 864 times 1 fourth minus 216 times 1 fifth, which simplifies to 216 minus 43.2, which is 172.8.",
+                "Finally, multiply by the square root of 46 over the square root of 46 to get 172.8 times the square root of 46 over the square root of 46, which simplifies to 432."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

@@ -1,0 +1,68 @@
+============================================================
+ MODEL: mistralai/mistral-small-3.2-24b-instruct
+ PROMPT: ucl_v4.1 (ucl)
+ ITERATION: 1
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3337
+Completion Tokens: 696
+Total Tokens: 4033
+Duration: 14.76s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2427
+Words: 396
+Lines: 32
+TTS Keywords: 73
+TTS Keyword Density: 18.43%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.209
+Reasoning Overhead: 0.0%
+Speed: 273.2 tok/s
+Cost Proxy: 5425.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral of x cubed z ds along the line segment from the point 0 comma 6 comma 4 to the point 6 comma 3 comma 3.",
+    "question_type": "line integral",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "numerical",
+            "values": ["The value of the line integral is 270"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "First, parameterize the line segment C from (0, 6, 4) to (6, 3, 3).",
+                "The parametric equations are x equals t comma y equals 6 minus 0.5 t comma z equals 4 minus 0.5 t for t ranging from 0 to 6.",
+                "Compute the derivative of each component: dx dt equals 1 comma dy dt equals negative 0.5 comma dz dt equals negative 0.5.",
+                "The differential ds is the square root of the sum of the squares of the derivatives: ds equals square root of 1 squared plus negative 0.5 squared plus negative 0.5 squared dt equals square root of 1 plus 0.25 plus 0.25 dt equals square root of 1.5 dt equals square root of 3 over 2 dt.",
+                "Substitute the parametric equations and ds into the integral: integral from 0 to 6 of x cubed z ds equals integral from 0 to 6 of t cubed times (4 minus 0.5 t) times square root of 3 over 2 dt.",
+                "Simplify the integrand: integral from 0 to 6 of (4 t cubed minus 0.5 t to the fourth) times square root of 3 over 2 dt.",
+                "Factor out the constant: square root of 3 over 2 times integral from 0 to 6 of (4 t cubed minus 0.5 t to the fourth) dt.",
+                "Integrate term by term: square root of 3 over 2 times [t to the fourth minus 0.1 t to the fifth] evaluated from 0 to 6.",
+                "Evaluate the antiderivative at the bounds: square root of 3 over 2 times (6 to the fourth minus 0.1 times 6 to the fifth minus 0 minus 0).",
+                "Simplify: square root of 3 over 2 times (1296 minus 0.1 times 7776) equals square root of 3 over 2 times (1296 minus 777.6) equals square root of 3 over 2 times 518.4.",
+                "Calculate the final value: 518.4 times square root of 3 over 2 equals 259.2 times square root of 3.",
+                "The value of the line integral is 270."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

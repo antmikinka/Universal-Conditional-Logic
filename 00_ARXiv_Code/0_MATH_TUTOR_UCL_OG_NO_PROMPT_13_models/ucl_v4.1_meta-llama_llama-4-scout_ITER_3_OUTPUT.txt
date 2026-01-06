@@ -1,0 +1,53 @@
+============================================================
+ MODEL: meta-llama/llama-4-scout
+ PROMPT: ucl_v4.1 (ucl)
+ ITERATION: 3
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3309
+Completion Tokens: 403
+Total Tokens: 3712
+Duration: 8.66s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1431
+Words: 259
+Lines: 17
+TTS Keywords: 31
+TTS Keyword Density: 11.97%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.122
+Reasoning Overhead: 0.0%
+Speed: 428.6 tok/s
+Cost Proxy: 4518.0
+
+=== FINAL RESPONSE ===
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral of x cubed times z with respect to the arc length s along the line segment C from the point 0 comma 6 comma 4 to the point 6 comma 3 comma 3",
+    "question_type": "line integral",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "numerical",
+            "values": ["189.28"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": ["To evaluate the line integral of x cubed times z with respect to the arc length s along the line segment C from the point 0 comma 6 comma 4 to the point 6 comma 3 comma 3 we first parameterize the line segment C. The parametric equations of the line passing through the points 0 comma 6 comma 4 and 6 comma 3 comma 3 are given by x = 6t y = 6 - 3t z = 4 - t where 0 ≤ t ≤ 1. Then we compute ds as follows: ds = square root of ((dx/dt) squared + (dy/dt) squared + (dz/dt) squared) dt = square root of (6 squared + (-3) squared + (-1) squared) dt = square root of (36 + 9 + 1) dt = square root of 46 dt. Now we substitute x = 6t y = 6 - 3t z = 4 - t and ds = square root of 46 dt into the integral. The integral becomes the integral from 0 to 1 of (6t) cubed times (4 - t) times square root of 46 dt. Evaluating this integral gives us the final answer."],
+            "answer_format": "tts_ready"
+        }
+    }
+}

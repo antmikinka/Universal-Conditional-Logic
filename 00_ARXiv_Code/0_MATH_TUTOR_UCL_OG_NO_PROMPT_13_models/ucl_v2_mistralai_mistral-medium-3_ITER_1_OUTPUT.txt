@@ -1,0 +1,69 @@
+============================================================
+ MODEL: mistralai/mistral-medium-3
+ PROMPT: ucl_v2 (ucl)
+ ITERATION: 1
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 5584
+Completion Tokens: 610
+Total Tokens: 6194
+Duration: 13.21s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2834
+Words: 426
+Lines: 33
+TTS Keywords: 67
+TTS Keyword Density: 15.73%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.109
+Reasoning Overhead: 0.0%
+Speed: 468.9 tok/s
+Cost Proxy: 7414.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral: the integral over C of x cubed z d s. Where C is the line segment from the point zero, six, four to the point six, three, three.",
+    "question_type": "vector_calculus",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "single_value",
+            "values": [
+                "The line integral of x cubed z d s over the line segment from the point zero, six, four to the point six, three, three is negative one hundred fifty-six times the square root of twenty-one."
+            ],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "First, parameterize the line segment C from the point zero, six, four to the point six, three, three using a parameter t that goes from zero to one.",
+                "The parametric equations for the line segment are x equals six t, y equals six minus three t, and z equals four minus t.",
+                "Next, compute the differential length element d s, which is the square root of the quantity the derivative of x with respect to t squared plus the derivative of y with respect to t squared plus the derivative of z with respect to t squared, all times d t.",
+                "This simplifies to d s equals the square root of the quantity six squared plus negative three squared plus negative one squared, all times d t, which is the square root of forty-six times d t.",
+                "Substitute the parametric equations and d s into the integral to get the integral from zero to one of the quantity six t cubed times the quantity four minus t end quantity times the square root of forty-six, d t.",
+                "Simplify the integrand to get twenty-four times the square root of forty-six times the integral from zero to one of the quantity t cubed minus t to the fourth end quantity, d t.",
+                "Evaluate the integral to get twenty-four times the square root of forty-six times the quantity one-fourth minus one-fifth end quantity.",
+                "Simplify the expression to get twenty-four times the square root of forty-six times one over twenty, which is twelve over five times the square root of forty-six.",
+                "Rationalize the expression to get twelve times the square root of forty-six over five.",
+                "Simplify the square root of forty-six to get twelve times the square root of twenty-one times the square root of two over five.",
+                "The final answer is twelve times the square root of twenty-one times the square root of two over five, which simplifies to negative one hundred fifty-six times the square root of twenty-one."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

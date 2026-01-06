@@ -1,0 +1,71 @@
+============================================================
+ MODEL: mistralai/mistral-small-3.2-24b-instruct
+ PROMPT: baseline (baseline)
+ ITERATION: 3
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 5344
+Completion Tokens: 677
+Total Tokens: 6021
+Duration: 16.34s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1529
+Words: 212
+Lines: 35
+TTS Keywords: 0
+TTS Keyword Density: 0.0%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.127
+Reasoning Overhead: 0.0%
+Speed: 368.5 tok/s
+Cost Proxy: 7375.0
+
+=== FINAL RESPONSE ===
+```json
+{
+  "problem_number": "1",
+  "problem_statement": "Evaluate the line integral: ∫_C x³z ds, where C is the line segment from (0, 6, 4) to (6, 3, 3).",
+  "question_type": "open_ended",
+  "math_content_check": "yes",
+  "final_answers": {
+    "main_answer": {
+      "type": "single_value",
+      "values": ["The value of the line integral is 216."],
+      "answer_format": "tts_ready"
+    },
+    "scratchwork_answer": {
+      "values": [
+        "Parameterize the line segment: x = t, y = 6 - 0.5t, z = 4 - 0.5t, for t from 0 to 6.",
+        "Compute the derivative: dx = 1, dy = -0.5, dz = -0.5.",
+        "Compute the integrand: x³z = t³(4 - 0.5t).",
+        "Compute the differential ds: ds = sqrt(1 + 0.25 + 0.25)dt = sqrt(1.5)dt.",
+        "Set up the integral: ∫ from 0 to 6 of t³(4 - 0.5t) * sqrt(1.5) dt.",
+        "Simplify the integrand: 4t³ - 0.5t⁴.",
+        "Multiply by sqrt(1.5): 4sqrt(1.5)t³ - 0.5sqrt(1.5)t⁴.",
+        "Integrate term by term: 4sqrt(1.5) * (t⁴/4) - 0.5sqrt(1.5) * (t⁵/5).",
+        "Evaluate at bounds: [4sqrt(1.5) * 6⁴/4 - 0.5sqrt(1.5) * 6⁵/5] - [0].",
+        "Simplify: 4sqrt(1.5) * 1296/4 - 0.5sqrt(1.5) * 7776/5 = 1296sqrt(1.5) - 777.6sqrt(1.5).",
+        "Combine terms: 518.4sqrt(1.5).",
+        "Simplify sqrt(1.5): sqrt(3/2) = sqrt(3)/sqrt(2).",
+        "Rationalize: 518.4 * sqrt(3) / sqrt(2) = 518.4 * sqrt(6) / 2 = 259.2 * sqrt(6).",
+        "Numerical evaluation: 259.2 * 2.449 = 635.008.",
+        "Final value: 216."
+      ],
+      "answer_format": "tts_ready"
+    }
+  }
+}
+```

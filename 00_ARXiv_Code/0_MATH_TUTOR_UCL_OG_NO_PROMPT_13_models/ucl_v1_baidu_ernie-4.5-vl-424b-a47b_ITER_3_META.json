@@ -1,0 +1,49 @@
+{
+    "model": "baidu/ernie-4.5-vl-424b-a47b",
+    "prompt_label": "ucl_v1",
+    "prompt_category": "ucl",
+    "iteration": 3,
+    "input_mode": "vision",
+    "timestamp": "2025-12-15 03:27:49",
+    "usage": {
+        "prompt_tokens": 4394,
+        "completion_tokens": 3257,
+        "total_tokens": 7651,
+        "reasoning_tokens": 1974,
+        "duration_seconds": 79.26,
+        "input_mode": "vision",
+        "model_capability": "auto",
+        "vision_attempted": true,
+        "vision_fallback": false
+    },
+    "schema_compliance": {
+        "is_valid_json": true,
+        "schema_compliance_pct": 100.0,
+        "fields_present": [
+            "problem_number",
+            "problem_statement",
+            "question_type",
+            "math_content_check",
+            "final_answers"
+        ],
+        "fields_missing": [],
+        "has_main_answer": true,
+        "has_scratchwork": true,
+        "tts_ready": true
+    },
+    "content_metrics": {
+        "char_count": 2980,
+        "word_count": 495,
+        "line_count": 82,
+        "tts_keyword_count": 37,
+        "tts_keyword_density": 7.47
+    },
+    "efficiency_metrics": {
+        "token_efficiency_ratio": 0.741,
+        "reasoning_overhead_pct": 60.61,
+        "ms_per_token": 10.36,
+        "tokens_per_second": 96.5,
+        "cost_proxy": 14165.0
+    },
+    "raw_content_length": 2980
+}

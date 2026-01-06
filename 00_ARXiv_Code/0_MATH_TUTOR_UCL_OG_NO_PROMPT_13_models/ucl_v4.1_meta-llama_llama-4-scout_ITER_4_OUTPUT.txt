@@ -1,0 +1,53 @@
+============================================================
+ MODEL: meta-llama/llama-4-scout
+ PROMPT: ucl_v4.1 (ucl)
+ ITERATION: 4
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3311
+Completion Tokens: 447
+Total Tokens: 3758
+Duration: 1.67s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1697
+Words: 296
+Lines: 17
+TTS Keywords: 52
+TTS Keyword Density: 17.57%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.135
+Reasoning Overhead: 0.0%
+Speed: 2250.3 tok/s
+Cost Proxy: 4652.0
+
+=== FINAL RESPONSE ===
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral: the integral of x cubed times z with respect to s, where C is the line segment from open bracket 0 comma 6 comma 4 close bracket to open bracket 6 comma 3 comma 3 close bracket.",
+    "question_type": "line integral",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "numerical",
+            "values": ["1980"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": ["First, parameterize the line segment C. We can write the line segment parametrically as: x equals 6 t, y equals 6 minus 3 t, z equals 4 minus t, for t going from 0 to 1. Then, compute d s equals square root of 6 squared plus left parenthesis negative 3 right parenthesis squared plus left parenthesis negative 1 right parenthesis squared d t equals square root of 36 plus 9 plus 1 end square root d t equals square root of 46 d t. Next, substitute x, y, z into the integral: the integral of x cubed z d s equals the integral from 0 to 1 of 6 t cubed times 4 minus t times square root of 46 d t. Evaluate the integral: integral from 0 to 1 of 6 t cubed times 4 minus t times square root of 46 d t equals square root of 46 times integral from 0 to 1 of 24 t cubed minus 6 t to the fourth power d t. Perform the integration: square root of 46 times 24 over 4 t to the fourth power minus 6 over 5 t to the fifth power, evaluated from 0 to 1. This equals square root of 46 times 6 minus 6 over 5 equals square root of 46 times 24 over 5. Finally, calculate the numerical result: 1980."], 
+            "answer_format": "tts_ready"
+        }
+    }
+}

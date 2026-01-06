@@ -1,0 +1,43 @@
+{
+    "model": "google/gemini-3-pro-preview",
+    "prompt_label": "no_prompt",
+    "prompt_category": "control",
+    "iteration": 1,
+    "input_mode": "vision",
+    "timestamp": "2025-12-15 01:51:31",
+    "usage": {
+        "prompt_tokens": 1068,
+        "completion_tokens": 3307,
+        "total_tokens": 4375,
+        "reasoning_tokens": 2368,
+        "duration_seconds": 28.95,
+        "input_mode": "vision",
+        "model_capability": "auto",
+        "vision_attempted": true,
+        "vision_fallback": false
+    },
+    "schema_compliance": {
+        "is_valid_json": false,
+        "schema_compliance_pct": 0.0,
+        "fields_present": [],
+        "fields_missing": [],
+        "has_main_answer": false,
+        "has_scratchwork": false,
+        "tts_ready": false
+    },
+    "content_metrics": {
+        "char_count": 2203,
+        "word_count": 377,
+        "line_count": 64,
+        "tts_keyword_count": 0,
+        "tts_keyword_density": 0.0
+    },
+    "efficiency_metrics": {
+        "token_efficiency_ratio": 3.096,
+        "reasoning_overhead_pct": 71.61,
+        "ms_per_token": 6.62,
+        "tokens_per_second": 151.1,
+        "cost_proxy": 10989.0
+    },
+    "raw_content_length": 2203
+}

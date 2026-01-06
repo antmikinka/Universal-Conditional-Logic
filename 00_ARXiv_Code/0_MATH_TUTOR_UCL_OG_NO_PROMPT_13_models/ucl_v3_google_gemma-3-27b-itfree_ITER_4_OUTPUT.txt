@@ -1,0 +1,73 @@
+============================================================
+ MODEL: google/gemma-3-27b-it:free
+ PROMPT: ucl_v3 (ucl)
+ ITERATION: 4
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 4123
+Completion Tokens: 0
+Total Tokens: 4123
+Duration: 17.64s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2804
+Words: 474
+Lines: 37
+TTS Keywords: 108
+TTS Keyword Density: 22.78%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.0
+Reasoning Overhead: 0%
+Speed: 233.7 tok/s
+Cost Proxy: 4123.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral of x cubed z ds where C is the line segment from 0 comma 6 comma 4 to 6 comma 3 comma 3.",
+    "question_type": "applied_physics",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "numerical",
+            "values": [
+                "189"
+            ],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "Let x equals 6t and y equals 6 minus 6t and z equals 4 minus 2t for 0 less than or equal to t less than or equal to 1.",
+                "Then dr equals 6i minus 6j minus 2k dt.",
+                "The magnitude of dr is the square root of 6 squared plus negative 6 squared plus negative 2 squared which equals the square root of 36 plus 36 plus 4 which equals the square root of 76 which equals 2 times the square root of 19.",
+                "The line integral is the integral from 0 to 1 of x cubed z ds which equals the integral from 0 to 1 of (6t) cubed times (4 minus 2t) times 2 times the square root of 19 dt.",
+                "This equals the integral from 0 to 1 of 216 t cubed times (4 minus 2t) times 2 times the square root of 19 dt.",
+                "This equals 432 times the square root of 19 times the integral from 0 to 1 of 4t cubed minus 2t to the fourth dt.",
+                "This equals 432 times the square root of 19 times (t to the fourth minus one half t to the fifth) evaluated from 0 to 1.",
+                "This equals 432 times the square root of 19 times (1 minus one half) which equals 432 times the square root of 19 times one half which equals 216 times the square root of 19.",
+                "The integral is 216 times the square root of 19 which is approximately 88.825.",
+                "The line integral is the integral from 0 to 1 of x cubed z ds which equals the integral from 0 to 1 of (6t) cubed times (4 minus 2t) times 2 times the square root of 19 dt.",
+                "This equals the integral from 0 to 1 of 216 t cubed times (4 minus 2t) times 2 times the square root of 19 dt.",
+                "This equals 432 times the square root of 19 times the integral from 0 to 1 of 4t cubed minus 2t to the fourth dt.",
+                "This equals 432 times the square root of 19 times (t to the fourth minus one half t to the fifth) evaluated from 0 to 1.",
+                "This equals 432 times the square root of 19 times (1 minus one half) which equals 432 times the square root of 19 times one half which equals 216 times the square root of 19.",
+                "The line integral is 216 times the square root of 19 which is approximately 88.825."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

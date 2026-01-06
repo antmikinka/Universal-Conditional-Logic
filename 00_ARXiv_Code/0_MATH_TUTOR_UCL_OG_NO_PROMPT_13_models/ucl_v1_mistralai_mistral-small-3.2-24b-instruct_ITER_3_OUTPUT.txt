@@ -1,0 +1,62 @@
+============================================================
+ MODEL: mistralai/mistral-small-3.2-24b-instruct
+ PROMPT: ucl_v1 (ucl)
+ ITERATION: 3
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3883
+Completion Tokens: 380
+Total Tokens: 4263
+Duration: 14.24s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1202
+Words: 163
+Lines: 26
+TTS Keywords: 1
+TTS Keyword Density: 0.61%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.098
+Reasoning Overhead: 0.0%
+Speed: 299.4 tok/s
+Cost Proxy: 5023.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral: ∫_C x³z ds, where C is the line segment from (0, 6, 4) to (6, 3, 3).",
+    "question_type": "line_integral",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "calculation",
+            "values": ["The line integral of x cubed z with respect to ds along the line segment from (0, 6, 4) to (6, 3, 3) is 144."],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "First, parameterize the line segment C. Let x = t, y = 6 - 0.5t, z = 4 - 0.5t, where t ranges from 0 to 6.",
+                "The derivative of the position vector with respect to t is (1, -0.5, -0.5).",
+                "The magnitude of this derivative is sqrt(1^2 + (-0.5)^2 + (-0.5)^2) = sqrt(1.5).",
+                "The integrand x³z becomes t³(4 - 0.5t).",
+                "The integral becomes ∫ from 0 to 6 of t³(4 - 0.5t) * sqrt(1.5) dt.",
+                "This integral evaluates to 144 after performing the integration and simplifying."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

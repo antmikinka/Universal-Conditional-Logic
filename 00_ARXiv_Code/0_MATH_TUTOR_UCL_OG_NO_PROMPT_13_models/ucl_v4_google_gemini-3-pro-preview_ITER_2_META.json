@@ -1,0 +1,49 @@
+{
+    "model": "google/gemini-3-pro-preview",
+    "prompt_label": "ucl_v4",
+    "prompt_category": "ucl",
+    "iteration": 2,
+    "input_mode": "vision",
+    "timestamp": "2025-12-15 02:50:12",
+    "usage": {
+        "prompt_tokens": 3496,
+        "completion_tokens": 5315,
+        "total_tokens": 8811,
+        "reasoning_tokens": 4657,
+        "duration_seconds": 54.87,
+        "input_mode": "vision",
+        "model_capability": "auto",
+        "vision_attempted": true,
+        "vision_fallback": false
+    },
+    "schema_compliance": {
+        "is_valid_json": true,
+        "schema_compliance_pct": 100.0,
+        "fields_present": [
+            "problem_number",
+            "problem_statement",
+            "question_type",
+            "math_content_check",
+            "final_answers"
+        ],
+        "fields_missing": [],
+        "has_main_answer": true,
+        "has_scratchwork": true,
+        "tts_ready": true
+    },
+    "content_metrics": {
+        "char_count": 3103,
+        "word_count": 467,
+        "line_count": 37,
+        "tts_keyword_count": 52,
+        "tts_keyword_density": 11.13
+    },
+    "efficiency_metrics": {
+        "token_efficiency_ratio": 1.52,
+        "reasoning_overhead_pct": 87.62,
+        "ms_per_token": 6.23,
+        "tokens_per_second": 160.6,
+        "cost_proxy": 19441.0
+    },
+    "raw_content_length": 3103
+}

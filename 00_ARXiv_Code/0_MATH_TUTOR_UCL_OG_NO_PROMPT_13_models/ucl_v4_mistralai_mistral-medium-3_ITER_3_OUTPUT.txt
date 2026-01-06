@@ -1,0 +1,71 @@
+============================================================
+ MODEL: mistralai/mistral-medium-3
+ PROMPT: ucl_v4 (ucl)
+ ITERATION: 3
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3314
+Completion Tokens: 730
+Total Tokens: 4044
+Duration: 7.45s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2600
+Words: 432
+Lines: 35
+TTS Keywords: 70
+TTS Keyword Density: 16.2%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.22
+Reasoning Overhead: 0.0%
+Speed: 542.8 tok/s
+Cost Proxy: 5504.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": null,
+    "problem_statement": "Evaluate the line integral: integral over C of x cubed z d s Where: C is the line segment from (0, 6, 4) to (6, 3, 3).",
+    "question_type": "evaluation",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "definite_integral",
+            "values": [
+                "The line integral of x cubed z d s over the curve C from (0, 6, 4) to (6, 3, 3) can be evaluated by parameterizing the line segment."
+            ],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "First, parameterize the line segment C using a parameter t that goes from 0 to 1.",
+                "The parametric equations for the line segment are: x equals 0 plus 6 t, y equals 6 minus 3 t, z equals 4 minus t.",
+                "Next, compute the differential length element d s. The derivatives of x, y, and z with respect to t are: d x d t equals 6, d y d t equals negative 3, d z d t equals negative 1.",
+                "The magnitude of the derivative vector is: square root of 6 squared plus negative 3 squared plus negative 1 squared equals square root of 36 plus 9 plus 1 equals square root of 46.",
+                "Thus, d s equals square root of 46 d t.",
+                "Substitute the parametric equations and d s into the integral: integral from 0 to 1 of (6 t) cubed times (4 minus t) times square root of 46 d t.",
+                "Simplify the integrand: integral from 0 to 1 of 216 t cubed times (4 minus t) times square root of 46 d t.",
+                "Distribute the terms inside the integral: integral from 0 to 1 of 864 t cubed times square root of 46 d t minus integral from 0 to 1 of 216 t to the fourth times square root of 46 d t.",
+                "Integrate term by term: 864 times square root of 46 times integral from 0 to 1 of t cubed d t equals 864 times square root of 46 times t to the fourth over 4 evaluated from 0 to 1.",
+                "216 times square root of 46 times integral from 0 to 1 of t to the fourth d t equals 216 times square root of 46 times t to the fifth over 5 evaluated from 0 to 1.",
+                "Evaluate the integrals: 864 times square root of 46 times one fourth minus 216 times square root of 46 times one fifth.",
+                "Simplify the expression: 216 times square root of 46 minus 43.2 times square root of 46.",
+                "Combine like terms: 172.8 times square root of 46."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

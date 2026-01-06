@@ -1,0 +1,42 @@
+============================================================
+ MODEL: x-ai/grok-4
+ PROMPT: no_prompt (control)
+ ITERATION: 1
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 945
+Completion Tokens: 970
+Total Tokens: 1915
+Reasoning Tokens: 813
+Duration: 22.08s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: False
+Schema Compliance: 0.0%
+Fields Present: []
+Fields Missing: []
+Has Main Answer: False
+Has Scratchwork: False
+TTS Ready: False
+
+=== CONTENT METRICS ===
+Characters: 383
+Words: 61
+Lines: 5
+TTS Keywords: 0
+TTS Keyword Density: 0.0%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 1.026
+Reasoning Overhead: 83.81%
+Speed: 86.7 tok/s
+Cost Proxy: 3855.0
+
+=== FINAL RESPONSE ===
+To evaluate the line integral \(\int_C z^2 \, ds\), where \(C\) is the line segment from \((0,6,4)\) to \((6,3,3)\), parametrize \(C\) by \(\mathbf{r}(t) = (6t, 6 - 3t, 4 - t)\) for \(0 \leq t \leq 1\).
+
+Then \(ds = \sqrt{46} \, dt\), and the integral is \(\sqrt{46} \int_0^1 (4 - t)^2 \, dt = \sqrt{46} \cdot \frac{37}{3} = \frac{37\sqrt{46}}{3}\).  
+
+\boxed{\dfrac{37\sqrt{46}}{3}}

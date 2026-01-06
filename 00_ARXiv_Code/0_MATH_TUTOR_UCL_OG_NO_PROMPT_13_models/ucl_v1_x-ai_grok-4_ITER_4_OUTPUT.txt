@@ -1,0 +1,65 @@
+============================================================
+ MODEL: x-ai/grok-4
+ PROMPT: ucl_v1 (ucl)
+ ITERATION: 4
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3602
+Completion Tokens: 1157
+Total Tokens: 4759
+Reasoning Tokens: 727
+Duration: 33.45s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1644
+Words: 244
+Lines: 28
+TTS Keywords: 36
+TTS Keyword Density: 14.75%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.321
+Reasoning Overhead: 62.83%
+Speed: 142.3 tok/s
+Cost Proxy: 7073.0
+
+=== FINAL RESPONSE ===
+{
+    "problem_number": "",
+    "problem_statement": "Evaluate the line integral: integral from C of x squared ds, where C is the line segment from (0,6,4) to (6,3,3).",
+    "question_type": "vector_calculus",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "numerical",
+            "values": ["twelve times the square root of forty-six"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "Parametrize the line segment C from point (0,6,4) to (6,3,3). Let t go from 0 to 1.",
+                "The position vector r of t is (6t, 6 minus 3t, 4 minus t).",
+                "The derivative r prime of t is (6, negative 3, negative 1).",
+                "The magnitude of r prime is the square root of (6 squared plus negative 3 squared plus negative 1 squared), which is the square root of (36 plus 9 plus 1), equaling the square root of 46.",
+                "ds equals the magnitude of r prime dt, which is square root of 46 dt.",
+                "x equals 6t, so x squared equals 36 t squared.",
+                "The integral becomes the integral from 0 to 1 of 36 t squared times square root of 46 dt.",
+                "Factor out the constants: 36 times square root of 46 times the integral from 0 to 1 of t squared dt.",
+                "The integral of t squared dt from 0 to 1 is t cubed over 3 evaluated from 0 to 1, which is 1 over 3.",
+                "So, 36 times square root of 46 times 1 over 3 equals 12 times square root of 46."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}

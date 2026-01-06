@@ -1,0 +1,49 @@
+{
+    "model": "openai/gpt-5-mini",
+    "prompt_label": "ucl_v1",
+    "prompt_category": "ucl",
+    "iteration": 4,
+    "input_mode": "vision",
+    "timestamp": "2025-12-15 04:58:26",
+    "usage": {
+        "prompt_tokens": 3358,
+        "completion_tokens": 2395,
+        "total_tokens": 5753,
+        "reasoning_tokens": 1984,
+        "duration_seconds": 38.42,
+        "input_mode": "vision",
+        "model_capability": "auto",
+        "vision_attempted": true,
+        "vision_fallback": false
+    },
+    "schema_compliance": {
+        "is_valid_json": true,
+        "schema_compliance_pct": 100.0,
+        "fields_present": [
+            "problem_number",
+            "problem_statement",
+            "question_type",
+            "math_content_check",
+            "final_answers"
+        ],
+        "fields_missing": [],
+        "has_main_answer": true,
+        "has_scratchwork": true,
+        "tts_ready": true
+    },
+    "content_metrics": {
+        "char_count": 1796,
+        "word_count": 286,
+        "line_count": 27,
+        "tts_keyword_count": 43,
+        "tts_keyword_density": 15.03
+    },
+    "efficiency_metrics": {
+        "token_efficiency_ratio": 0.713,
+        "reasoning_overhead_pct": 82.84,
+        "ms_per_token": 6.68,
+        "tokens_per_second": 149.7,
+        "cost_proxy": 10543.0
+    },
+    "raw_content_length": 1796
+}

@@ -1,0 +1,89 @@
+============================================================
+ MODEL: mistralai/mistral-medium-3
+ PROMPT: ucl_v3 (ucl)
+ ITERATION: 1
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 4688
+Completion Tokens: 1209
+Total Tokens: 5897
+Duration: 16.57s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 6172
+Words: 935
+Lines: 53
+TTS Keywords: 171
+TTS Keyword Density: 18.29%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.258
+Reasoning Overhead: 0.0%
+Speed: 355.9 tok/s
+Cost Proxy: 8315.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral of the quantity x cubed times z with respect to s where C is the line segment from the point open bracket zero comma six comma four close bracket to the point open bracket six comma three comma three close bracket.",
+    "question_type": "line_integral",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "line_integral",
+            "values": [
+                "To evaluate the line integral of the quantity x cubed times z with respect to s along the line segment C from the point open bracket zero comma six comma four close bracket to the point open bracket six comma three comma three close bracket, we follow these steps:",
+                "First, parameterize the line segment C. The parametric equations for the line segment from point A open bracket zero comma six comma four close bracket to point B open bracket six comma three comma three close bracket can be written as:",
+                "x equals zero plus the quantity six minus zero close quantity times t equals six t,",
+                "y equals six plus the quantity three minus six close quantity times t equals six minus three t,",
+                "z equals four plus the quantity three minus four close quantity times t equals four minus t,",
+                "where t ranges from zero to one.",
+                "Next, compute the differential element ds. The differential element ds is given by the norm of the derivative of the position vector r of t with respect to t, times dt.",
+                "The position vector r of t is open bracket six t comma six minus three t comma four minus t close bracket.",
+                "The derivative of r with respect to t is open bracket six comma negative three comma negative one close bracket.",
+                "The norm of this derivative is the square root of the quantity six squared plus the quantity negative three squared plus the quantity negative one squared end quantity equals the square root of the quantity thirty-six plus nine plus one end quantity equals the square root of forty-six.",
+                "Thus, ds equals the square root of forty-six times dt.",
+                "Now, express the integrand x cubed times z in terms of t:",
+                "x cubed times z equals the quantity six t close quantity cubed times the quantity four minus t close quantity equals two hundred sixteen t cubed times the quantity four minus t close quantity equals eight hundred sixty-four t cubed minus two hundred sixteen t to the power of four.",
+                "Substitute the integrand and ds into the integral:",
+                "the integral from zero to one of the quantity eight hundred sixty-four t cubed minus two hundred sixteen t to the power of four close quantity times the square root of forty-six dt.",
+                "Factor out the square root of forty-six:",
+                "the square root of forty-six times the integral from zero to one of the quantity eight hundred sixty-four t cubed minus two hundred sixteen t to the power of four close quantity dt.",
+                "Now, compute the integral:",
+                "the integral from zero to one of eight hundred sixty-four t cubed dt equals eight hundred sixty-four times the integral from zero to one of t cubed dt equals eight hundred sixty-four times the quantity t to the power of four divided by four evaluated from zero to one equals eight hundred sixty-four times one fourth equals two hundred sixteen.",
+                "the integral from zero to one of two hundred sixteen t to the power of four dt equals two hundred sixteen times the integral from zero to one of t to the power of four dt equals two hundred sixteen times the quantity t to the power of five divided by five evaluated from zero to one equals two hundred sixteen times one fifth equals forty-three point two.",
+                "Thus, the integral becomes:",
+                "the square root of forty-six times the quantity two hundred sixteen minus forty-three point two close quantity equals the square root of forty-six times one hundred seventy-two point eight.",
+                "Finally, compute the numerical value:",
+                "the square root of forty-six is approximately six point seven eight two, and six point seven eight two times one hundred seventy-two point eight is approximately one thousand one hundred seventy-two point four."
+            ],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "Parameterize the line segment C: x equals six t, y equals six minus three t, z equals four minus t.",
+                "Compute the differential element ds: ds equals the square root of forty-six times dt.",
+                "Express the integrand x cubed times z in terms of t: eight hundred sixty-four t cubed minus two hundred sixteen t to the power of four.",
+                "Set up the integral: the integral from zero to one of the quantity eight hundred sixty-four t cubed minus two hundred sixteen t to the power of four close quantity times the square root of forty-six dt.",
+                "Factor out the square root of forty-six: the square root of forty-six times the integral from zero to one of the quantity eight hundred sixty-four t cubed minus two hundred sixteen t to the power of four close quantity dt.",
+                "Compute the integrals: the integral from zero to one of eight hundred sixty-four t cubed dt equals two hundred sixteen, and the integral from zero to one of two hundred sixteen t to the power of four dt equals forty-three point two.",
+                "Combine the results: the square root of forty-six times the quantity two hundred sixteen minus forty-three point two close quantity equals the square root of forty-six times one hundred seventy-two point eight.",
+                "Final computation: six point seven eight two times one hundred seventy-two point eight equals approximately one thousand one hundred seventy-two point four."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

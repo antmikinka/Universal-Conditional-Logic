@@ -1,0 +1,64 @@
+============================================================
+ MODEL: x-ai/grok-4
+ PROMPT: ucl_v2 (ucl)
+ ITERATION: 4
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 5071
+Completion Tokens: 1239
+Total Tokens: 6310
+Reasoning Tokens: 867
+Duration: 35.62s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1876
+Words: 271
+Lines: 27
+TTS Keywords: 43
+TTS Keyword Density: 15.87%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.244
+Reasoning Overhead: 69.98%
+Speed: 177.1 tok/s
+Cost Proxy: 8788.0
+
+=== FINAL RESPONSE ===
+{
+    "problem_number": "unknown",
+    "problem_statement": "Evaluate the line integral of x squared ds where C is the line segment from open parenthesis zero comma six comma four close parenthesis to open parenthesis six comma three comma three close parenthesis",
+    "question_type": "vector_calculus",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "single_value",
+            "values": ["twelve square root of forty six"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "To evaluate the line integral of x squared ds along the curve C from open parenthesis zero comma six comma four close parenthesis to open parenthesis six comma three comma three close parenthesis comma first parametrize the line segment",
+                "Let t go from zero to one comma x of t equals six t comma y of t equals six minus three t comma z of t equals four minus t",
+                "The derivative r prime of t is the vector six comma negative three comma negative one",
+                "The magnitude of r prime of t is square root of thirty six plus nine plus one comma which is square root of forty six",
+                "x squared is open parenthesis six t close parenthesis squared comma which is thirty six t squared",
+                "The integral becomes the integral from zero to one of thirty six t squared times square root of forty six dt",
+                "Factor out the constants comma thirty six square root of forty six times the integral from zero to one of t squared dt",
+                "The integral of t squared dt from zero to one is one third",
+                "So thirty six square root of forty six times one third equals twelve square root of forty six"
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}

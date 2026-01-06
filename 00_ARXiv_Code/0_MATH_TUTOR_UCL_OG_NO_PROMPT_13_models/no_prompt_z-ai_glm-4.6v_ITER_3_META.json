@@ -1,0 +1,43 @@
+{
+    "model": "z-ai/glm-4.6v",
+    "prompt_label": "no_prompt",
+    "prompt_category": "control",
+    "iteration": 3,
+    "input_mode": "vision",
+    "timestamp": "2025-12-15 04:11:31",
+    "usage": {
+        "prompt_tokens": 622,
+        "completion_tokens": 2570,
+        "total_tokens": 3192,
+        "reasoning_tokens": 1019,
+        "duration_seconds": 43.29,
+        "input_mode": "vision",
+        "model_capability": "auto",
+        "vision_attempted": true,
+        "vision_fallback": false
+    },
+    "schema_compliance": {
+        "is_valid_json": false,
+        "schema_compliance_pct": 0.0,
+        "fields_present": [],
+        "fields_missing": [],
+        "has_main_answer": false,
+        "has_scratchwork": false,
+        "tts_ready": false
+    },
+    "content_metrics": {
+        "char_count": 2148,
+        "word_count": 400,
+        "line_count": 75,
+        "tts_keyword_count": 0,
+        "tts_keyword_density": 0.0
+    },
+    "efficiency_metrics": {
+        "token_efficiency_ratio": 4.132,
+        "reasoning_overhead_pct": 39.65,
+        "ms_per_token": 13.56,
+        "tokens_per_second": 73.7,
+        "cost_proxy": 8332.0
+    },
+    "raw_content_length": 2148
+}

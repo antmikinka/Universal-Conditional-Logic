@@ -1,0 +1,49 @@
+{
+    "model": "z-ai/glm-4.6v",
+    "prompt_label": "ucl_v1",
+    "prompt_category": "ucl",
+    "iteration": 4,
+    "input_mode": "vision",
+    "timestamp": "2025-12-15 05:07:27",
+    "usage": {
+        "prompt_tokens": 3308,
+        "completion_tokens": 1638,
+        "total_tokens": 4946,
+        "reasoning_tokens": 780,
+        "duration_seconds": 23.63,
+        "input_mode": "vision",
+        "model_capability": "auto",
+        "vision_attempted": true,
+        "vision_fallback": false
+    },
+    "schema_compliance": {
+        "is_valid_json": true,
+        "schema_compliance_pct": 100.0,
+        "fields_present": [
+            "problem_number",
+            "problem_statement",
+            "question_type",
+            "math_content_check",
+            "final_answers"
+        ],
+        "fields_missing": [],
+        "has_main_answer": true,
+        "has_scratchwork": true,
+        "tts_ready": true
+    },
+    "content_metrics": {
+        "char_count": 1191,
+        "word_count": 111,
+        "line_count": 26,
+        "tts_keyword_count": 0,
+        "tts_keyword_density": 0.0
+    },
+    "efficiency_metrics": {
+        "token_efficiency_ratio": 0.495,
+        "reasoning_overhead_pct": 47.62,
+        "ms_per_token": 4.78,
+        "tokens_per_second": 209.3,
+        "cost_proxy": 8222.0
+    },
+    "raw_content_length": 1191
+}

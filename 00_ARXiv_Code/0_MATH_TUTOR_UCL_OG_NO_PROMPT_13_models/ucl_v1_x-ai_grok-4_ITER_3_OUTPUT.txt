@@ -1,0 +1,62 @@
+============================================================
+ MODEL: x-ai/grok-4
+ PROMPT: ucl_v1 (ucl)
+ ITERATION: 3
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3602
+Completion Tokens: 1867
+Total Tokens: 5469
+Reasoning Tokens: 1490
+Duration: 51.97s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1398
+Words: 210
+Lines: 25
+TTS Keywords: 28
+TTS Keyword Density: 13.33%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.518
+Reasoning Overhead: 79.81%
+Speed: 105.2 tok/s
+Cost Proxy: 9203.0
+
+=== FINAL RESPONSE ===
+{
+    "problem_number": "N/A",
+    "problem_statement": "Evaluate the line integral: integral sub C of x squared ds, where C is the line segment from (0,6,4) to (6,3,3).",
+    "question_type": "vector_calculus",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "numerical_expression",
+            "values": ["12 times square root of 46"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "Parametrize the line segment C from (0,6,4) to (6,3,3) using t from 0 to 1: x equals 6 t, y equals 6 minus 3 t, z equals 4 minus t.",
+                "The differential ds equals the magnitude of r prime of t dt, where r prime of t is the vector 6, negative 3, negative 1.",
+                "The magnitude of r prime of t is square root of 36 plus 9 plus 1, which is square root of 46.",
+                "The integral becomes integral from 0 to 1 of (6 t) squared times square root of 46 dt.",
+                "That's 36 times square root of 46 times integral from 0 to 1 of t squared dt.",
+                "The integral of t squared dt from 0 to 1 is t cubed over 3 evaluated from 0 to 1, which is 1 over 3.",
+                "So, 36 times square root of 46 times 1 over 3 equals 12 times square root of 46."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}

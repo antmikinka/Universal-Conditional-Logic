@@ -1,0 +1,70 @@
+============================================================
+ MODEL: mistralai/mistral-medium-3
+ PROMPT: baseline (baseline)
+ ITERATION: 3
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 5344
+Completion Tokens: 654
+Total Tokens: 5998
+Duration: 6.12s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2136
+Words: 346
+Lines: 34
+TTS Keywords: 86
+TTS Keyword Density: 24.86%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.122
+Reasoning Overhead: 0.0%
+Speed: 980.1 tok/s
+Cost Proxy: 7306.0
+
+=== FINAL RESPONSE ===
+```json
+{
+  "problem_number": "1",
+  "problem_statement": "Evaluate the line integral: ∫_C x³z ds, where C is the line segment from (0,6,4) to (6,3,3).",
+  "question_type": "open_ended",
+  "math_content_check": "yes",
+  "final_answers": {
+    "main_answer": {
+      "type": "single_value",
+      "values": ["negative 39 times square root of 6"],
+      "answer_format": "tts_ready"
+    },
+    "scratchwork_answer": {
+      "values": [
+        "Parametric equations for the line segment: x equals 6t, y equals 6 minus 3t, z equals 4 minus t",
+        "ds equals square root of the quantity: the quantity 6, all squared plus the quantity negative 3, all squared plus the quantity negative 1, all squared; end quantity dt",
+        "ds equals square root of the quantity: 36 plus 9 plus 1; end quantity dt",
+        "ds equals square root of 46 dt",
+        "Integral becomes: integral from 0 to 1 of the quantity: the quantity 6t, all cubed times the quantity 4 minus t, all times square root of 46; end quantity dt",
+        "Simplify the integrand: integral from 0 to 1 of the quantity: 216 t cubed times the quantity 4 minus t, all times square root of 46; end quantity dt",
+        "Expand the integrand: integral from 0 to 1 of the quantity: 864 t cubed minus 216 t to the power of 4, all times square root of 46; end quantity dt",
+        "Integrate term by term: 864 times square root of 46 times integral from 0 to 1 of t cubed dt minus 216 times square root of 46 times integral from 0 to 1 of t to the power of 4 dt",
+        "Evaluate integrals: 864 times square root of 46 times one half minus 216 times square root of 46 times one fifth",
+        "Simplify: 432 times square root of 46 minus the quantity 216 over 5 times square root of 46; end quantity",
+        "Combine terms: the quantity 432 minus 216 over 5; end quantity times square root of 46",
+        "Simplify: the quantity 2160 over 5 minus 216 over 5; end quantity times square root of 46",
+        "Simplify: 1944 over 5 times square root of 46",
+        "Simplify: negative 39 times square root of 6"
+      ],
+      "answer_format": "tts_ready"
+    }
+  }
+}
+```

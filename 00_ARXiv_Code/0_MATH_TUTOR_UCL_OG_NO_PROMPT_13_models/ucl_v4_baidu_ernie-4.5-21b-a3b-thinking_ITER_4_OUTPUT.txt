@@ -1,0 +1,109 @@
+============================================================
+ MODEL: baidu/ernie-4.5-21b-a3b-thinking
+ PROMPT: ucl_v4 (ucl)
+ ITERATION: 4
+ INPUT MODE: text
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 2669
+Completion Tokens: 954
+Total Tokens: 3623
+Reasoning Tokens: 725
+Duration: 11.11s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 640
+Words: 83
+Lines: 23
+TTS Keywords: 6
+TTS Keyword Density: 7.23%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.357
+Reasoning Overhead: 76.0%
+Speed: 326.1 tok/s
+Cost Proxy: 5531.0
+
+=== REASONING / THINKING ===
+Hmm, the user has given me a complex math problem about evaluating a line integral in 3D space. Let me analyze this step by step.
+
+The problem is: Evaluate the line integral ∫_C x³z ds where C is the line segment from (0,6,4) to (6,3,3). This involves vector calculus concepts specifically line integrals in space.
+
+Looking at the system prompt, I need to:
+- Convert all mathematical notation to spoken language while preserving accuracy
+- Output in strict JSON format with specific fields
+- Apply domain-specific transformations based on content
+
+The universal TTS rules are particularly relevant here:
+- Negative numbers become "negative [magnitude]"
+- Decimals become "[integer part] point [fractional part]"
+- Fractions become "[numerator] over [denominator]"
+- Exponents become "[base] to the power of [exponent]"
+- Square roots become "square root of [radicand]"
+- Vectors become "open bracket [components] close bracket"
+- Functions become "[function name] of [parameters]"
+
+For this vector calculus problem containing "line integral", I need to apply the specific transformation rules from the <vector_calculus_notation> section. The key elements are:
+- "double integral" not present
+- "triple integral" absent
+- "line integral" present - this is the main operation
+- No surface/surface integrals
+
+The transformation steps should be:
+1. Convert the integral notation: "integral of x cubed z ds" becomes "integral over curve C of x cubed z ds"
+2. Specify the curve C: "from point (0,6,4) to (6,3,3)" becomes "open bracket start point (0,6,4) comma end point (6,3,3) close bracket"
+3. Break down the integral components:
+   - Function: x³z → "x cubed z"
+   - ds → "ds" (remains unchanged as it's the differential)
+   - Path → "over curve C"
+
+The JSON output must include:
+- problem_number: "1" (as per standard convention)
+- problem_statement: fully verbalized version
+- question_type: "line_integral"
+- math_content_check: "yes"
+- final_answers with main_answer (type: "line_integral_evaluation", values: [verbalized result], answer_format: "tts_ready")
+- scratchwork_answer (if any, but this is a direct computation)
+
+I notice the physics_units section won't apply since there are no units mentioned. The statistics/probability sections are irrelevant here.
+
+The critical part is ensuring the mathematical accuracy is preserved while converting to speech. The result should be a clear, spoken-language version of the solution that can be easily spoken back. For the line integral ∫ x³z ds along C from (0,6,4) to (6,3,3), the verbalized solution would be: "integral over curve C from point zero comma six comma four to six comma three comma three of x cubed z ds".
+
+The JSON output must strictly follow the template with all fields populated correctly. I'll structure the JSON with proper escaping and formatting to meet the requirements.
+
+
+==============================
+
+=== FINAL RESPONSE ===
+```json
+{
+  "problem_number": "1",
+  "problem_statement": "Evaluate the line integral of x cubed z ds over the line segment C from (0, 6, 4) to (6, 3, 3).",
+  "question_type": "line_integral_evaluation",
+  "math_content_check": "yes",
+  "final_answers": {
+    "main_answer": {
+      "type": "line_integral_evaluation",
+      "values": [
+        "integral over curve C from point open bracket 0 comma 6 comma 4 close bracket to open bracket 6 comma 3 comma 3 close bracket of x cubed z ds"
+      ],
+      "answer_format": "tts_ready"
+    },
+    "scratchwork_answer": {
+      "values": [],
+      "answer_format": "tts_ready"
+    }
+  }
+}
+```
+

@@ -1,0 +1,68 @@
+============================================================
+ MODEL: x-ai/grok-4
+ PROMPT: ucl_v3 (ucl)
+ ITERATION: 3
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 4329
+Completion Tokens: 1279
+Total Tokens: 5608
+Reasoning Tokens: 875
+Duration: 34.56s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2062
+Words: 290
+Lines: 31
+TTS Keywords: 40
+TTS Keyword Density: 13.79%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.295
+Reasoning Overhead: 68.41%
+Speed: 162.3 tok/s
+Cost Proxy: 8166.0
+
+=== FINAL RESPONSE ===
+{
+    "problem_number": "N/A",
+    "problem_statement": "Evaluate the line integral of x squared ds where C is the line segment from open parenthesis zero comma six comma four close parenthesis to open parenthesis six comma three comma three close parenthesis",
+    "question_type": "vector_calculus",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "numerical",
+            "values": ["twelve square root of forty six"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "To evaluate the line integral of x squared ds along the line segment C from open parenthesis zero comma six comma four close parenthesis to open parenthesis six comma three comma three close parenthesis",
+                "First comma parametrize the curve using parameter t from zero to one",
+                "x of t equals six t",
+                "y of t equals six minus three t",
+                "z of t equals four minus t",
+                "The derivative dr dt is the vector open parenthesis six comma negative three comma negative one close parenthesis",
+                "The magnitude of dr dt is square root of thirty six plus nine plus one which is square root of forty six",
+                "ds equals square root of forty six dt",
+                "The integral becomes integral from t equals zero to one of open parenthesis six t close parenthesis squared times square root of forty six dt",
+                "Which is integral from zero to one of thirty six t squared square root of forty six dt",
+                "Factor out the constants colon thirty six square root of forty six times integral from zero to one of t squared dt",
+                "The integral of t squared dt from zero to one is t cubed over three evaluated from zero to one which is one third",
+                "So thirty six square root of forty six times one third equals twelve square root of forty six"
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}

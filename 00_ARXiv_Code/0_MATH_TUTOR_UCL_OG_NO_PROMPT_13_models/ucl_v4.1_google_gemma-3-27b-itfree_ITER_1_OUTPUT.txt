@@ -1,0 +1,67 @@
+============================================================
+ MODEL: google/gemma-3-27b-it:free
+ PROMPT: ucl_v4.1 (ucl)
+ ITERATION: 1
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 2785
+Completion Tokens: 0
+Total Tokens: 2785
+Duration: 14.61s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2307
+Words: 410
+Lines: 31
+TTS Keywords: 75
+TTS Keyword Density: 18.29%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.0
+Reasoning Overhead: 0%
+Speed: 190.6 tok/s
+Cost Proxy: 2785.0
+
+=== FINAL RESPONSE ===
+```json
+{
+  "problem_number": "1",
+  "problem_statement": "Evaluate the line integral of x cubed z ds where C is the line segment from open bracket 0 comma 6 comma 4 close bracket to open bracket 6 comma 3 comma 3 close bracket.",
+  "question_type": "evaluation",
+  "math_content_check": "yes",
+  "final_answers": {
+    "main_answer": {
+      "type": "numerical",
+      "values": [
+        "189"
+      ],
+      "answer_format": "tts_ready"
+    },
+    "scratchwork_answer": {
+      "values": [
+        "First, parameterize the line segment C as r of t equals open bracket 0 comma 6 comma 4 close bracket plus t times open bracket 6 minus 0 comma 3 minus 6 comma 3 minus 4 close bracket which simplifies to open bracket 6t comma 6 minus 3t comma 4 plus t close bracket for 0 less than or equal to t less than or equal to 1.",
+        "Next, compute the derivative of r with respect to t which is r prime of t equals open bracket 6 comma negative 3 comma 1 close bracket.",
+        "Then, compute the magnitude of r prime of t which is the square root of 6 squared plus negative 3 squared plus 1 squared which equals the square root of 36 plus 9 plus 1 which equals the square root of 46.",
+        "Now, substitute x equals 6t and z equals 4 plus t into the integrand x cubed z which gives us open bracket 6t close bracket cubed times open bracket 4 plus t close bracket which equals 216 t cubed times open bracket 4 plus t close bracket which equals 864 t cubed plus 216 t to the power of 4.",
+        "Then, compute the line integral by integrating from 0 to 1 of 864 t cubed plus 216 t to the power of 4 times the square root of 46 dt.",
+        "This equals the square root of 46 times the integral from 0 to 1 of 864 t cubed plus 216 t to the power of 4 dt.",
+        "Integrating, we get the square root of 46 times open bracket 864 t to the power of 4 divided by 4 plus 216 t to the power of 5 divided by 5 close bracket evaluated from 0 to 1.",
+        "This equals the square root of 46 times open bracket 216 plus 216 divided by 5 close bracket which equals the square root of 46 times open bracket 216 plus 43.2 close bracket which equals the square root of 46 times 259.2.",
+        "Finally, the line integral equals approximately 189."
+      ],
+      "answer_format": "tts_ready"
+    }
+  }
+}
+```

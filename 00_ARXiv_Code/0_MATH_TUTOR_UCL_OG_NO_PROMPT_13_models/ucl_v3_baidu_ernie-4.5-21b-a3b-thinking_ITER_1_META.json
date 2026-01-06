@@ -1,0 +1,49 @@
+{
+    "model": "baidu/ernie-4.5-21b-a3b-thinking",
+    "prompt_label": "ucl_v3",
+    "prompt_category": "ucl",
+    "iteration": 1,
+    "input_mode": "text",
+    "timestamp": "2025-12-15 01:20:25",
+    "usage": {
+        "prompt_tokens": 4071,
+        "completion_tokens": 1245,
+        "total_tokens": 5316,
+        "reasoning_tokens": 998,
+        "duration_seconds": 14.32,
+        "input_mode": "text",
+        "model_capability": "auto",
+        "vision_attempted": true,
+        "vision_fallback": true
+    },
+    "schema_compliance": {
+        "is_valid_json": true,
+        "schema_compliance_pct": 100.0,
+        "fields_present": [
+            "problem_number",
+            "problem_statement",
+            "question_type",
+            "math_content_check",
+            "final_answers"
+        ],
+        "fields_missing": [],
+        "has_main_answer": true,
+        "has_scratchwork": true,
+        "tts_ready": true
+    },
+    "content_metrics": {
+        "char_count": 652,
+        "word_count": 66,
+        "line_count": 19,
+        "tts_keyword_count": 0,
+        "tts_keyword_density": 0.0
+    },
+    "efficiency_metrics": {
+        "token_efficiency_ratio": 0.306,
+        "reasoning_overhead_pct": 80.16,
+        "ms_per_token": 2.69,
+        "tokens_per_second": 371.2,
+        "cost_proxy": 7806.0
+    },
+    "raw_content_length": 652
+}

@@ -1,0 +1,43 @@
+{
+    "model": "x-ai/grok-4",
+    "prompt_label": "no_prompt",
+    "prompt_category": "control",
+    "iteration": 1,
+    "input_mode": "vision",
+    "timestamp": "2025-12-15 02:09:35",
+    "usage": {
+        "prompt_tokens": 945,
+        "completion_tokens": 970,
+        "total_tokens": 1915,
+        "reasoning_tokens": 813,
+        "duration_seconds": 22.08,
+        "input_mode": "vision",
+        "model_capability": "auto",
+        "vision_attempted": true,
+        "vision_fallback": false
+    },
+    "schema_compliance": {
+        "is_valid_json": false,
+        "schema_compliance_pct": 0.0,
+        "fields_present": [],
+        "fields_missing": [],
+        "has_main_answer": false,
+        "has_scratchwork": false,
+        "tts_ready": false
+    },
+    "content_metrics": {
+        "char_count": 383,
+        "word_count": 61,
+        "line_count": 5,
+        "tts_keyword_count": 0,
+        "tts_keyword_density": 0.0
+    },
+    "efficiency_metrics": {
+        "token_efficiency_ratio": 1.026,
+        "reasoning_overhead_pct": 83.81,
+        "ms_per_token": 11.53,
+        "tokens_per_second": 86.7,
+        "cost_proxy": 3855.0
+    },
+    "raw_content_length": 383
+}

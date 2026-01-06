@@ -1,0 +1,66 @@
+============================================================
+ MODEL: x-ai/grok-4
+ PROMPT: ucl_v3 (ucl)
+ ITERATION: 2
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 4329
+Completion Tokens: 1261
+Total Tokens: 5590
+Reasoning Tokens: 885
+Duration: 29.65s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1604
+Words: 230
+Lines: 29
+TTS Keywords: 38
+TTS Keyword Density: 16.52%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.291
+Reasoning Overhead: 70.18%
+Speed: 188.5 tok/s
+Cost Proxy: 8112.0
+
+=== FINAL RESPONSE ===
+{
+    "problem_number": "",
+    "problem_statement": "Evaluate the line integral of x squared ds where C is the line segment from open parenthesis 0 comma 6 comma 4 close parenthesis to open parenthesis 6 comma 3 comma 3 close parenthesis.",
+    "question_type": "fill_in_blanks",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "numerical",
+            "values": ["12 square root of 46"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "Parametrize the curve C from open parenthesis 0 comma 6 comma 4 close parenthesis to open parenthesis 6 comma 3 comma 3 close parenthesis using t from 0 to 1.",
+                "x of t equals 6 t",
+                "y of t equals 6 minus 3 t",
+                "z of t equals 4 minus t",
+                "The derivative r prime of t equals open parenthesis 6 comma negative 3 comma negative 1 close parenthesis",
+                "The magnitude of r prime of t equals square root of 36 plus 9 plus 1 equals square root of 46",
+                "ds equals square root of 46 dt",
+                "The integral becomes integral from 0 to 1 of open parenthesis 6 t close parenthesis squared times square root of 46 dt",
+                "Which is 36 square root of 46 times integral from 0 to 1 of t squared dt",
+                "Integral of t squared dt from 0 to 1 equals one third",
+                "So 36 square root of 46 times one third equals 12 square root of 46"
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}

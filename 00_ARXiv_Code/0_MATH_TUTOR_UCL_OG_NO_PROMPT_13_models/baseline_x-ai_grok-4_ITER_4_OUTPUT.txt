@@ -1,0 +1,56 @@
+============================================================
+ MODEL: x-ai/grok-4
+ PROMPT: baseline (baseline)
+ ITERATION: 4
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 5300
+Completion Tokens: 1857
+Total Tokens: 7157
+Reasoning Tokens: 1556
+Duration: 51.42s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1309
+Words: 197
+Lines: 19
+TTS Keywords: 40
+TTS Keyword Density: 20.3%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.35
+Reasoning Overhead: 83.79%
+Speed: 139.2 tok/s
+Cost Proxy: 10871.0
+
+=== FINAL RESPONSE ===
+```json
+{
+  "problem_number": "1",
+  "problem_statement": "Evaluate the line integral integral over C of z squared ds, where C is the line segment from the quantity zero comma six comma four to the quantity six comma three comma three",
+  "question_type": "vector_calculus",
+  "math_content_check": "yes",
+  "final_answers": {
+    "main_answer": {
+      "type": "integral",
+      "values": ["thirty seven times square root of forty six, all over three"],
+      "answer_format": "tts_ready"
+    },
+    "scratchwork_answer": {
+      "values": ["Parametrization: x equals six t, y equals six minus three t, z equals four minus t, for t from zero to one", "Derivative vector: six comma negative three comma negative one", "Magnitude: square root of forty six", "ds equals square root of forty six dt", "Integral: square root of forty six times integral from zero to one of the quantity four minus t squared dt", "Substitution u equals four minus t, du equals negative dt, limits from four to three", "Equals square root of forty six times the quantity u cubed over three evaluated from three to four", "Equals square root of forty six over three times the quantity sixty four minus twenty seven", "Equals thirty seven times square root of forty six over three"],
+      "answer_format": "tts_ready"
+    }
+  }
+}
+```

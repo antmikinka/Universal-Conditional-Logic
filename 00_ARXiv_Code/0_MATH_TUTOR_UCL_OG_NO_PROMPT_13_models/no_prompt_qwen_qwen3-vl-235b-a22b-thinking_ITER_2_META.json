@@ -1,0 +1,43 @@
+{
+    "model": "qwen/qwen3-vl-235b-a22b-thinking",
+    "prompt_label": "no_prompt",
+    "prompt_category": "control",
+    "iteration": 2,
+    "input_mode": "vision",
+    "timestamp": "2025-12-15 02:18:29",
+    "usage": {
+        "prompt_tokens": 492,
+        "completion_tokens": 2116,
+        "total_tokens": 2608,
+        "reasoning_tokens": 1401,
+        "duration_seconds": 57.76,
+        "input_mode": "vision",
+        "model_capability": "auto",
+        "vision_attempted": true,
+        "vision_fallback": false
+    },
+    "schema_compliance": {
+        "is_valid_json": false,
+        "schema_compliance_pct": 0.0,
+        "fields_present": [],
+        "fields_missing": [],
+        "has_main_answer": false,
+        "has_scratchwork": false,
+        "tts_ready": false
+    },
+    "content_metrics": {
+        "char_count": 1560,
+        "word_count": 318,
+        "line_count": 91,
+        "tts_keyword_count": 0,
+        "tts_keyword_density": 0.0
+    },
+    "efficiency_metrics": {
+        "token_efficiency_ratio": 4.301,
+        "reasoning_overhead_pct": 66.21,
+        "ms_per_token": 22.15,
+        "tokens_per_second": 45.2,
+        "cost_proxy": 6840.0
+    },
+    "raw_content_length": 1560
+}

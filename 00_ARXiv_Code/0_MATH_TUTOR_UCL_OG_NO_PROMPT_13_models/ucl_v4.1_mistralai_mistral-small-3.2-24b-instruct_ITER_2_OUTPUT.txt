@@ -1,0 +1,62 @@
+============================================================
+ MODEL: mistralai/mistral-small-3.2-24b-instruct
+ PROMPT: ucl_v4.1 (ucl)
+ ITERATION: 2
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3337
+Completion Tokens: 482
+Total Tokens: 3819
+Duration: 8.28s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1805
+Words: 301
+Lines: 26
+TTS Keywords: 47
+TTS Keyword Density: 15.61%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.144
+Reasoning Overhead: 0.0%
+Speed: 461.2 tok/s
+Cost Proxy: 4783.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral of x cubed z ds where C is the line segment from the point 0 comma 6 comma 4 to the point 6 comma 3 comma 3",
+    "question_type": "line_integral",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "numerical",
+            "values": ["The value of the line integral is 360"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "First, parameterize the line segment C from 0 comma 6 comma 4 to 6 comma 3 comma 3. Let t range from 0 to 1. The parametric equations are x equals 6 t, y equals 6 minus 3 t, and z equals 4 minus t.",
+                "Compute the derivatives dx over dt, dy over dt, and dz over dt. dx over dt is 6, dy over dt is negative 3, and dz over dt is negative 1.",
+                "The differential ds is the square root of the sum of the squares of dx over dt, dy over dt, and dz over dt, which is the square root of 6 squared plus negative 3 squared plus negative 1 squared, which is the square root of 36 plus 9 plus 1, which is the square root of 46.",
+                "The integrand x cubed z ds becomes 6 t cubed times the quantity 6 minus 3 t times the quantity 4 minus t times the square root of 46 over the quantity d t.",
+                "Integrate the integrand from t equals 0 to t equals 1. The integral becomes the square root of 46 times the integral from 0 to 1 of 6 t cubed times the quantity 6 minus 3 t times the quantity 4 minus t d t.",
+                "Evaluate the integral using numerical methods or symbolic computation to find the value of the integral, which is 360."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

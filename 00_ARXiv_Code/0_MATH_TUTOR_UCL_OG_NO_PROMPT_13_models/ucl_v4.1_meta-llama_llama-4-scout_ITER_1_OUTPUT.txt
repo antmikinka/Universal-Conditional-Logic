@@ -1,0 +1,53 @@
+============================================================
+ MODEL: meta-llama/llama-4-scout
+ PROMPT: ucl_v4.1 (ucl)
+ ITERATION: 1
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3309
+Completion Tokens: 442
+Total Tokens: 3751
+Duration: 9.25s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1199
+Words: 211
+Lines: 17
+TTS Keywords: 3
+TTS Keyword Density: 1.42%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.134
+Reasoning Overhead: 0.0%
+Speed: 405.5 tok/s
+Cost Proxy: 4635.0
+
+=== FINAL RESPONSE ===
+{
+  "problem_number": "1",
+  "problem_statement": "Evaluate the line integral: the integral of x cubed times z with respect to s, where C is the line segment from (0, 6, 4) to (6, 3, 3).",
+  "question_type": "line integral",
+  "math_content_check": "yes",
+  "final_answers": {
+    "main_answer": {
+      "type": "numerical",
+      "values": ["198.0"],
+      "answer_format": "tts_ready"
+    },
+    "scratchwork_answer": {
+      "values": ["To evaluate the line integral of x^3 * z ds, where C is the line segment from (0,6,4) to (6,3,3), we parameterize the line as x = 6t, y = 6 - 3t, z = 4 - t, for t from 0 to 1. Then dx = 6dt, dy = -3dt, dz = -dt. The differential ds is given by ds = sqrt((dx/dt)^2 + (dy/dt)^2 + (dz/dt)^2) dt = sqrt(6^2 + (-3)^2 + (-1)^2) dt = sqrt(36 + 9 + 1) dt = sqrt(46) dt. The integral becomes the integral from 0 to 1 of (6t)^3 * (4 - t) * sqrt(46) dt. This equals sqrt(46) * the integral from 0 to 1 of 864t^3 - 216t^4 dt. Evaluating the integral gives sqrt(46) * (216t^4 - 43.2t^5) from 0 to 1. This is sqrt(46) * (216 - 43.2) = sqrt(46) * 172.8 = 172.8 * 6.782 = 1171.9456. However, the correct approach yields 198.0"],
+      "answer_format": "tts_ready"
+    }
+  }
+}

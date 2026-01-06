@@ -1,0 +1,74 @@
+============================================================
+ MODEL: mistralai/mistral-medium-3
+ PROMPT: ucl_v1 (ucl)
+ ITERATION: 3
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3883
+Completion Tokens: 822
+Total Tokens: 4705
+Duration: 15.01s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2568
+Words: 420
+Lines: 38
+TTS Keywords: 39
+TTS Keyword Density: 9.29%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.212
+Reasoning Overhead: 0.0%
+Speed: 313.5 tok/s
+Cost Proxy: 6349.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": null,
+    "problem_statement": "Evaluate the line integral: ∫_C x^3 z ds. Where C is the line segment from (0, 6, 4) to (6, 3, 3).",
+    "question_type": "multiple_integrals",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "integral_evaluation",
+            "values": [
+                "The line integral of the quantity x cubed times z with respect to s along the line segment from the point (0, 6, 4) to the point (6, 3, 3)."
+            ],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "First, parameterize the line segment C from (0, 6, 4) to (6, 3, 3).",
+                "Let r(t) = (0 + 6t, 6 - 3t, 4 - t) where t ranges from 0 to 1.",
+                "Compute the derivative of r(t) with respect to t: r'(t) = (6, -3, -1).",
+                "The magnitude of r'(t) is the square root of (6 squared plus negative 3 squared plus negative 1 squared), which is the square root of (36 + 9 + 1) = the square root of 46.",
+                "The differential element ds is the magnitude of r'(t) dt, which is the square root of 46 dt.",
+                "Express x and z in terms of t: x(t) = 6t and z(t) = 4 - t.",
+                "Substitute x(t) and z(t) into the integrand: x^3 z = (6t)^3 (4 - t) = 216 t^3 (4 - t).",
+                "Set up the integral: the integral from 0 to 1 of 216 t^3 (4 - t) times the square root of 46 dt.",
+                "Simplify the integrand: 216 t^3 (4 - t) = 864 t^3 - 216 t^4.",
+                "The integral becomes the integral from 0 to 1 of (864 t^3 - 216 t^4) times the square root of 46 dt.",
+                "Factor out the square root of 46: the square root of 46 times the integral from 0 to 1 of (864 t^3 - 216 t^4) dt.",
+                "Evaluate the integral: the square root of 46 times the quantity (864 times the integral from 0 to 1 of t^3 dt minus 216 times the integral from 0 to 1 of t^4 dt).",
+                "Compute the integrals: the integral of t^3 from 0 to 1 is 1/4 and the integral of t^4 from 0 to 1 is 1/5.",
+                "Substitute the values: the square root of 46 times the quantity (864 times 1/4 minus 216 times 1/5).",
+                "Simplify the expression: the square root of 46 times the quantity (216 minus 43.2) = the square root of 46 times 172.8.",
+                "Thus, the value of the line integral is 172.8 times the square root of 46."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

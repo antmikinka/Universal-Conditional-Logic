@@ -1,0 +1,43 @@
+{
+    "model": "google/gemma-3-27b-it:free",
+    "prompt_label": "ucl_v1",
+    "prompt_category": "ucl",
+    "iteration": 1,
+    "input_mode": "vision",
+    "timestamp": "2025-12-15 01:56:08",
+    "usage": {
+        "prompt_tokens": 3328,
+        "completion_tokens": 0,
+        "total_tokens": 3328,
+        "reasoning_tokens": 0,
+        "duration_seconds": 277.46,
+        "input_mode": "vision",
+        "model_capability": "auto",
+        "vision_attempted": true,
+        "vision_fallback": false
+    },
+    "schema_compliance": {
+        "is_valid_json": false,
+        "schema_compliance_pct": 0.0,
+        "fields_present": [],
+        "fields_missing": [],
+        "has_main_answer": false,
+        "has_scratchwork": false,
+        "tts_ready": false
+    },
+    "content_metrics": {
+        "char_count": 27402,
+        "word_count": 4096,
+        "line_count": 299,
+        "tts_keyword_count": 0,
+        "tts_keyword_density": 0.0
+    },
+    "efficiency_metrics": {
+        "token_efficiency_ratio": 0.0,
+        "reasoning_overhead_pct": 0,
+        "ms_per_token": 83.37,
+        "tokens_per_second": 12.0,
+        "cost_proxy": 3328.0
+    },
+    "raw_content_length": 27402
+}

@@ -1,0 +1,67 @@
+============================================================
+ MODEL: mistralai/mistral-small-3.2-24b-instruct
+ PROMPT: ucl_v4 (ucl)
+ ITERATION: 3
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3314
+Completion Tokens: 597
+Total Tokens: 3911
+Duration: 7.84s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2182
+Words: 331
+Lines: 31
+TTS Keywords: 73
+TTS Keyword Density: 22.05%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.18
+Reasoning Overhead: 0.0%
+Speed: 498.9 tok/s
+Cost Proxy: 5105.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral of x cubed z ds where C is the line segment from open bracket 0 comma 6 comma 4 close bracket to open bracket 6 comma 3 comma 3 close bracket",
+    "question_type": "line integral evaluation",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "numerical",
+            "values": ["The value of the line integral is 108"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "First, parameterize the line segment C from open bracket 0 comma 6 comma 4 close bracket to open bracket 6 comma 3 comma 3 close bracket.",
+                "The parametric equations are x equals t comma y equals 6 minus 0.5 t comma z equals 4 minus 0.5 t for t ranging from 0 to 6.",
+                "Compute the derivatives dx dt equals 1 comma dy dt equals negative 0.5 comma dz dt equals negative 0.5.",
+                "The differential ds equals square root of the quantity 1 squared plus negative 0.5 squared plus negative 0.5 squared end quantity dt equals square root of 1.5 dt.",
+                "Substitute into the integral: integral from 0 to 6 of t cubed times the quantity 4 minus 0.5 t times square root of 1.5 dt.",
+                "Simplify the integrand: integral from 0 to 6 of square root of 1.5 times t cubed times the quantity 4 minus 0.5 t dt.",
+                "Evaluate the integral: square root of 1.5 times integral from 0 to 6 of the quantity 4 t cubed minus 0.5 t to the fourth power dt.",
+                "Integrate term by term: square root of 1.5 times the quantity 4 times 6 to the fourth power over 4 minus 0.5 times 6 to the fifth power over 5 end quantity.",
+                "Simplify: square root of 1.5 times the quantity 4 times 1296 minus 0.5 times 7776 over 5 end quantity.",
+                "Calculate: square root of 1.5 times the quantity 5184 minus 1555.2 equals square root of 1.5 times 3628.8.",
+                "Final value: square root of 1.5 times 3628.8 equals 108."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

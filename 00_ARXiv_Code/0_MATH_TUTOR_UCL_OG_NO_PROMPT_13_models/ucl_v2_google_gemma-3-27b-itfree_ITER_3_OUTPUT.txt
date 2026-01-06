@@ -1,0 +1,66 @@
+============================================================
+ MODEL: google/gemma-3-27b-it:free
+ PROMPT: ucl_v2 (ucl)
+ ITERATION: 3
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 4985
+Completion Tokens: 0
+Total Tokens: 4985
+Duration: 14.81s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2359
+Words: 353
+Lines: 30
+TTS Keywords: 55
+TTS Keyword Density: 15.58%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.0
+Reasoning Overhead: 0%
+Speed: 336.6 tok/s
+Cost Proxy: 4985.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral of x cubed times z with respect to ds, where C is the line segment from the point zero comma six comma four to the point six comma three comma three.",
+    "question_type": "multiple_integrals",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "single_value",
+            "values": [
+                "189"
+            ],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "First, parameterize the line segment C as r of t equals t times the vector six comma negative three comma negative one, for t ranging from zero to one.",
+                "Second, compute the derivative of r with respect to t, which is dr dt equals the vector six comma negative three comma negative one.",
+                "Third, calculate the magnitude of dr dt, which is the square root of six squared plus negative three squared plus negative one squared, which equals the square root of thirty eight.",
+                "Fourth, substitute x equals six t, z equals negative t plus four into the integrand x cubed times z, which gives us the expression six cubed t cubed times negative t plus four, which simplifies to two one six t cubed times negative t plus four.",
+                "Fifth, evaluate the line integral by integrating the expression two one six t cubed times negative t plus four with respect to t from zero to one, multiplied by the magnitude of dr dt, which is the square root of thirty eight.",
+                "Sixth, the integral of two one six t cubed times negative t plus four is equal to two one six times the integral of negative t to the fourth plus four t cubed from zero to one, which equals two one six times negative one fifth plus four fourths, which equals two one six times negative one fifth plus one.",
+                "Seventh, simplifying the expression, we get two one six times four fifths, which equals eight sixty four fifths.",
+                "Eighth, multiplying by the magnitude of dr dt, which is the square root of thirty eight, we get eight sixty four fifths times the square root of thirty eight, which equals approximately one eight nine."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

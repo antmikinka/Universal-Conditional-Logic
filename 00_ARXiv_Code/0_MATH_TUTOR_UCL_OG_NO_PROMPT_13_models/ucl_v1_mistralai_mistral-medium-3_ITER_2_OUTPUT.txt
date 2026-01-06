@@ -1,0 +1,72 @@
+============================================================
+ MODEL: mistralai/mistral-medium-3
+ PROMPT: ucl_v1 (ucl)
+ ITERATION: 2
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3883
+Completion Tokens: 678
+Total Tokens: 4561
+Duration: 6.01s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2011
+Words: 301
+Lines: 36
+TTS Keywords: 6
+TTS Keyword Density: 1.99%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.175
+Reasoning Overhead: 0.0%
+Speed: 758.9 tok/s
+Cost Proxy: 5917.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": null,
+    "problem_statement": "Evaluate the line integral: ∫_C x³z ds. Where C is the line segment from (0, 6, 4) to (6, 3, 3).",
+    "question_type": "multiple_integrals",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "line_integral",
+            "values": [
+                "The line integral of x cubed z with respect to s along the line segment from the point (0, 6, 4) to the point (6, 3, 3)."
+            ],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "First, parameterize the line segment C from (0, 6, 4) to (6, 3, 3).",
+                "Let r(t) = (0 + 6t, 6 - 3t, 4 - t) where t ranges from 0 to 1.",
+                "Compute the derivative of r(t) with respect to t: r'(t) = (6, -3, -1).",
+                "The magnitude of r'(t) is sqrt(6² + (-3)² + (-1)²) = sqrt(36 + 9 + 1) = sqrt(46).",
+                "The line integral becomes the integral from 0 to 1 of x(t)³ z(t) times the magnitude of r'(t) dt.",
+                "Substitute x(t) = 6t and z(t) = 4 - t into the integral.",
+                "The integral becomes the integral from 0 to 1 of (6t)³ (4 - t) sqrt(46) dt.",
+                "Simplify the integrand: 216 t³ (4 - t) sqrt(46).",
+                "Evaluate the integral from 0 to 1 of 216 t³ (4 - t) sqrt(46) dt.",
+                "This can be split into two integrals: 864 sqrt(46) integral from 0 to 1 of t³ dt minus 216 sqrt(46) integral from 0 to 1 of t⁴ dt.",
+                "Evaluate each integral separately: integral from 0 to 1 of t³ dt = 1/4 and integral from 0 to 1 of t⁴ dt = 1/5.",
+                "Combine the results: 864 sqrt(46) times 1/4 minus 216 sqrt(46) times 1/5.",
+                "Simplify: 216 sqrt(46) - 43.2 sqrt(46) = 172.8 sqrt(46).",
+                "Thus, the value of the line integral is 172.8 sqrt(46)."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

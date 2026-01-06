@@ -1,0 +1,63 @@
+============================================================
+ MODEL: mistralai/mistral-small-3.2-24b-instruct
+ PROMPT: ucl_v4.1 (ucl)
+ ITERATION: 3
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3337
+Completion Tokens: 484
+Total Tokens: 3821
+Duration: 10.33s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1820
+Words: 283
+Lines: 27
+TTS Keywords: 39
+TTS Keyword Density: 13.78%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.145
+Reasoning Overhead: 0.0%
+Speed: 369.9 tok/s
+Cost Proxy: 4789.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral of x cubed z ds, where C is the line segment from the point 0 comma 6 comma 4 to the point 6 comma 3 comma 3.",
+    "question_type": "line integral evaluation",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "numerical",
+            "values": ["The value of the line integral is 108"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "First, parameterize the line segment C from (0, 6, 4) to (6, 3, 3). Let t range from 0 to 1. The parametric equations are x equals 6 t, y equals 6 minus 3 t, and z equals 4 minus t.",
+                "Compute the derivatives dx over dt, dy over dt, and dz over dt, which are 6, negative 3, and negative 1, respectively.",
+                "The differential ds is the square root of the sum of the squares of the derivatives times dt, which is the square root of 6 squared plus negative 3 squared plus negative 1 squared times dt, or the square root of 46 times dt.",
+                "Substitute the parametric equations and ds into the integral: the integral from 0 to 1 of (6 t) cubed times (6 minus 3 t) times (4 minus t) times the square root of 46 times dt.",
+                "Simplify the integrand: 216 t cubed times (6 minus 3 t) times (4 minus t) times the square root of 46.",
+                "Integrate the simplified expression with respect to t from 0 to 1. This involves expanding and integrating term by term.",
+                "After integrating and evaluating from 0 to 1, the result is 108 times the square root of 46 over the square root of 46, which simplifies to 108."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

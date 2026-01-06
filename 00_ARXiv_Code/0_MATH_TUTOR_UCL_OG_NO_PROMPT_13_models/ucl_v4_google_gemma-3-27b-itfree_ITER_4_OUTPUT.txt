@@ -1,0 +1,67 @@
+============================================================
+ MODEL: google/gemma-3-27b-it:free
+ PROMPT: ucl_v4 (ucl)
+ ITERATION: 4
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 2753
+Completion Tokens: 0
+Total Tokens: 2753
+Duration: 11.04s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1706
+Words: 264
+Lines: 31
+TTS Keywords: 53
+TTS Keyword Density: 20.08%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.0
+Reasoning Overhead: 0%
+Speed: 249.4 tok/s
+Cost Proxy: 2753.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral of x cubed z ds where C is the line segment from open bracket 0 comma 6 comma 4 close bracket to open bracket 6 comma 3 comma 3 close bracket.",
+    "question_type": "evaluation",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "numerical",
+            "values": [
+                "189"
+            ],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "Let x equals t and z equals 6 minus t. Then ds equals square root of 1 plus 1 plus 1 dt equals square root of 3 dt.",
+                "The integral becomes integral from 0 to 6 of t cubed times 6 minus t times square root of 3 dt.",
+                "This equals square root of 3 times integral from 0 to 6 of 6 t cubed minus t to the power of 4 dt.",
+                "This equals square root of 3 times open bracket 6 times t to the power of 4 divided by 4 minus t to the power of 5 divided by 5 close bracket evaluated from 0 to 6.",
+                "This equals square root of 3 times open bracket 6 times 6 to the power of 4 divided by 4 minus 6 to the power of 5 divided by 5 close bracket.",
+                "This equals square root of 3 times open bracket 6 times 1296 divided by 4 minus 7776 divided by 5 close bracket.",
+                "This equals square root of 3 times open bracket 1944 minus 1555 point 2 close bracket.",
+                "This equals square root of 3 times 388 point 8.",
+                "This equals approximately 674 point 8."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

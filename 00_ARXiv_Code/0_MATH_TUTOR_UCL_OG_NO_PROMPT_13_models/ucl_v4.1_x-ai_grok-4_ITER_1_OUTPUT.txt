@@ -1,0 +1,70 @@
+============================================================
+ MODEL: x-ai/grok-4
+ PROMPT: ucl_v4.1 (ucl)
+ ITERATION: 1
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3192
+Completion Tokens: 1564
+Total Tokens: 4756
+Reasoning Tokens: 1083
+Duration: 43.03s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2417
+Words: 360
+Lines: 33
+TTS Keywords: 69
+TTS Keyword Density: 19.17%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.49
+Reasoning Overhead: 69.25%
+Speed: 110.5 tok/s
+Cost Proxy: 7884.0
+
+=== FINAL RESPONSE ===
+{
+    "problem_number": "N/A",
+    "problem_statement": "Evaluate the line integral of z squared ds where C is the line segment from open bracket zero comma six comma four close bracket to open bracket six comma three comma three close bracket",
+    "question_type": "evaluate_line_integral",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "expression",
+            "values": ["thirty seven times square root of forty six over three"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "To evaluate the line integral of z squared ds over the line segment C from open bracket zero comma six comma four close bracket to open bracket six comma three comma three close bracket.",
+                "Parametrize the curve with parameter t from zero to one.",
+                "x equals six t",
+                "y equals six minus three t",
+                "z equals four minus t",
+                "The differential ds equals square root of open bracket d x d t close bracket squared plus open bracket d y d t close bracket squared plus open bracket d z d t close bracket squared d t",
+                "d x d t equals six comma d y d t equals negative three comma d z d t equals negative one",
+                "So ds equals square root of thirty six plus nine plus one d t equals square root of forty six d t",
+                "The integral becomes integral from t equals zero to one of open bracket four minus t close bracket squared times square root of forty six d t",
+                "Equals square root of forty six times integral from zero to one of open bracket four minus t close bracket squared d t",
+                "Expand open bracket four minus t close bracket squared equals sixteen minus eight t plus t squared",
+                "Integral of sixteen minus eight t plus t squared d t from zero to one equals open bracket sixteen t minus four t squared plus t cubed over three close bracket from zero to one",
+                "At one: sixteen minus four plus one over three equals twelve plus one over three equals thirty seven over three",
+                "At zero: zero",
+                "So square root of forty six times thirty seven over three equals thirty seven times square root of forty six over three"
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}

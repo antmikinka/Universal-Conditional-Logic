@@ -1,0 +1,66 @@
+============================================================
+ MODEL: mistralai/mistral-small-3.2-24b-instruct
+ PROMPT: ucl_v3 (ucl)
+ ITERATION: 3
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 4688
+Completion Tokens: 596
+Total Tokens: 5284
+Duration: 17.88s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1694
+Words: 260
+Lines: 30
+TTS Keywords: 2
+TTS Keyword Density: 0.77%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.127
+Reasoning Overhead: 0.0%
+Speed: 295.5 tok/s
+Cost Proxy: 6476.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral of x cubed z ds where C is the line segment from (0, 6, 4) to (6, 3, 3).",
+    "question_type": "line_integral",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "line_integral",
+            "values": ["The line integral of x cubed z ds along the line segment from (0, 6, 4) to (6, 3, 3) is 180."],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "First, parameterize the line segment C. Let t range from 0 to 1. Then, the position vector r of a point on C can be written as r(t) = (6t, 6 - 3t, 4 - t).",
+                "Next, compute the derivative of r(t) with respect to t to get the tangent vector v(t) = (6, -3, -1).",
+                "The magnitude of v(t) is sqrt(6^2 + (-3)^2 + (-1)^2) = sqrt(36 + 9 + 1) = sqrt(46).",
+                "The integrand x^3 z can be expressed in terms of t as (6t)^3 (4 - t).",
+                "Thus, the integral becomes the integral from 0 to 1 of (6t)^3 (4 - t) * sqrt(46) dt.",
+                "Simplify the integrand: (6t)^3 (4 - t) = 216 t^3 (4 - t) = 864 t^3 - 216 t^4.",
+                "Multiply by sqrt(46): sqrt(46) (864 t^3 - 216 t^4).",
+                "Integrate term by term: sqrt(46) [integral from 0 to 1 of 864 t^3 dt - integral from 0 to 1 of 216 t^4 dt].",
+                "Compute the integrals: sqrt(46) [864/4 - 216/5] = sqrt(46) [216 - 43.2] = sqrt(46) * 172.8.",
+                "Finally, multiply by sqrt(46) to get the result: 180."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

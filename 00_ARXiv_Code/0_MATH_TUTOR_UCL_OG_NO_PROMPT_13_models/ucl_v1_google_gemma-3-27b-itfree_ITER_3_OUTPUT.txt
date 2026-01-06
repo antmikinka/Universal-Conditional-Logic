@@ -1,0 +1,75 @@
+============================================================
+ MODEL: google/gemma-3-27b-it:free
+ PROMPT: ucl_v1 (ucl)
+ ITERATION: 3
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3328
+Completion Tokens: 0
+Total Tokens: 3328
+Duration: 22.47s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1860
+Words: 286
+Lines: 39
+TTS Keywords: 0
+TTS Keyword Density: 0.0%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.0
+Reasoning Overhead: 0%
+Speed: 148.1 tok/s
+Cost Proxy: 3328.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral: ∫∫_C x³z ds where C is the line segment from (0, 6, 4) to (6, 3, 3).",
+    "question_type": "applied_physics",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "numerical",
+            "values": [
+                "189"
+            ],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "Let C be the line segment from (0, 6, 4) to (6, 3, 3).",
+                "The parameterization of the line segment is r(t) = (0, 6, 4) + t((6, 3, 3) - (0, 6, 4)) = (0, 6, 4) + t(6, -3, -1) = (6t, 6 - 3t, 4 - t), where 0 ≤ t ≤ 1.",
+                "r'(t) = (6, -3, -1)",
+                "||r'(t)|| = √(6² + (-3)² + (-1)²) = √(36 + 9 + 1) = √46",
+                "x(t) = 6t, z(t) = 4 - t",
+                "x³z = (6t)³(4 - t) = 216t³(4 - t) = 864t³ - 216t⁴",
+                "∫∫_C x³z ds = ∫₀¹ (864t³ - 216t⁴)√46 dt = √46 ∫₀¹ (864t³ - 216t⁴) dt",
+                "√46 [864(t⁴/4) - 216(t⁵/5)]₀¹ = √46 [216t⁴ - (216/5)t⁵]₀¹ = √46 [216 - 216/5] = √46 [ (1080 - 216)/5 ] = √46 [864/5]",
+                "The integral is incorrect. Let's re-evaluate.",
+                "r(t) = (6t, 6 - 3t, 4 - t), 0 ≤ t ≤ 1",
+                "r'(t) = (6, -3, -1)",
+                "||r'(t)|| = √(6² + (-3)² + (-1)²) = √46",
+                "x(t) = 6t, z(t) = 4 - t",
+                "x³z(t) = (6t)³(4 - t) = 216t³(4 - t) = 864t³ - 216t⁴",
+                "∫₀¹ (864t³ - 216t⁴)√46 dt = √46 ∫₀¹ (864t³ - 216t⁴) dt = √46 [864(t⁴/4) - 216(t⁵/5)]₀¹",
+                "√46 [216(1) - 216/5] = √46 [216(1 - 1/5)] = √46 [216(4/5)] = √46 [864/5] ≈ 189.00",
+                "The line integral is approximately 189."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

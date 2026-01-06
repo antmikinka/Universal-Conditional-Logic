@@ -1,0 +1,43 @@
+{
+    "model": "baidu/ernie-4.5-21b-a3b-thinking",
+    "prompt_label": "no_prompt",
+    "prompt_category": "control",
+    "iteration": 2,
+    "input_mode": "text",
+    "timestamp": "2025-12-15 02:26:52",
+    "usage": {
+        "prompt_tokens": 83,
+        "completion_tokens": 11392,
+        "total_tokens": 11475,
+        "reasoning_tokens": 10541,
+        "duration_seconds": 130.88,
+        "input_mode": "text",
+        "model_capability": "auto",
+        "vision_attempted": true,
+        "vision_fallback": true
+    },
+    "schema_compliance": {
+        "is_valid_json": false,
+        "schema_compliance_pct": 0.0,
+        "fields_present": [],
+        "fields_missing": [],
+        "has_main_answer": false,
+        "has_scratchwork": false,
+        "tts_ready": false
+    },
+    "content_metrics": {
+        "char_count": 1606,
+        "word_count": 273,
+        "line_count": 63,
+        "tts_keyword_count": 0,
+        "tts_keyword_density": 0.0
+    },
+    "efficiency_metrics": {
+        "token_efficiency_ratio": 137.253,
+        "reasoning_overhead_pct": 92.53,
+        "ms_per_token": 11.41,
+        "tokens_per_second": 87.7,
+        "cost_proxy": 34259.0
+    },
+    "raw_content_length": 1606
+}

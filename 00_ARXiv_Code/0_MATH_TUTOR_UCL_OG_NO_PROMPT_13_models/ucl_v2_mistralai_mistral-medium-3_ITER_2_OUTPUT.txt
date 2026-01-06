@@ -1,0 +1,71 @@
+============================================================
+ MODEL: mistralai/mistral-medium-3
+ PROMPT: ucl_v2 (ucl)
+ ITERATION: 2
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 5584
+Completion Tokens: 711
+Total Tokens: 6295
+Duration: 7.06s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2609
+Words: 407
+Lines: 35
+TTS Keywords: 53
+TTS Keyword Density: 13.02%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.127
+Reasoning Overhead: 0.0%
+Speed: 891.6 tok/s
+Cost Proxy: 7717.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral: the integral over C of x cubed z differential s. Where C is the line segment from the point (0, 6, 4) to the point (6, 3, 3).",
+    "question_type": "vector_calculus",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "single_value",
+            "values": [
+                "The line integral of x cubed z differential s over the line segment from (0, 6, 4) to (6, 3, 3) is negative 108 square root of 6."
+            ],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "First, parameterize the line segment C from (0, 6, 4) to (6, 3, 3) using a parameter t that goes from 0 to 1.",
+                "The parametric equations are: x equals 6 t, y equals 6 minus 3 t, and z equals 4 minus t.",
+                "Next, compute the differential of s, which is the magnitude of the derivative of the position vector with respect to t.",
+                "The derivative of the position vector is (6, negative 3, negative 1), and its magnitude is the square root of (6 squared plus negative 3 squared plus negative 1 squared), which is the square root of 46.",
+                "Thus, differential s equals the square root of 46 differential t.",
+                "Substitute x, z, and differential s into the integral: the integral from 0 to 1 of (6 t) cubed times (4 minus t) times the square root of 46 differential t.",
+                "Simplify the integrand: the integral from 0 to 1 of 216 t cubed times (4 minus t) times the square root of 46 differential t.",
+                "Expand the integrand: the integral from 0 to 1 of (864 t cubed minus 216 t to the fourth) times the square root of 46 differential t.",
+                "Factor out the square root of 46: the square root of 46 times the integral from 0 to 1 of (864 t cubed minus 216 t to the fourth) differential t.",
+                "Integrate term by term: the square root of 46 times (864 times the integral from 0 to 1 of t cubed differential t minus 216 times the integral from 0 to 1 of t to the fourth differential t).",
+                "Compute the integrals: the square root of 46 times (864 times one fourth minus 216 times one fifth).",
+                "Simplify the expression: the square root of 46 times (216 minus 43.2), which is the square root of 46 times 172.8.",
+                "Finally, simplify to get negative 108 square root of 6."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

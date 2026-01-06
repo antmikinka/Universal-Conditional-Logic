@@ -1,0 +1,55 @@
+============================================================
+ MODEL: mistralai/mistral-small-3.2-24b-instruct
+ PROMPT: ucl_v2 (ucl)
+ ITERATION: 4
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 5584
+Completion Tokens: 635
+Total Tokens: 6219
+Duration: 6.01s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2109
+Words: 391
+Lines: 19
+TTS Keywords: 70
+TTS Keyword Density: 17.9%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.114
+Reasoning Overhead: 0.0%
+Speed: 1034.8 tok/s
+Cost Proxy: 7489.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral of x cubed z ds along the line segment C from the point (0, 6, 4) to the point (6, 3, 3).",
+    "question_type": "line_integral",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "single_value",
+            "values": ["The line integral of x cubed z ds along the line segment C from the point (0, 6, 4) to the point (6, 3, 3) is evaluated as follows: First, parameterize the line segment C. Let t range from 0 to 1. Then, x equals 6 t, y equals 6 minus 3 t, and z equals 4 minus t. Next, compute the differential length ds. ds equals the square root of the quantity (d x over d t) squared plus (d y over d t) squared plus (d z over d t) squared d t. This simplifies to the square root of 121 t squared plus 9 d t. Then, express the integrand x cubed z in terms of t. This becomes 216 t cubed times the quantity 4 minus t. Finally, integrate from 0 to 1 of 216 t cubed times the quantity 4 minus t all over the square root of 121 t squared plus 9 d t. This integral evaluates to 108 over 13 times the quantity 121 times the square root of 122 minus the square root of 11."],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": ["First, parameterize the line segment C. Let t range from 0 to 1. Then, x equals 6 t, y equals 6 minus 3 t, and z equals 4 minus t. Next, compute the differential length ds. ds equals the square root of the quantity (d x over d t) squared plus (d y over d t) squared plus (d z over d t) squared d t. This simplifies to the square root of 121 t squared plus 9 d t. Then, express the integrand x cubed z in terms of t. This becomes 216 t cubed times the quantity 4 minus t. Finally, integrate from 0 to 1 of 216 t cubed times the quantity 4 minus t all over the square root of 121 t squared plus 9 d t. This integral evaluates to 108 over 13 times the quantity 121 times the square root of 122 minus the square root of 11."],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

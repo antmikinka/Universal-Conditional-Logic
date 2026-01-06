@@ -1,0 +1,64 @@
+============================================================
+ MODEL: mistralai/mistral-small-3.2-24b-instruct
+ PROMPT: ucl_v2 (ucl)
+ ITERATION: 2
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 5584
+Completion Tokens: 721
+Total Tokens: 6305
+Duration: 25.83s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2427
+Words: 409
+Lines: 28
+TTS Keywords: 75
+TTS Keyword Density: 18.34%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.129
+Reasoning Overhead: 0.0%
+Speed: 244.1 tok/s
+Cost Proxy: 7747.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral of x cubed z ds where C is the line segment from the point 0, 6, 4 to the point 6, 3, 3.",
+    "question_type": "multiple_integrals",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "single_value",
+            "values": ["The line integral of x cubed z ds along the given line segment is 150."],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "The line segment from (0, 6, 4) to (6, 3, 3) can be parameterized as x equals t, y equals 6 minus 0.5 t, z equals 4 minus 0.5 t, for t ranging from 0 to 6.",
+                "The differential ds is the magnitude of the derivative of the position vector with respect to t, which is the square root of 1 squared plus negative 0.5 squared plus negative 0.5 squared, which equals the square root of 1 plus 0.25 plus 0.25, which equals the square root of 1.5.",
+                "The integrand x cubed z becomes t cubed times the quantity 4 minus 0.5 t.",
+                "The integral becomes the integral from 0 to 6 of t cubed times the quantity 4 minus 0.5 t times the square root of 1.5, with respect to t.",
+                "This integral can be split into two parts: 4 times the square root of 1.5 times the integral from 0 to 6 of t cubed, with respect to t, minus 0.5 times the square root of 1.5 times the integral from 0 to 6 of t to the fourth power, with respect to t.",
+                "Evaluating these integrals, we get 4 times the square root of 1.5 times the quantity 6 to the fourth power over 4 minus 0 to the fourth power over 4, which is 4 times the square root of 1.5 times 360, minus 0.5 times the square root of 1.5 times the quantity 6 to the fifth power over 5 minus 0 to the fifth power over 5, which is 0.5 times the square root of 1.5 times 777.6.",
+                "Simplifying, we get 4 times the square root of 1.5 times 360 minus 0.5 times the square root of 1.5 times 777.6, which equals the square root of 1.5 times the quantity 1440 minus 388.8, which equals the square root of 1.5 times 1051.2.",
+                "The square root of 1.5 is the square root of 3 over 2, so the integral becomes the square root of 3 over 2 times 1051.2, which equals 150."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

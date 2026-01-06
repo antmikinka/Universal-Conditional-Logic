@@ -1,0 +1,63 @@
+============================================================
+ MODEL: mistralai/mistral-small-3.2-24b-instruct
+ PROMPT: ucl_v4 (ucl)
+ ITERATION: 2
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3314
+Completion Tokens: 469
+Total Tokens: 3783
+Duration: 6.84s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1705
+Words: 264
+Lines: 27
+TTS Keywords: 33
+TTS Keyword Density: 12.5%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.142
+Reasoning Overhead: 0.0%
+Speed: 553.1 tok/s
+Cost Proxy: 4721.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral of x cubed z ds where C is the line segment from point 0 comma 6 comma 4 to point 6 comma 3 comma 3",
+    "question_type": "math",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "calculation",
+            "values": ["The value of the line integral is 126"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "First, parameterize the line segment C. Let x equal t, y equal 6 minus 0.5 t, and z equal 4 minus 0.5 t, where t ranges from 0 to 6.",
+                "Compute the derivatives dx over dt, dy over dt, and dz over dt, which are 1, negative 0.5, and negative 0.5, respectively.",
+                "The differential ds is the square root of the sum of the squares of the derivatives times dt, which is the square root of 1 plus 0.25 plus 0.25 times dt, which simplifies to the square root of 1.5 times dt.",
+                "Substitute the parameterization and ds into the integral to get the integral from 0 to 6 of t cubed times 4 minus 0.5 t times the square root of 1.5 times dt.",
+                "Simplify the integrand to get the integral from 0 to 6 of the square root of 1.5 times t cubed times 4 minus 0.5 t times dt.",
+                "Evaluate the integral using the antiderivative of the integrand, which is the square root of 1.5 times the integral from 0 to 6 of 4 t cubed minus 0.5 t squared times dt.",
+                "Evaluate the antiderivative at the bounds 0 and 6, which gives 126."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

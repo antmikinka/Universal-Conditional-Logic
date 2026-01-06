@@ -1,0 +1,70 @@
+============================================================
+ MODEL: mistralai/mistral-small-3.2-24b-instruct
+ PROMPT: ucl_v4 (ucl)
+ ITERATION: 1
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3314
+Completion Tokens: 658
+Total Tokens: 3972
+Duration: 8.94s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2329
+Words: 375
+Lines: 34
+TTS Keywords: 52
+TTS Keyword Density: 13.87%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.199
+Reasoning Overhead: 0.0%
+Speed: 444.3 tok/s
+Cost Proxy: 5288.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral of x cubed z ds where C is the line segment from the point 0 comma 6 comma 4 to the point 6 comma 3 comma 3.",
+    "question_type": "line integral evaluation",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "numerical",
+            "values": ["The value of the line integral is 108"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "First, parameterize the line segment C. Let x equal t, y equal negative 0.5 t plus 9, and z equal 0.5 t plus 1, where t ranges from 0 to 6.",
+                "Compute the derivatives dx over dt, dy over dt, and dz over dt.",
+                "dx over dt is 1.",
+                "dy over dt is negative 0.5.",
+                "dz over dt is 0.5.",
+                "The differential ds is the square root of the sum of the squares of dx over dt, dy over dt, and dz over dt, which is the square root of 1 plus 0.25 plus 0.25, which is the square root of 1.5.",
+                "The integrand x cubed z ds becomes t cubed times the quantity 0.5 t plus 1 times the square root of 1.5.",
+                "Set up the integral from 0 to 6 of t cubed times the quantity 0.5 t plus 1 times the square root of 1.5 dt.",
+                "Simplify the integrand to the square root of 1.5 times the integral from 0 to 6 of 0.5 t to the fourth power plus t cubed dt.",
+                "Integrate term by term to get the square root of 1.5 times the quantity 0.5 times t to the fifth power over 5 plus t to the fourth power over 4 evaluated from 0 to 6.",
+                "Evaluate the antiderivative at the bounds to get the square root of 1.5 times the quantity 0.5 times 6 to the fifth power over 5 plus 6 to the fourth power over 4 minus 0.",
+                "Simplify to get the square root of 1.5 times the quantity 0.5 times 7776 over 5 plus 1296.",
+                "Calculate the numerical value to get the square root of 1.5 times the quantity 777.6 plus 1296, which is the square root of 1.5 times 2073.6.",
+                "Simplify further to get the square root of 3110.4, which is approximately 108."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

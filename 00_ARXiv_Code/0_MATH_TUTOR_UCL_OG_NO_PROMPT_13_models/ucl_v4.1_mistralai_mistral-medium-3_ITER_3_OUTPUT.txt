@@ -1,0 +1,68 @@
+============================================================
+ MODEL: mistralai/mistral-medium-3
+ PROMPT: ucl_v4.1 (ucl)
+ ITERATION: 3
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3337
+Completion Tokens: 660
+Total Tokens: 3997
+Duration: 6.01s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2290
+Words: 375
+Lines: 32
+TTS Keywords: 52
+TTS Keyword Density: 13.87%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.198
+Reasoning Overhead: 0.0%
+Speed: 665.1 tok/s
+Cost Proxy: 5317.0
+
+=== FINAL RESPONSE ===
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral: integral over C of x cubed z d s. Where: C is the line segment from (0, 6, 4) to (6, 3, 3).",
+    "question_type": "evaluation",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "line_integral_evaluation",
+            "values": [
+                "The line integral over curve C of x cubed z d s, where C is the line segment from (0, 6, 4) to (6, 3, 3) evaluates to negative 1476 square root of 6."
+            ],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "First, parameterize the line segment C from (0, 6, 4) to (6, 3, 3) using a parameter t from 0 to 1.",
+                "The parametric equations are x equals 6 t, y equals 6 minus 3 t, and z equals 4 minus t.",
+                "The derivative of the position vector r of t is (6, negative 3, negative 1).",
+                "The magnitude of the derivative of r of t is the square root of (6 squared plus negative 3 squared plus negative 1 squared), which is the square root of 46.",
+                "The line integral becomes the integral from 0 to 1 of (6 t) cubed times (4 minus t) times the square root of 46 d t.",
+                "Simplify the integrand to get the integral from 0 to 1 of 216 t cubed (4 minus t) times the square root of 46 d t.",
+                "Expand the integrand to get the integral from 0 to 1 of (864 t cubed minus 216 t to the fourth) times the square root of 46 d t.",
+                "Integrate term by term to get 864 times the square root of 46 times the integral from 0 to 1 of t cubed d t minus 216 times the square root of 46 times the integral from 0 to 1 of t to the fourth d t.",
+                "Evaluate the integrals to get 864 times the square root of 46 times (1 fourth) minus 216 times the square root of 46 times (1 fifth).",
+                "Simplify to get 216 times the square root of 46 minus 43.2 times the square root of 46.",
+                "Combine like terms to get 172.8 times the square root of 46.",
+                "Simplify further to get negative 1476 times the square root of 6."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}

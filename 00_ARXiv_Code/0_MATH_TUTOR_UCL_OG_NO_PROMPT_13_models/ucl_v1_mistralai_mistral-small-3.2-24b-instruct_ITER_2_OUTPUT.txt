@@ -1,0 +1,64 @@
+============================================================
+ MODEL: mistralai/mistral-small-3.2-24b-instruct
+ PROMPT: ucl_v1 (ucl)
+ ITERATION: 2
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3883
+Completion Tokens: 496
+Total Tokens: 4379
+Duration: 4.5s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1764
+Words: 275
+Lines: 28
+TTS Keywords: 42
+TTS Keyword Density: 15.27%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.128
+Reasoning Overhead: 0.0%
+Speed: 973.1 tok/s
+Cost Proxy: 5371.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral: integral from C of x^3 z ds. Where: C is the line segment from (0, 6, 4) to (6, 3, 3).",
+    "question_type": "line_integral",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "tts_ready",
+            "values": ["the integral from C of x cubed z ds is equal to the quantity 108"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "the line segment C can be parameterized as x equals t, y equals 6 minus 0.5 t, z equals 4 minus 0.5 t, for t ranging from 0 to 6",
+                "the derivative of the position vector with respect to t is the vector 1, -0.5, -0.5",
+                "the magnitude of this derivative vector is the square root of 1 squared plus -0.5 squared plus -0.5 squared, which is the square root of 1.5",
+                "the integrand x cubed z becomes t cubed times the quantity 4 minus 0.5 t",
+                "the integral becomes the integral from 0 to 6 of t cubed times the quantity 4 minus 0.5 t times the square root of 1.5 dt",
+                "this integral can be split into two parts: 4 times the square root of 1.5 times the integral from 0 to 6 of t cubed dt, minus 0.5 times the square root of 1.5 times the integral from 0 to 6 of t to the fourth power dt",
+                "evaluating these integrals gives 4 times the square root of 1.5 times the quantity 6 to the fourth power over 4, minus 0.5 times the square root of 1.5 times the quantity 6 to the fifth power over 5",
+                "simplifying this expression gives 108"
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

@@ -1,0 +1,68 @@
+============================================================
+ MODEL: google/gemma-3-27b-it:free
+ PROMPT: ucl_v3 (ucl)
+ ITERATION: 2
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 4123
+Completion Tokens: 0
+Total Tokens: 4123
+Duration: 15.83s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2395
+Words: 405
+Lines: 32
+TTS Keywords: 72
+TTS Keyword Density: 17.78%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.0
+Reasoning Overhead: 0%
+Speed: 260.5 tok/s
+Cost Proxy: 4123.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral of x cubed z ds where C is the line segment from 0 comma 6 comma 4 to 6 comma 3 comma 3.",
+    "question_type": "applied_physics",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "numerical",
+            "values": [
+                "189"
+            ],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "First, parameterize the line segment C as r of t equals 0 comma 6 comma 4 plus t times 6 minus 0 comma 3 minus 6 comma 3 minus 4 which simplifies to r of t equals 6t comma 6 minus 3t comma 4 plus t for 0 less than or equal to t less than or equal to 1.",
+                "Second, compute the derivative of r with respect to t which is r prime of t equals 6 comma negative 3 comma 1.",
+                "Third, calculate the magnitude of r prime of t which is the square root of 6 squared plus negative 3 squared plus 1 squared which equals the square root of 36 plus 9 plus 1 which equals the square root of 46.",
+                "Fourth, substitute x equals 6t and z equals 4 plus t into the integrand x cubed z which gives us (6t) cubed times (4 plus t) which simplifies to 216 t cubed times (4 plus t) which equals 864 t cubed plus 216 t to the power of 4.",
+                "Fifth, evaluate the line integral by integrating from 0 to 1 of (864 t cubed plus 216 t to the power of 4) times the square root of 46 dt.",
+                "Sixth, integrate 864 t cubed with respect to t to get 864 times t to the power of 4 divided by 4 which equals 216 t to the power of 4.",
+                "Seventh, integrate 216 t to the power of 4 with respect to t to get 216 times t to the power of 5 divided by 5 which equals 43.2 t to the power of 5.",
+                "Eighth, evaluate the integral from 0 to 1 which gives us 216 times 1 to the power of 4 plus 43.2 times 1 to the power of 5 minus 0 which equals 216 plus 43.2 which equals 259.2.",
+                "Ninth, multiply the result by the square root of 46 which gives us 259.2 times the square root of 46 which equals approximately 259.2 times 6.782 which equals approximately 1759.05.",
+                "The line integral is equal to 1759.05."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

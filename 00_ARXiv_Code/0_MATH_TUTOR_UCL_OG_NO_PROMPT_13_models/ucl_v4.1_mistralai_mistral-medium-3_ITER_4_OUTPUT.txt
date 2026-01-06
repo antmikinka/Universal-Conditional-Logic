@@ -1,0 +1,76 @@
+============================================================
+ MODEL: mistralai/mistral-medium-3
+ PROMPT: ucl_v4.1 (ucl)
+ ITERATION: 4
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3337
+Completion Tokens: 976
+Total Tokens: 4313
+Duration: 8.59s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 4845
+Words: 776
+Lines: 40
+TTS Keywords: 110
+TTS Keyword Density: 14.18%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.292
+Reasoning Overhead: 0.0%
+Speed: 502.1 tok/s
+Cost Proxy: 6265.0
+
+=== FINAL RESPONSE ===
+{
+    "problem_number": null,
+    "problem_statement": "Evaluate the line integral: integral over C of x cubed z ds Where: C is the line segment from open bracket zero comma six comma four close bracket to open bracket six comma three comma three close bracket.",
+    "question_type": "evaluation",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "line_integral_evaluation",
+            "values": [
+                "To evaluate the line integral of x cubed z ds over the line segment C from open bracket zero comma six comma four close bracket to open bracket six comma three comma three close bracket, we follow these steps:",
+                "First, parameterize the line segment C. Let t be a parameter that goes from zero to one.",
+                "The vector r of t can be written as r of t equals open bracket six t comma six minus three t comma four minus t close bracket.",
+                "Next, compute the derivative of r with respect to t, which is r prime of t equals open bracket six comma negative three comma negative one close bracket.",
+                "The magnitude of r prime of t is the square root of open bracket six squared plus open bracket negative three close bracket squared plus open bracket negative one close bracket squared end square root, which is the square root of open bracket thirty six plus nine plus one end square root, which is the square root of forty six.",
+                "The line integral becomes the integral from zero to one of open bracket six t close bracket cubed times open bracket four minus t close bracket times the square root of forty six dt.",
+                "Simplify the integrand: open bracket six t close bracket cubed is two hundred sixteen t cubed, and open bracket four minus t close bracket is four minus t.",
+                "Thus, the integral becomes the integral from zero to one of two hundred sixteen t cubed times open bracket four minus t close bracket times the square root of forty six dt.",
+                "This can be split into two integrals: two hundred sixteen times the square root of forty six times the integral from zero to one of four t cubed dt minus two hundred sixteen times the square root of forty six times the integral from zero to one of t to the fourth dt.",
+                "Evaluate the integrals: the integral from zero to one of four t cubed dt is four times open bracket t to the fourth over four close bracket evaluated from zero to one, which is one.",
+                "The integral from zero to one of t to the fourth dt is open bracket t to the fifth over five close bracket evaluated from zero to one, which is one fifth.",
+                "Combine the results: two hundred sixteen times the square root of forty six times open bracket four minus one fifth close bracket, which is two hundred sixteen times the square root of forty six times nineteen fifths.",
+                "Thus, the value of the line integral is two hundred sixteen times nineteen over five times the square root of forty six."
+            ],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "Parameterize the line segment C: r of t equals open bracket six t comma six minus three t comma four minus t close bracket.",
+                "Compute the derivative of r with respect to t: r prime of t equals open bracket six comma negative three comma negative one close bracket.",
+                "Compute the magnitude of r prime of t: the square root of open bracket six squared plus open bracket negative three close bracket squared plus open bracket negative one close bracket squared end square root equals the square root of forty six.",
+                "Set up the integral: integral from zero to one of open bracket six t close bracket cubed times open bracket four minus t close bracket times the square root of forty six dt.",
+                "Simplify the integrand: two hundred sixteen t cubed times open bracket four minus t close bracket times the square root of forty six.",
+                "Split the integral: two hundred sixteen times the square root of forty six times the integral from zero to one of four t cubed dt minus two hundred sixteen times the square root of forty six times the integral from zero to one of t to the fourth dt.",
+                "Evaluate the integrals: the integral from zero to one of four t cubed dt equals one, the integral from zero to one of t to the fourth dt equals one fifth.",
+                "Combine the results: two hundred sixteen times the square root of forty six times open bracket four minus one fifth close bracket equals two hundred sixteen times the square root of forty six times nineteen fifths."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}

@@ -1,0 +1,64 @@
+============================================================
+ MODEL: x-ai/grok-4
+ PROMPT: ucl_v1 (ucl)
+ ITERATION: 1
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3602
+Completion Tokens: 1465
+Total Tokens: 5067
+Reasoning Tokens: 1042
+Duration: 39.61s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1821
+Words: 279
+Lines: 27
+TTS Keywords: 36
+TTS Keyword Density: 12.9%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.407
+Reasoning Overhead: 71.13%
+Speed: 127.9 tok/s
+Cost Proxy: 7997.0
+
+=== FINAL RESPONSE ===
+{
+    "problem_number": "",
+    "problem_statement": "Evaluate the line integral integral sub C of x squared d s where C is the line segment from open parenthesis 0 comma 6 comma 4 close parenthesis to open parenthesis 6 comma 3 comma 3 close parenthesis",
+    "question_type": "vector_calculus",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "numerical",
+            "values": ["twelve times the square root of forty six"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "Parametrize the line segment C from point A open parenthesis 0 comma 6 comma 4 close parenthesis to point B open parenthesis 6 comma 3 comma 3 close parenthesis using parameter t from 0 to 1.",
+                "The position vector r of t is equal to open parenthesis 6 t comma 6 minus 3 t comma 4 minus t close parenthesis.",
+                "The derivative r prime of t is open parenthesis 6 comma negative 3 comma negative 1 close parenthesis.",
+                "The magnitude of r prime of t is the square root of 36 plus 9 plus 1 which is the square root of 46.",
+                "d s equals the square root of 46 d t.",
+                "The integral becomes the integral from 0 to 1 of open parenthesis 6 t close parenthesis squared times the square root of 46 d t.",
+                "That simplifies to the square root of 46 times the integral from 0 to 1 of 36 t squared d t.",
+                "The integral of 36 t squared d t from 0 to 1 is 36 times open parenthesis t cubed over 3 close parenthesis from 0 to 1 which is 36 times one third equals 12.",
+                "Therefore the line integral is 12 times the square root of 46."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}

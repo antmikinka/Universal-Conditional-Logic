@@ -1,0 +1,64 @@
+============================================================
+ MODEL: mistralai/mistral-small-3.2-24b-instruct
+ PROMPT: ucl_v3 (ucl)
+ ITERATION: 2
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 4688
+Completion Tokens: 594
+Total Tokens: 5282
+Duration: 17.56s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2182
+Words: 358
+Lines: 28
+TTS Keywords: 45
+TTS Keyword Density: 12.57%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.127
+Reasoning Overhead: 0.0%
+Speed: 300.8 tok/s
+Cost Proxy: 6470.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral of x cubed z ds along the line segment C from the point 0 comma 6 comma 4 to the point 6 comma 3 comma 3.",
+    "question_type": "line_integral",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "line_integral",
+            "values": ["The value of the line integral is 144"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "First, parameterize the line segment C. The line segment from (0, 6, 4) to (6, 3, 3) can be parameterized as x equals 0 plus 6 t, y equals 6 minus 3 t, z equals 4 minus t, where t goes from 0 to 1.",
+                "Next, compute the differential ds. The differential ds is the magnitude of the derivative of the position vector with respect to t, which is the square root of the sum of the squares of the derivatives of x, y, and z with respect to t. This gives ds equals the square root of 36 plus 9 plus 1, which is the square root of 46, times dt.",
+                "Substitute the parameterization into the integrand. The integrand x cubed z becomes the quantity 6 t cubed times the quantity 4 minus t.",
+                "Set up the integral. The line integral becomes the integral from 0 to 1 of the quantity 6 t cubed times the quantity 4 minus t times the square root of 46, with respect to t.",
+                "Simplify the integrand. The integrand can be written as the quantity 24 t cubed minus 6 t to the fourth times the square root of 46.",
+                "Integrate term by term. The integral of 24 t cubed is 6 t to the fourth, and the integral of 6 t to the fourth is 0.6 t to the fifth.",
+                "Evaluate the antiderivative at the bounds. The antiderivative evaluated from 0 to 1 is the quantity 6 times 1 to the fourth minus 0.6 times 1 to the fifth, which is 6 minus 0.6, which is 5.4.",
+                "Multiply by the square root of 46. The final value of the line integral is 5.4 times the square root of 46, which is 144."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

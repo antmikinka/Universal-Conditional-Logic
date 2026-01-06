@@ -1,0 +1,62 @@
+============================================================
+ MODEL: x-ai/grok-4
+ PROMPT: ucl_v4.1 (ucl)
+ ITERATION: 2
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3192
+Completion Tokens: 1185
+Total Tokens: 4377
+Reasoning Tokens: 880
+Duration: 32.61s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1492
+Words: 207
+Lines: 25
+TTS Keywords: 28
+TTS Keyword Density: 13.53%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.371
+Reasoning Overhead: 74.26%
+Speed: 134.2 tok/s
+Cost Proxy: 6747.0
+
+=== FINAL RESPONSE ===
+{
+    "problem_number": "N/A",
+    "problem_statement": "Evaluate the line integral of x squared ds where C is the line segment from open parenthesis zero comma six comma four close parenthesis to open parenthesis six comma three comma three close parenthesis.",
+    "question_type": "evaluate_integral",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "expression",
+            "values": ["twelve square root of forty six"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "Parametrize the curve C. Let t go from zero to one. Then x equals six t, y equals six minus three t, z equals four minus t.",
+                "The derivative r prime of t is open bracket six comma negative three comma negative one close bracket.",
+                "The norm of r prime of t is square root of thirty six plus nine plus one equals square root of forty six.",
+                "The integral is integral from zero to one of open parenthesis six t close parenthesis squared times square root of forty six dt.",
+                "That is thirty six square root of forty six integral from zero to one of t squared dt.",
+                "Integral of t squared dt from zero to one is one third.",
+                "So thirty six square root of forty six times one third equals twelve square root of forty six."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}

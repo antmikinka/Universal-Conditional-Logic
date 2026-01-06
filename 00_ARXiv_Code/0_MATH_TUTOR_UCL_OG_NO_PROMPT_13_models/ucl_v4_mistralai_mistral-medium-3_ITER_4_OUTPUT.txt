@@ -1,0 +1,71 @@
+============================================================
+ MODEL: mistralai/mistral-medium-3
+ PROMPT: ucl_v4 (ucl)
+ ITERATION: 4
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3314
+Completion Tokens: 772
+Total Tokens: 4086
+Duration: 7.19s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2776
+Words: 469
+Lines: 35
+TTS Keywords: 69
+TTS Keyword Density: 14.71%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.233
+Reasoning Overhead: 0.0%
+Speed: 568.3 tok/s
+Cost Proxy: 5630.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": null,
+    "problem_statement": "Evaluate the line integral: integral over C of x cubed z d s Where: C is the line segment from (0, 6, 4) to (6, 3, 3).",
+    "question_type": "evaluation",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "definite_integral",
+            "values": [
+                "The line integral of x cubed z d s over the curve C from (0, 6, 4) to (6, 3, 3) can be evaluated by parameterizing the line segment."
+            ],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "First, parameterize the line segment C using a parameter t that goes from 0 to 1.",
+                "The parametric equations for the line segment are: x equals 0 plus 6 t, y equals 6 minus 3 t, z equals 4 minus t.",
+                "The derivative of the position vector r of t with respect to t is: d r d t equals open bracket 6 comma negative 3 comma negative 1 close bracket.",
+                "The magnitude of d r d t is the square root of 6 squared plus negative 3 squared plus negative 1 squared, which is the square root of 36 plus 9 plus 1, which is the square root of 46.",
+                "The line integral becomes the integral from 0 to 1 of the function x of t cubed times z of t times the magnitude of d r d t, d t.",
+                "Substitute the parametric equations into the integral: integral from 0 to 1 of (6 t) cubed times (4 minus t) times the square root of 46, d t.",
+                "Simplify the integrand: integral from 0 to 1 of 216 t cubed times (4 minus t) times the square root of 46, d t.",
+                "Distribute the terms: integral from 0 to 1 of 864 t cubed times the square root of 46 minus 216 t to the fourth times the square root of 46, d t.",
+                "Integrate term by term: 864 times the square root of 46 times the integral from 0 to 1 of t cubed, d t minus 216 times the square root of 46 times the integral from 0 to 1 of t to the fourth, d t.",
+                "Evaluate the integrals: 864 times the square root of 46 times open bracket t to the fourth over 4 close bracket from 0 to 1 minus 216 times the square root of 46 times open bracket t to the fifth over 5 close bracket from 0 to 1.",
+                "Simplify the evaluated integrals: 864 times the square root of 46 times open bracket 1 over 4 close bracket minus 216 times the square root of 46 times open bracket 1 over 5 close bracket.",
+                "Combine the terms: 216 times the square root of 46 minus 43.2 times the square root of 46.",
+                "Final result: 172.8 times the square root of 46."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

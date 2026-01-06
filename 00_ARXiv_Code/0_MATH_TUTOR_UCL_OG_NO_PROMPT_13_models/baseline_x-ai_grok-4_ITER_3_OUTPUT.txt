@@ -1,0 +1,63 @@
+============================================================
+ MODEL: x-ai/grok-4
+ PROMPT: baseline (baseline)
+ ITERATION: 3
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 5300
+Completion Tokens: 1247
+Total Tokens: 6547
+Reasoning Tokens: 910
+Duration: 22.88s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1570
+Words: 232
+Lines: 26
+TTS Keywords: 55
+TTS Keyword Density: 23.71%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.235
+Reasoning Overhead: 72.98%
+Speed: 286.1 tok/s
+Cost Proxy: 9041.0
+
+=== FINAL RESPONSE ===
+{
+  "problem_number": "1",
+  "problem_statement": "Evaluate the line integral integral over C of z squared ds, where C is the line segment from the point zero comma six comma four to the point six comma three comma three",
+  "question_type": "vector_calculus",
+  "math_content_check": "yes",
+  "final_answers": {
+    "main_answer": {
+      "type": "single_value",
+      "values": ["thirty seven over three times square root of forty six"],
+      "answer_format": "tts_ready"
+    },
+    "scratchwork_answer": {
+      "values": [
+        "Parametrization: x equals six t comma y equals six minus three t comma z equals four minus t comma t from zero to one",
+        "Derivative: r prime of t equals vector six comma negative three comma negative one",
+        "Magnitude: square root of the quantity six squared plus negative three squared plus negative one squared end quantity equals square root of forty six",
+        "z squared equals the quantity four minus t end quantity squared",
+        "Integral equals square root of forty six times integral from zero to one of the quantity four minus t end quantity squared dt",
+        "Compute integral: let u equals four minus t comma du equals negative dt comma limits from four to three",
+        "Equals integral from three to four of u squared du equals u cubed over three from three to four equals sixty four over three minus twenty seven over three equals thirty seven over three",
+        "Final result: square root of forty six times thirty seven over three"
+      ],
+      "answer_format": "tts_ready"
+    }
+  }
+}

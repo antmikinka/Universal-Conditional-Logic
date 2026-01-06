@@ -1,0 +1,55 @@
+============================================================
+ MODEL: mistralai/mistral-small-3.2-24b-instruct
+ PROMPT: ucl_v1 (ucl)
+ ITERATION: 4
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3883
+Completion Tokens: 481
+Total Tokens: 4364
+Duration: 7.1s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1446
+Words: 247
+Lines: 19
+TTS Keywords: 46
+TTS Keyword Density: 18.62%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.124
+Reasoning Overhead: 0.0%
+Speed: 614.6 tok/s
+Cost Proxy: 5326.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral: ∫_C x³z ds, where C is the line segment from (0, 6, 4) to (6, 3, 3).",
+    "question_type": "line_integral",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "line_integral",
+            "values": ["the integral from 0 to 1 of the quantity (the quantity 0 plus 6 times t) cubed times the quantity 4 minus t times the quantity 3 plus t times the square root of the quantity 121 plus 0 times t squared plus 0 times t squared dt"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": ["parameterize the line segment from (0, 6, 4) to (6, 3, 3) as r(t) = (6t, 6 - 3t, 4 - t) for t in [0, 1], compute the derivative r'(t) = (6, -3, -1), compute the magnitude of r'(t) as the square root of 6 squared plus -3 squared plus -1 squared, which is the square root of 121, which is 11, the integrand is x(t) cubed times z(t) times the magnitude of r'(t), which is the quantity 6t cubed times the quantity 4 minus t times 11 dt, the integral becomes the integral from 0 to 1 of 1944 t cubed minus 132 t dt, which is 1944 times the integral from 0 to 1 of t cubed dt minus 132 times the integral from 0 to 1 of t dt, which is 1944 times 1/4 minus 132 times 1/2, which is 486 minus 66, which is 420"],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

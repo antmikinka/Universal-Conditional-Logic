@@ -1,0 +1,66 @@
+============================================================
+ MODEL: mistralai/mistral-small-3.2-24b-instruct
+ PROMPT: ucl_v2 (ucl)
+ ITERATION: 1
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 5584
+Completion Tokens: 634
+Total Tokens: 6218
+Duration: 9.76s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 1802
+Words: 292
+Lines: 30
+TTS Keywords: 1
+TTS Keyword Density: 0.34%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.114
+Reasoning Overhead: 0.0%
+Speed: 637.1 tok/s
+Cost Proxy: 7486.0
+
+=== FINAL RESPONSE ===
+```json
+{
+    "problem_number": "1",
+    "problem_statement": "Evaluate the line integral of x cubed z ds where C is the line segment from the point 0, 6, 4 to the point 6, 3, 3.",
+    "question_type": "line_integral",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "single_value",
+            "values": ["The value of the line integral is 180"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "First, we parameterize the line segment C. The vector from (0, 6, 4) to (6, 3, 3) is (6, -3, -1). So, the parametric equations are x = 6t, y = 6 - 3t, z = 4 - t, where t goes from 0 to 1.",
+                "Next, we find the derivative of the parametric equations with respect to t: dx/dt = 6, dy/dt = -3, dz/dt = -1.",
+                "The differential ds is the magnitude of the derivative vector, which is sqrt(6^2 + (-3)^2 + (-1)^2) = sqrt(36 + 9 + 1) = sqrt(46).",
+                "We substitute the parametric equations into the integrand: x^3 z = (6t)^3 (4 - t) = 216t^3 (4 - t).",
+                "The integrand becomes 216t^3 (4 - t) * sqrt(46).",
+                "We integrate this from t = 0 to t = 1: the integral from 0 to 1 of 216t^3 (4 - t) sqrt(46) dt.",
+                "We can factor out sqrt(46): sqrt(46) * 216 * the integral from 0 to 1 of (4t^3 - t^4) dt.",
+                "We evaluate the integral: the integral from 0 to 1 of (4t^3 - t^4) dt = [t^4 - (1/5)t^5] from 0 to 1 = 1 - 1/5 = 4/5.",
+                "So, the value of the integral is sqrt(46) * 216 * 4/5 = 216 * 4/5 * sqrt(46).",
+                "Simplifying, we get 216 * 4/5 = 172.8, and 172.8 * sqrt(46) = 180."
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}
+```

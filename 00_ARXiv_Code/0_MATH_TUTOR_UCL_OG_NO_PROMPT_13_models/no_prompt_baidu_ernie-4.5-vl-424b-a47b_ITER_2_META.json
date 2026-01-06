@@ -1,0 +1,43 @@
+{
+    "model": "baidu/ernie-4.5-vl-424b-a47b",
+    "prompt_label": "no_prompt",
+    "prompt_category": "control",
+    "iteration": 2,
+    "input_mode": "vision",
+    "timestamp": "2025-12-15 02:47:16",
+    "usage": {
+        "prompt_tokens": 1377,
+        "completion_tokens": 13013,
+        "total_tokens": 14390,
+        "reasoning_tokens": 12232,
+        "duration_seconds": 352.79,
+        "input_mode": "vision",
+        "model_capability": "auto",
+        "vision_attempted": true,
+        "vision_fallback": false
+    },
+    "schema_compliance": {
+        "is_valid_json": false,
+        "schema_compliance_pct": 0.0,
+        "fields_present": [],
+        "fields_missing": [],
+        "has_main_answer": false,
+        "has_scratchwork": false,
+        "tts_ready": false
+    },
+    "content_metrics": {
+        "char_count": 1582,
+        "word_count": 261,
+        "line_count": 55,
+        "tts_keyword_count": 0,
+        "tts_keyword_density": 0.0
+    },
+    "efficiency_metrics": {
+        "token_efficiency_ratio": 9.45,
+        "reasoning_overhead_pct": 94.0,
+        "ms_per_token": 24.52,
+        "tokens_per_second": 40.8,
+        "cost_proxy": 40416.0
+    },
+    "raw_content_length": 1582
+}

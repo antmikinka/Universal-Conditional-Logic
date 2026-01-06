@@ -1,0 +1,68 @@
+============================================================
+ MODEL: x-ai/grok-4
+ PROMPT: ucl_v4 (ucl)
+ ITERATION: 1
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 3162
+Completion Tokens: 1828
+Total Tokens: 4990
+Reasoning Tokens: 1397
+Duration: 49.26s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2169
+Words: 309
+Lines: 31
+TTS Keywords: 53
+TTS Keyword Density: 17.15%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 0.578
+Reasoning Overhead: 76.42%
+Speed: 101.3 tok/s
+Cost Proxy: 8646.0
+
+=== FINAL RESPONSE ===
+{
+    "problem_number": "N/A",
+    "problem_statement": "Evaluate the line integral of x squared d s, where C is the line segment from open parenthesis zero comma six comma four close parenthesis to open parenthesis six comma three comma three close parenthesis.",
+    "question_type": "evaluate_integral",
+    "math_content_check": "yes",
+    "final_answers": {
+        "main_answer": {
+            "type": "scalar",
+            "values": ["twelve square root of forty six"],
+            "answer_format": "tts_ready"
+        },
+        "scratchwork_answer": {
+            "values": [
+                "To evaluate the line integral over curve C of x squared d s, where C is the line segment from open parenthesis zero comma six comma four close parenthesis to open parenthesis six comma three comma three close parenthesis.",
+                "Parametrize the curve with parameter t from zero to one.",
+                "x of t equals six t",
+                "y of t equals six minus three t",
+                "z of t equals four minus t",
+                "The derivative d r d t equals open bracket six comma negative three comma negative one close bracket",
+                "The norm of d r d t equals square root of six squared plus negative three squared plus negative one squared equals square root of thirty six plus nine plus one equals square root of forty six",
+                "Thus, d s equals square root of forty six d t",
+                "The integrand x squared equals open parenthesis six t close parenthesis squared equals thirty six t squared",
+                "The integral becomes integral from zero to one of thirty six t squared times square root of forty six d t",
+                "Factor out constants: thirty six square root of forty six times integral from zero to one of t squared d t",
+                "The antiderivative of t squared is t cubed over three, evaluated from zero to one, which is one over three minus zero equals one over three",
+                "Therefore, thirty six square root of forty six times one over three equals twelve square root of forty six"
+            ],
+            "answer_format": "tts_ready"
+        }
+    }
+}

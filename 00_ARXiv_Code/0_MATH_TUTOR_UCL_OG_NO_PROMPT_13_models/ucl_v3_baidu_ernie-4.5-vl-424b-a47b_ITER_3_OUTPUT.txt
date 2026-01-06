@@ -1,0 +1,457 @@
+============================================================
+ MODEL: baidu/ernie-4.5-vl-424b-a47b
+ PROMPT: ucl_v3 (ucl)
+ ITERATION: 3
+ INPUT MODE: vision
+============================================================
+
+=== TOKEN USAGE ===
+Prompt Tokens: 5176
+Completion Tokens: 8412
+Total Tokens: 13588
+Reasoning Tokens: 7884
+Duration: 331.82s
+
+=== SCHEMA COMPLIANCE ===
+Valid JSON: True
+Schema Compliance: 100.0%
+Fields Present: ['problem_number', 'problem_statement', 'question_type', 'math_content_check', 'final_answers']
+Fields Missing: []
+Has Main Answer: True
+Has Scratchwork: True
+TTS Ready: True
+
+=== CONTENT METRICS ===
+Characters: 2324
+Words: 345
+Lines: 24
+TTS Keywords: 49
+TTS Keyword Density: 14.2%
+
+=== EFFICIENCY METRICS ===
+Token Efficiency Ratio: 1.625
+Reasoning Overhead: 93.72%
+Speed: 40.9 tok/s
+Cost Proxy: 30412.0
+
+=== REASONING / THINKING ===
+
+We are given a line integral: ∫_C x³ z ds, where C is the line segment from (0,6,4) to (6,3,3).
+ We'll parameterize the line segment. Let t be a parameter that goes from 0 to 1.
+ Then, the vector from (0,6,4) to (6,3,3) is <6, -3, -1>.
+ So, the parametric equations are:
+   x(t) = 0 + 6t = 6t
+   y(t) = 6 - 3t
+   z(t) = 4 - t
+
+ We also need the derivative with respect to t to compute ds.
+   dx/dt = 6
+   dy/dt = -3
+   dz/dt = -1
+
+ Then, the speed is sqrt( (dx/dt)^2 + (dy/dt)^2 + (dz/dt)^2 ) = sqrt(6² + (-3)² + (-1)²) = sqrt(36+9+1)=sqrt(46)
+
+ So, ds = sqrt(46) dt.
+
+ Now, the integral becomes:
+   ∫_{t=0}^{1} [ (6t)^3 * (4 - t) ] * sqrt(46) dt
+
+ Simplify the expression inside:
+   (6t)^3 = 216 t^3
+   So, 216 t^3 * (4 - t) = 216 (4t^3 - t^4) = 864 t^3 - 216 t^4
+
+ Therefore, the integral is:
+   ∫_{0}^{1} (864 t^3 - 216 t^4) * sqrt(46) dt
+   = sqrt(46) * ∫_{0}^{1} (864 t^3 - 216 t^4) dt
+
+ Now, compute the antiderivative:
+   ∫ (864 t^3 - 216 t^4) dt = 864*(t^4/4) - 216*(t^5/5) 
+                             = 216 t^4 - (216/5) t^5   [since 864/4=216]
+
+ Evaluate from 0 to 1:
+   = [216*(1)^4 - (216/5)*(1)^5] - [0] 
+   = 216 - 216/5 
+   = (1080 - 216)/5 
+   = 864/5
+
+ Then multiply by sqrt(46):
+   = sqrt(46) * (864/5) = (864/5) * sqrt(46)
+
+ We can leave it as is or simplify. But note that 864/5 is 172.8, but we'll keep fractional.
+
+ Alternatively, we can factor and write as:
+   = (864 * sqrt(46)) / 5
+
+ However, we might simplify the fraction. Let's check if 864 and 5 have common factors? 5 is prime, 864 not divisible by 5? Actually 864/5 is already in simplest form.
+
+ But let's compute the numerical value if needed? The problem doesn't specify, but since it's a math problem, we can leave in exact form.
+
+ However, note that 864 and 5: 864 = 2^5 * 3^3, so no common factors with 5. So we write:
+
+   ∫_C x³ z ds = (864 * sqrt(46)) / 5
+
+ But wait, let me double-check the antiderivative evaluation:
+
+   ∫ 864 t^3 dt from 0 to 1 = 864 * [t^4/4] from 0 to 1 = 864 * (1/4) = 216
+   ∫ -216 t^4 dt from 0 to 1 = -216 * [t^5/5] from 0 to 1 = -216/5
+   So total = 216 - 216/5 = (1080 - 216)/5 = 864/5. That's correct.
+
+ Therefore, the answer is (864/5) * sqrt(46).
+
+ However, we can write it as a single fraction: 864 sqrt(46) / 5.
+
+ But note that 864 and 5 are coprime? Actually, 864 is 864, and 5 is prime. So yes.
+
+ Alternatively, we can factor out the common factor? Actually, we can write:
+
+   = (864/5) * sqrt(46)
+
+ But to present it nicely, we can leave it as is.
+
+ However, let me check the calculation again for the integral:
+
+   Original integral: ∫_0^1 [216 t^3 * (4 - t)] * sqrt(46) dt
+   Actually, note that in the expression I had: 216 t^3 * (4-t) = 864 t^3 - 216 t^4, then multiplied by sqrt(46). So the integral is sqrt(46) times the integral of 864 t^3 - 216 t^4.
+
+ We computed that integral as 864/5? Actually, wait: the antiderivative evaluated at 1 is 216 - 216/5? But note:
+
+   The antiderivative of 864 t^3 is 864 * (t^4/4) = 216 t^4.
+   The antiderivative of -216 t^4 is -216 * (t^5/5) = - (216/5) t^5.
+
+   At t=1: 216 - 216/5 = (1080 - 216)/5? Actually, 216 = 1080/5? No, 216 = 1080/5? 1080/5=216, yes. So 216 is 1080/5? Actually, 216 = 216/1 = (216*5)/5 = 1080/5? But 1080/5 is 216, that's true. But then:
+
+   total = 216 - 216/5 = (5*216 - 216)/5 = (4*216)/5? Actually, that's 864/5? Because 4*216=864.
+
+   Alternatively: 216 = 1080/5? That's not helpful. We have 216 = 1080/5? 1080/5=216, so 216 = 1080/5. Then 216 - 216/5 = 1080/5 - 216/5 = (1080-216)/5 = 864/5. Correct.
+
+ So the answer is:
+
+   (864/5) * sqrt(46) = (864 * sqrt(46)) / 5
+
+ We can also write it as: 864 sqrt(46) divided by 5.
+
+ Now, for the TTS conversion, we need to express the answer in natural spoken language.
+
+ How to say: (864 * sqrt(46)) / 5
+
+ We can break it down:
+   "eight hundred sixty-four times the square root of forty-six, all over five"
+
+ But note that the entire expression is the result of the integral.
+
+ Alternatively, we can compute the numerical value if required? But the problem doesn't specify, so exact form is acceptable.
+
+ However, the problem says "evaluate", so either form is acceptable. But in the context of a line integral, often exact form is preferred.
+
+ So we'll output the exact form in spoken language.
+
+ But note: the problem says to output in JSON with TTS ready format.
+
+ We'll convert the mathematical expression to words.
+
+ Also note: the integral is a scalar, so we just have one value.
+
+ However, the JSON structure has:
+   "final_answers": {
+        "main_answer": { ... },
+        "scratchwork_answer": { ... }
+   }
+
+ We have the main answer. We also computed via antiderivatives, so we don't have step-by-step scratchwork? But the problem doesn't require step-by-step, but our system might add it? Actually, the JSON template has scratchwork_answer. But in this case, we did the calculation in one step? We can provide the step-by-step if needed? But the instruction doesn't require. We'll just provide the final answer.
+
+ However, note the JSON template has:
+        "final_answers": {
+            "main_answer": ...,
+            "scratchwork_answer": ...
+        }
+
+ We can leave scratchwork_answer as empty? But the requirement says TTS_ready, so if empty, we need to have an array. Alternatively, we can omit? But the template includes it. We'll put an empty array or a message? Since the problem didn't ask for steps, we can skip. But the template requires "values" as an array. We can have an array with one element if we have a step, but if we don't, we can have an empty array? But the problem doesn't specify.
+
+ Alternatively, we can write the steps we did:
+
+   Step 1: Parameterize the curve.
+   Step 2: Compute r'(t) and |r'(t)| = sqrt(46)
+   Step 3: Set up the integral: ∫_0^1 (6t)^3 (4-t) sqrt(46) dt
+   Step 4: Simplify the integrand: 864 t^3 - 216 t^4, then multiply by sqrt(46)? Actually, we factored out sqrt(46) so the integral is sqrt(46) * ∫ (864 t^3 - 216 t^4) dt
+   Step 5: Antiderivative: 216 t^4 - (216/5) t^5, evaluated from 0 to 1: 216 - 216/5 = 864/5
+   Step 6: Multiply by sqrt(46): (864 sqrt(46)) / 5
+
+ But that's a lot. We can summarize? Or we can just put the final answer in main_answer and leave scratchwork empty? Since the problem says "evaluate", we can just give the answer.
+
+ How about we do:
+
+   main_answer: { type: "scalar", values: [ "eight hundred sixty-four times the square root of forty-six, all over five" ] }
+   scratchwork_answer: we can put an array of the steps? But the problem didn't ask. Given the instruction, we can skip. But the template requires. We can put a note? Alternatively, we can put the steps in the scratchwork as an array of strings.
+
+ However, the instruction says: "scratchwork_answer": { "values": [ ... ], ... }.
+
+ Since we did the calculation, we can write the steps. But note the step-by-step for TTS is already provided in the linear_algebra_procedures for QR, but that's for linear algebra. Here we are in calculus.
+
+ We'll do:
+
+   Step 1: Parameterize the line segment: 
+        r(t) = <0,6,4> + t * <6-0, 3-6, 3-4> = <6t, 6-3t, 4-t> for t in [0,1]
+
+   Step 2: Compute r'(t) = <6, -3, -1>
+            |r'(t)| = sqrt(6^2 + (-3)^2 + (-1)^2) = sqrt(36+9+1)=sqrt(46)
+
+   Step 3: The integral becomes ∫_0^1 [ (6t)^3 * (4-t) ] * sqrt(46) dt
+           = ∫_0^1 [216 t^3 (4-t)] * sqrt(46) dt
+           = sqrt(46) * ∫_0^1 (864 t^3 - 216 t^4) dt
+
+   Step 4: Integrate term by term:
+            ∫864 t^3 dt = 864 * (t^4/4) = 216 t^4
+            ∫-216 t^4 dt = -216 * (t^5/5) = - (216/5) t^5
+
+   Step 5: Evaluate from 0 to 1: 
+            [216(1)^4 - (216/5)(1)^5] = 216 - 216/5 = 864/5
+
+   Step 6: Multiply by sqrt(46): (864 sqrt(46)) / 5
+
+ But in TTS, we want spoken language.
+
+ However, the problem only asked to evaluate the integral, so we can just output the answer. But the JSON template requires scratchwork_answer. We can either include the steps or leave as an empty array? But the specification says "TTS_ready", so if we leave empty, then the array would be empty and that's TTS_ready? But we must have TTS for the values. Alternatively, we can put a placeholder? 
+
+ Since the problem doesn't specify, and to keep it clean, we will put the main answer in main_answer and leave scratchwork_answer as an empty array? But the template requires the structure. Alternatively, we can put:
+
+   scratchwork_answer: { values: [ "We parameterized the curve, computed the speed, set up the integral, and evaluated the integral." ] }
+
+ But that's vague. Or we can skip? Actually, the requirement says: "scratchwork_answer": { ... } must be present. So we have to include it.
+
+ We decide to include a brief step:
+
+   In natural spoken language:
+
+   Step 1: "We parameterized the line segment from t equals zero to t equals one as x equals six t, y equals six minus three t, z equals four minus t."
+
+   Step 2: "The derivative is the constant vector <6, -3, -1>, and its magnitude is square root of forty-six."
+
+   Step 3: "The integral becomes the integral from zero to one of open parenthesis x cubed times z close parenthesis times the speed, which is square root of forty-six, times differential t. Substituting, we get the integral from zero to one of open parenthesis twenty-one six t cubed times open parenthesis four minus t close parenthesis close parenthesis times square root of forty-six differential t. Simplifying the expression inside: twenty-one six t cubed times four is eight hundred sixty-four t cubed, and twenty-one six t cubed times negative t is negative two hundred sixteen t to the fourth. So we have the integral of [eight hundred sixty-four t cubed minus two hundred sixteen t to the fourth] times square root of forty-six differential t."
+
+   Step 4: "Now, the integral can be split: square root of forty-six times integral of eight hundred sixty-four t cubed dt minus ... but actually we factor the square root of forty-six out. Then we integrate: integral of eight hundred sixty-four t cubed is eight hundred sixty-four times t to the fourth over four, which is two hundred sixteen t to the fourth. Integral of negative two hundred sixteen t to the fourth is negative two hundred sixteen over five t to the fifth."
+
+   Step 5: "Evaluate from zero to one: at one, two hundred sixteen minus two hundred sixteen over five equals two hundred sixteen times one minus two hundred sixteen over five equals ... which is two hundred sixteen times (one minus one fifth)? Actually, we computed 864/5? We said 216 - 216/5 = 864/5? But note: 216 is 1080/5? Then 1080/5 - 216/5 = 864/5. So: eight hundred sixty-four over five."
+
+   Step 6: "Multiply by square root of forty-six: eight hundred sixty-four times square root of forty-six over five."
+
+ But that's long. Alternatively, we can summarize the steps in a few sentences.
+
+ However, to keep it concise and since we are limited by the array, we can break into steps. The array can hold multiple strings.
+
+ We'll do 6 steps as above, but each step as a string.
+
+ But note: the TTS should be clear. We can also just put the final answer and in scratchwork we say "See main answer for the result, computed via parameterization."? But that's not a step-by-step.
+
+ Given the complexity, and since the problem is straightforward, we might skip detailed steps? But the system requires scratchwork.
+
+ Alternatively, we can output the calculation as:
+
+   scratchwork_answer: [
+        "Parameterization: (x(t), y(t), z(t)) = (6t, 6-3t, 4-t) for t in [0,1]",
+        "Speed: |r'(t)| = sqrt( (6)^2 + (-3)^2 + (-1)^2 ) = sqrt(46)",
+        "Integral: ∫_0^1 [ (6t)^3 * (4-t) ] * sqrt(46) dt = sqrt(46) * ∫_0^1 (864 t^3 - 216 t^4) dt",
+        "Antiderivative: 216 t^4 - (216/5) t^5",
+        "Evaluated at 1: 216 - 216/5 = 864/5",
+        "Then multiplied by sqrt(46): (864 sqrt(46)) / 5"
+   ]
+
+ But for TTS, we need to convert the mathematical expressions in these steps to spoken language? We can do that in code? But note we are to output a JSON with TTS ready. So we need to convert each step to spoken language.
+
+ However, we already know how to convert math to TTS? We can use the same rules as above.
+
+ How to convert each step? We'll do:
+
+   Step 1: "Parameterization: (x(t), y(t), z(t)) = (6t comma 6 minus 3t comma 4 minus t) for t from 0 to 1"
+
+   Step 2: "Speed: absolute value of r prime of t equals square root of open parenthesis 6 squared plus open parenthesis negative 3 close parenthesis squared plus open parenthesis negative 1 close parenthesis squared close parenthesis equals square root of forty-six"
+
+   Step 3: "Integral: integral from 0 to 1 of open parenthesis open parenthesis 6t close parenthesis cubed times open parenthesis 4 minus t close parenthesis close parenthesis times square root of forty-six differential t equals square root of forty-six times integral from 0 to 1 of open parenthesis eight hundred sixty-four t cubed minus two hundred sixteen t to the fourth close parenthesis differential t"
+
+   Step 4: "Antiderivative: two hundred sixteen t to the fourth minus open parenthesis two hundred sixteen over five close parenthesis t to the fifth"
+
+   Step 5: "Evaluated at 1: two hundred sixteen minus open parenthesis two hundred sixteen over five close parenthesis equals eight hundred sixty-four over five"
+
+   Step 6: "Then multiplied by square root of forty-six: open parenthesis eight hundred sixty-four square root of forty-six close parenthesis over five"
+
+ This is a bit repetitive and we are repeating the math symbols. But we have to.
+
+ Alternatively, we can just output the steps in plain text without conversion? But the system requires TTS ready. So we must convert.
+
+ However, note the entire problem analysis is for a TTS processor. We are to output natural spoken language. So we must convert every mathematical expression.
+
+ We'll do:
+
+   "Parameterization: the coordinates are x equals six t comma y equals six minus three t comma z equals four minus t for t between zero and one."
+
+   "The derivative vector r prime of t is six comma negative three comma negative one. Its magnitude is the square root of the sum: six squared which is thirty-six, plus negative three squared which is nine, plus negative one squared which is one. So thirty-six plus nine is forty-five, plus one is forty-six. Therefore, square root of forty-six."
+
+   "The integral becomes: the integral from t equals zero to t equals one of the function x cubed z times the speed. That is, open parenthesis six t close parenthesis cubed times open parenthesis four minus t close parenthesis times square root of forty-six differential t. Simplify inside: six cubed is two hundred sixteen, times t cubed, so two hundred sixteen t cubed. Then times four minus t: so two hundred sixteen t cubed times four is eight hundred sixty-four t cubed, and two hundred sixteen t cubed times negative t is negative two hundred sixteen t to the fourth. Therefore, we have the integral of [eight hundred sixty-four t cubed minus two hundred sixteen t to the fourth] times square root of forty-six differential t. Since square root of forty-six is constant, we factor it out: square root of forty-six times the integral of eight hundred sixty-four t cubed minus two hundred sixteen t to the fourth differential t."
+
+   "Next, we integrate term by term: the integral of eight hundred sixty-four t cubed is eight hundred sixty-four times the integral of t cubed, which is eight hundred sixty-four times t to the fourth over four, and eight hundred sixty-four divided by four is two hundred sixteen, so two hundred sixteen t to the fourth. The integral of negative two hundred sixteen t to the fourth is negative two hundred sixteen times t to the fifth over five, so negative two hundred sixteen over five t to the fifth."
+
+   "Evaluate at one: two hundred sixteen times one to the fourth is two hundred sixteen. Negative two hundred sixteen over five times one to the fifth is negative two hundred sixteen over five. So the expression is two hundred sixteen minus two hundred sixteen over five. Convert two hundred sixteen to a fraction over five: two hundred sixteen is one thousand eighty over five? Actually, two hundred sixteen is two hundred sixteen times five over five? That's one thousand eighty over five? Wait, 216 * 5 = 1080, so yes, two hundred sixteen equals one thousand eighty over five? But one thousand eighty over five is two hundred sixteen? Yes. Then subtract: one thousand eighty over five minus two hundred sixteen over five equals one thousand eighty minus two hundred sixteen over five? But we already have 216 - 216/5 = (5*216 - 216)/5 = (1080 - 216)/5 = 864/5. So eight hundred sixty-four over five."
+
+   "Finally, we multiply by square root of forty-six: eight hundred sixty-four times square root of forty-six over five."
+
+ This is very long. We might break it into more steps? Or we can note that the calculation of 216 - 216/5 is 864/5, so:
+
+   Step 5: "Then: two hundred sixteen minus two hundred sixteen over five equals eight hundred sixty-four over five."
+
+   Step 6: "Multiply by square root of forty-six: eight hundred sixty-four times square root of forty-six divided by five."
+
+ But we still have the complexity.
+
+ Alternatively, we can skip some steps? But we need to be accurate.
+
+ Given the time, we decide to put the steps as concisely as possible in TTS-ready strings.
+
+ However, the problem is simple, so we can put 4 steps:
+
+   "Step 1: Parameterize the curve with r(t) = <6t, 6-3t, 4-t> for 0 ≤ t ≤ 1."
+   "Step 2: The speed is the magnitude of the derivative vector <6, -3, -1>, which is sqrt(36+9+1)=sqrt(46)."
+   "Step 3: The integral becomes sqrt(46) ∫_0^1 [(6t)^3 (4-t)] dt = sqrt(46) ∫_0^1 (864t^3 - 216t^4) dt."
+   "Step 4: Compute the integral inside: [216t^4 - (216/5)t^5] from 0 to 1 = 216 - 216/5 = 864/5, then multiply by sqrt(46): (864 sqrt(46))/5."
+
+ But we need to convert the math in step 4 to spoken language.
+
+ We decide to do:
+
+   Step 1: "Parameterize: x of t equals six t comma y of t equals six minus three t comma z of t equals four minus t for t in the interval from zero to one inclusive."
+   Step 2: "Compute the derivative vector: six comma negative three comma negative one. Its magnitude is square root of six squared plus negative three squared plus negative one squared equals square root of thirty-six plus nine plus one equals square root of forty-six."
+   Step 3: "Set up the integral: integral from t equals zero to t equals one of the quantity x of t cubed times z of t times the speed. Substitute: x of t cubed is open parenthesis six t close parenthesis cubed equals two hundred sixteen t cubed. z of t is four minus t. So the product is two hundred sixteen t cubed times four minus t. Then times the speed square root of forty-six. So the integral becomes square root of forty-six times the integral from zero to one of two hundred sixteen t cubed times four minus t dt. Distribute: two hundred sixteen t cubed times four is eight hundred sixty-four t cubed, two hundred sixteen t cubed times negative t is negative two hundred sixteen t to the fourth. So we have square root of forty-six times the integral of eight hundred sixty-four t cubed minus two hundred sixteen t to the fourth from zero to one dt."
+   Step 4: "Integrate term by term: the antiderivative of eight hundred sixty-four t cubed is eight hundred sixty-four times t to the fourth over four equals two hundred sixteen t to the fourth. The antiderivative of negative two hundred sixteen t to the fourth is negative two hundred sixteen times t to the fifth over five. Evaluate at one: two hundred sixteen times one to the fourth is two hundred sixteen. Negative two hundred sixteen over five times one to the fifth is negative two hundred sixteen over five. Subtract at zero is zero. So the value is two hundred sixteen minus two hundred sixteen over five. Convert: two hundred sixteen is one thousand eighty over five? Actually, two hundred sixteen equals two hundred sixteen times five over five equals one thousand eighty over five. Then one thousand eighty over five minus two hundred sixteen over five equals one thousand eighty minus two hundred sixteen over five equals eight hundred sixty-four over five. Finally, multiply by square root of forty-six: eight hundred sixty-four square root of forty-six over five."
+
+ But that is still long.
+
+ Given the above, we decide to output the main answer and for scratchwork we put a placeholder saying "Detailed steps omitted for brevity."? But the system might require the steps.
+
+ Alternatively, we can note that the system is designed for linear algebra and calculus, so we can use the step-by-step as per the provided template? But the provided template is for Gram-Schmidt.
+
+ We'll go ahead and output the final answer in main_answer and for scratchwork we provide the steps in condensed TTS language.
+
+ But to save time, we'll put the scratchwork as an array of 4 steps as above, but each step as a string of spoken language.
+
+ We'll write the steps in natural spoken language as concisely as possible.
+
+ However, note the entire processing is automated. We are to output the JSON.
+
+ But since this is a demonstration, we provide the answer.
+
+ We'll do:
+
+   main_answer: 
+        type: "scalar"
+        values: [ "eight hundred sixty-four times the square root of forty-six, all over five" ]
+
+   scratchwork_answer: 
+        values: [
+            "We parameterized the curve by t from zero to one: x equals six t comma y equals six minus three t comma z equals four minus t.",
+            "The derivative vector is six comma negative three comma negative one, with magnitude square root of the sum: thirty-six plus nine plus one equals forty-six, so square root of forty-six.",
+            "The line integral becomes the integral from zero to one of [twenty-one six t cubed] times [four minus t] times [square root of forty-six] dt. We factored out the constant square root of forty-six and integrated the polynomial inside: eight hundred sixty-four t cubed minus two hundred sixteen t to the fourth.",
+            "The antiderivative is two hundred sixteen t to the fourth minus two hundred sixteen over five t to the fifth. Evaluated from zero to one: two hundred sixteen minus two hundred sixteen over five equals eight hundred sixty-four over five. Multiply by square root of forty-six: eight hundred sixty-four times square root of forty-six over five."
+        ]
+
+ Now, we output the final JSON.
+
+ But note: the problem number and problem statement. We are given a problem. We should extract:
+
+   problem_number: not given, we can use "1" or omit? The template has "problem_number". Since it's not provided, we can put an empty string or "1".
+
+   problem_statement: "Evaluate the line integral: ∫_C x³ z ds, where C is the line segment from (0,6,4) to (6,3,3)."
+
+   We convert the problem_statement to TTS ready? The requirement says: "problem_statement field MUST contain ONLY natural spoken language with ZERO mathematical symbols remaining"
+
+ So convert:
+
+   "Evaluate the line integral: ∫_C x³ z ds, where C is the line segment from (0,6,4) to (6,3,3)."
+
+   We remove the integral symbol? We must vocalize.
+
+   "Evaluate the line integral: integral from C of x cubed times z, differential s. Where C is the line segment from open parenthesis zero comma six comma four close parenthesis to open parenthesis six comma three comma three close parenthesis."
+
+ But we can break it down:
+
+   "Evaluate the following line integral: the integral over curve C of the function x cubed times z with respect to arc length. Curve C is the line segment from the point with coordinates zero comma six comma four to the point with coordinates six comma three comma three."
+
+ We'll use:
+
+   "Evaluate the line integral: integral over C of x cubed z differential s, where C is the line segment from open parenthesis zero comma six comma four close parenthesis to open parenthesis six comma three comma three close parenthesis."
+
+ But to be TTS ready, we should remove the mathematical symbols:
+
+   "Evaluate the line integral: the integral over the curve C of the function x cubed times z with respect to arc length s. Curve C is the line segment from the point zero comma six comma four to the point six comma three comma three."
+
+ However, we can say:
+
+   "Evaluate the line integral: integral from C of x cubed z ds. Where C is the line segment from open parenthesis zero comma six comma four close parenthesis to open parenthesis six comma three comma three close parenthesis."
+
+ But then we have to convert the integral and the points? We already have a rule for points: "comma" explicitly.
+
+ And for the integral: "integral over C of open parenthesis x cubed z close parenthesis differential s"
+
+ But the original problem has the integral symbol and the differential s. We can say:
+
+   "Evaluate the line integral: the integral over the curve C of the product of x cubed and z with respect to arc length s. The curve C is a line segment from the point with coordinates zero, six, four to the point with coordinates six, three, three."
+
+ We'll use that.
+
+ However, to match the rules, we explicitly say "comma" in coordinates.
+
+ So:
+
+   "Evaluate the line integral: integral over curve C of x cubed times z, differential s. Where curve C is the line segment from the point with coordinates (zero comma six comma four) to the point with coordinates (six comma three comma three)."
+
+ But wait, we should not use parentheses? We have to remove all symbols. So:
+
+   "Evaluate the line integral: the integral over the curve C of the function x cubed times z with respect to arc length s. The curve C is a line segment from the point zero comma six comma four to the point six comma three comma three."
+
+ We decide on this version.
+
+ Now, we assemble the JSON.
+
+ However, note the system has a switch for question_type. How to determine the question_type? The problem is to evaluate a line integral. This falls under "multiple_integrals" domain? But our switch has:
+
+   [[SWITCH: question_type ... ]]
+   ...
+   ^^CASE: multiple_integrals:mathematical_domain^^
+        [[ENFORCE: integral_notation:calculus_representation]]
+        [[REQUIRE: bounds_notation:integration_limits]]
+
+ We can classify as "multiple_integrals".
+
+ So:
+
+   "question_type": "multiple_integrals"
+
+ And "math_content_check": "yes"
+
+ Let's create the JSON.
+
+
+==============================
+
+=== FINAL RESPONSE ===
+{
+  "problem_number": "1",
+  "problem_statement": "Evaluate the line integral: the integral over the curve capital C of the function x cubed times z with respect to arc length s. The curve capital C is a line segment from the point with coordinates zero comma six comma four to the point with coordinates six comma three comma three.",
+  "question_type": "multiple_integrals",
+  "math_content_check": "yes",
+  "final_answers": {
+    "main_answer": {
+      "type": "scalar",
+      "values": [
+        "eight hundred sixty-four times the square root of forty-six, all over five"
+      ],
+      "answer_format": "tts_ready"
+    },
+    "scratchwork_answer": {
+      "values": [
+        "Parameterize the line segment: x of t equals six t comma y of t equals six minus three t comma z of t equals four minus t for t between zero and one inclusive.",
+        "Compute the derivative vector: six comma negative three comma negative one. Its magnitude is square root of open parenthesis six squared plus negative three squared plus negative one squared close parenthesis equals square root of open parenthesis thirty-six plus nine plus one close parenthesis equals square root of forty-six.",
+        "Set up the integral: integral from t equals zero to t equals one of open parenthesis open parenthesis six t close parenthesis cubed times open parenthesis four minus t close parenthesis close parenthesis times square root of forty-six differential t. Simplify the expression inside: eight hundred sixty-four t cubed minus two hundred sixteen t to the fourth, then factor out the constant square root of forty-six.",
+        "Integrate: antiderivative of eight hundred sixty-four t cubed is two hundred sixteen t to the fourth, antiderivative of negative two hundred sixteen t to the fourth is negative two hundred sixteen over five t to the fifth. Evaluated from zero to one: two hundred sixteen minus twenty-one point six equals one hundred ninety-four point four? Wait, no—convert to fractions: two hundred sixteen minus two hundred sixteen over five equals one thousand eighty over five minus two hundred sixteen over five equals eight hundred sixty-four over five. Multiply by square root of forty-six: eight hundred sixty-four times square root of forty-six over five."
+      ],
+      "answer_format": "tts_ready"
+    }
+  }
+}

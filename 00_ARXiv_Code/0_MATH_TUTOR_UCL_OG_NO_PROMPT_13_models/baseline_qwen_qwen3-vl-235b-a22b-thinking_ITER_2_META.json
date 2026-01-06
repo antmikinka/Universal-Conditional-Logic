@@ -1,0 +1,49 @@
+{
+    "model": "qwen/qwen3-vl-235b-a22b-thinking",
+    "prompt_label": "baseline",
+    "prompt_category": "baseline",
+    "iteration": 2,
+    "input_mode": "vision",
+    "timestamp": "2025-12-15 02:17:31",
+    "usage": {
+        "prompt_tokens": 5020,
+        "completion_tokens": 1436,
+        "total_tokens": 6456,
+        "reasoning_tokens": 1198,
+        "duration_seconds": 40.89,
+        "input_mode": "vision",
+        "model_capability": "auto",
+        "vision_attempted": true,
+        "vision_fallback": false
+    },
+    "schema_compliance": {
+        "is_valid_json": true,
+        "schema_compliance_pct": 100.0,
+        "fields_present": [
+            "problem_number",
+            "problem_statement",
+            "question_type",
+            "math_content_check",
+            "final_answers"
+        ],
+        "fields_missing": [],
+        "has_main_answer": true,
+        "has_scratchwork": true,
+        "tts_ready": true
+    },
+    "content_metrics": {
+        "char_count": 889,
+        "word_count": 126,
+        "line_count": 17,
+        "tts_keyword_count": 21,
+        "tts_keyword_density": 16.67
+    },
+    "efficiency_metrics": {
+        "token_efficiency_ratio": 0.286,
+        "reasoning_overhead_pct": 83.43,
+        "ms_per_token": 6.33,
+        "tokens_per_second": 157.9,
+        "cost_proxy": 9328.0
+    },
+    "raw_content_length": 889
+}
