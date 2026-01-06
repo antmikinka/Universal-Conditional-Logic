@@ -2,7 +2,7 @@
 
 **Experimental Data and Code for the UCL arxiv Paper**
 
-[![arXiv](https://img.shields.io/badge/arXiv-2025-b31b1b.svg)]()
+[![arXiv](https://img.shields.io/badge/arXiv-2601.00880-b31b1b.svg)](https://arxiv.org/abs/2601.00880)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)]()
 
 ## Overview
@@ -62,15 +62,30 @@ Each condition was run **4 iterations** per model to assess consistency.
 
 ## Citation
 
+If you use this code or data in your research, please cite:
+
+### APA Format
+
+Mikinka, A. (2025). Universal Conditional Logic: A formal language for prompt engineering. *arXiv preprint arXiv:2601.00880*. https://doi.org/10.48550/arXiv.2601.00880
+
+### BibTeX
+
 ```bibtex
 @article{mikinka2025ucl,
-  title={The Over-Specification Paradox: A Mathematical Framework for 
-         Prompt Optimization in Large Language Models},
+  title={Universal Conditional Logic: A Formal Language for Prompt Engineering},
   author={Mikinka, Anthony},
-  journal={arXiv preprint},
-  year={2025}
+  journal={arXiv preprint arXiv:2601.00880},
+  year={2025},
+  url={https://arxiv.org/abs/2601.00880},
+  doi={10.48550/arXiv.2601.00880}
 }
 ```
+
+### arXiv
+
+- **arXiv ID**: [2601.00880](https://arxiv.org/abs/2601.00880)
+- **DOI**: [10.48550/arXiv.2601.00880](https://doi.org/10.48550/arXiv.2601.00880)
+- **Categories**: cs.AI, cs.CL, cs.LG, cs.PL, cs.SE
 
 ## Author
 
