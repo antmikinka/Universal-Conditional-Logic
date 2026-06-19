@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UCL Prompt Builder - OpenRouter Edition</title>
-    
+    <title>UCL Prompt Builder - OpenRouter & Local LLM Edition</title>
+
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Build mathematically optimized AI prompts using Universal Conditional Logic (UCL) framework with OpenRouter integration">
-    <meta name="keywords" content="UCL, prompt engineering, AI, OpenRouter, prompt optimization">
+    <meta name="description" content="Build mathematically optimized AI prompts using Universal Conditional Logic (UCL) framework with OpenRouter and local LLM support (Lemonade, Ollama, LM Studio)">
+    <meta name="keywords" content="UCL, prompt engineering, AI, OpenRouter, Lemonade, Ollama, local LLM, prompt optimization">
     <meta name="author" content="Anthony Mikinka">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="UCL Prompt Builder - OpenRouter Edition">
-    <meta property="og:description" content="Transform your prompts with Universal Conditional Logic optimization">
+    <meta property="og:title" content="UCL Prompt Builder - OpenRouter & Local LLM Edition">
+    <meta property="og:description" content="Transform your prompts with Universal Conditional Logic optimization - now with local LLM support">
     <meta property="og:type" content="website">
     
     <!-- Google Fonts -->
@@ -171,6 +171,17 @@
                     Download
                 </button>
             </div>
+
+            <!-- Download Progress Bar (Lemonade) -->
+            <div class="download-progress" id="downloadProgress" style="display:none;">
+                <div class="progress-header">
+                    <span>Downloading model...</span>
+                    <span id="downloadProgressText">0%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="downloadProgressBar" style="width: 0%"></div>
+                </div>
+            </div>
         </main>
     </div>
 
@@ -183,38 +194,91 @@
             </div>
             <div class="modal-body">
                 <div class="setting-group">
-                    <label for="apiKeyInput" class="setting-label">
-                        OpenRouter API Key
-                        <span class="required">*</span>
+                    <label for="providerSelect" class="setting-label">
+                        LLM Provider
                     </label>
-                    <div class="input-with-toggle">
-                        <input 
-                            type="password" 
-                            id="apiKeyInput" 
-                            class="setting-input"
-                            placeholder="sk-or-v1-...">
-                        <button class="toggle-visibility" id="toggleApiKey" type="button">
-                            👁️
-                        </button>
-                    </div>
+                    <select id="providerSelect" class="setting-input" onchange="updateProviderUI()">
+                        <option value="openrouter">OpenRouter (Cloud - 20+ models)</option>
+                        <option value="lemonade">Lemonade (Local - Free)</option>
+                        <option value="openai_compat">Custom OpenAI-Compatible (Local)</option>
+                    </select>
                     <small class="setting-help">
-                        Get your API key from 
-                        <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">OpenRouter</a>
+                        Choose cloud (OpenRouter) or local (Lemonade, Ollama, LM Studio, etc.)
                     </small>
-                    <div class="api-key-status" id="apiKeyStatus"></div>
                 </div>
+
+                <!-- OpenRouter Settings -->
+                <div id="openrouterSettings">
+                    <div class="setting-group">
+                        <label for="apiKeyInput" class="setting-label">
+                            OpenRouter API Key
+                            <span class="required">*</span>
+                        </label>
+                        <div class="input-with-toggle">
+                            <input
+                                type="password"
+                                id="apiKeyInput"
+                                class="setting-input"
+                                placeholder="sk-or-v1-...">
+                            <button class="toggle-visibility" id="toggleApiKey" type="button">
+                                👁️
+                            </button>
+                        </div>
+                        <small class="setting-help">
+                            Get your API key from
+                            <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">OpenRouter</a>
+                        </small>
+                    </div>
+                </div>
+
+                <!-- Lemonade / Local Settings -->
+                <div id="lemonadeSettings" style="display:none;">
+                    <div class="setting-group">
+                        <label for="lemonadeEndpointInput" class="setting-label">
+                            Local Server Endpoint
+                        </label>
+                        <input
+                            type="text"
+                            id="lemonadeEndpointInput"
+                            class="setting-input"
+                            placeholder="http://localhost:13305">
+                        <small class="setting-help">
+                            <strong>Lemonade:</strong> http://localhost:13305 &nbsp;|&nbsp;
+                            <strong>Ollama:</strong> http://localhost:11434 &nbsp;|&nbsp;
+                            <strong>LM Studio:</strong> http://localhost:1234
+                        </small>
+                    </div>
+
+                    <div class="setting-group">
+                        <label for="lemonadeApiKeyInput" class="setting-label">
+                            API Key (optional)
+                        </label>
+                        <div class="input-with-toggle">
+                            <input
+                                type="password"
+                                id="lemonadeApiKeyInput"
+                                class="setting-input"
+                                placeholder="Leave blank for local servers">
+                        </div>
+                        <small class="setting-help">
+                            Most local servers don't require an API key. Lemonade: set via LEMONADE_API_KEY env var.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="api-key-status" id="apiKeyStatus"></div>
 
                 <div class="setting-group">
                     <label for="customModelInput" class="setting-label">
-                        Custom Model (optional)
+                        Custom Model ID (optional)
                     </label>
-                    <input 
-                        type="text" 
-                        id="customModelInput" 
+                    <input
+                        type="text"
+                        id="customModelInput"
                         class="setting-input"
-                        placeholder="e.g., anthropic/claude-3-7-sonnet">
+                        placeholder="Override dropdown with custom model ID">
                     <small class="setting-help">
-                        Override dropdown selection with any OpenRouter model ID
+                        Type any model ID to override the dropdown selection
                     </small>
                 </div>
 
@@ -287,6 +351,7 @@
     <!-- Scripts -->
     <script src="ucl-data.js"></script>
     <script src="models.js"></script>
+    <script src="lemonade-api.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

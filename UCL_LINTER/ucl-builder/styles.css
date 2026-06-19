@@ -1120,3 +1120,44 @@ body {
         justify-content: center;
     }
 }
+
+/* ============================================================================
+   DOWNLOAD PROGRESS BAR (Lemonade)
+   ========================================================================== */
+.download-progress {
+    margin: var(--gap-md) var(--gap-lg);
+    padding: var(--gap-md);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    backdrop-filter: blur(var(--glass-blur));
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--gap-sm);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.progress-header span:first-child {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 8px;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+    border-radius: var(--radius-sm);
+    transition: width 0.3s ease;
+}

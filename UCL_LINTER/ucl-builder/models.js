@@ -217,12 +217,129 @@ function getModelById(modelId) {
     return OPENROUTER_MODELS.find(m => m.id === modelId);
 }
 
+// ============================================================================
+// LEMONADE / LOCAL LLM MODELS
+// OpenAI-compatible local models via Lemonade Server
+// ============================================================================
+
+const LEMONADE_MODELS = [
+    // === Chat/LLM Models ===
+    {
+        id: 'Qwen3-0.6B-GGUF',
+        name: 'Qwen3 0.6B',
+        provider: 'Local',
+        category: 'Chat',
+        recommended: true,
+        description: 'Compact chat model, fast inference',
+        contextWindow: 32000,
+        pricing: { prompt: 0, completion: 0 }
+    },
+    {
+        id: 'Qwen3-1.7B-GGUF',
+        name: 'Qwen3 1.7B',
+        provider: 'Local',
+        category: 'Chat',
+        recommended: true,
+        description: 'Balanced chat model',
+        contextWindow: 32000,
+        pricing: { prompt: 0, completion: 0 }
+    },
+    {
+        id: 'Qwen3-4B-GGUF',
+        name: 'Qwen3 4B',
+        provider: 'Local',
+        category: 'Chat',
+        recommended: true,
+        description: 'Strong local chat model',
+        contextWindow: 32000,
+        pricing: { prompt: 0, completion: 0 }
+    },
+    {
+        id: 'Qwen3-8B-GGUF',
+        name: 'Qwen3 8B',
+        provider: 'Local',
+        category: 'Chat',
+        recommended: true,
+        description: 'Powerful local chat model',
+        contextWindow: 32000,
+        pricing: { prompt: 0, completion: 0 }
+    },
+    {
+        id: 'Llama-3.2-1B-Instruct-Hybrid',
+        name: 'Llama 3.2 1B Instruct',
+        provider: 'Local',
+        category: 'Chat',
+        recommended: true,
+        description: 'Meta Llama hybrid model',
+        contextWindow: 128000,
+        pricing: { prompt: 0, completion: 0 }
+    },
+    {
+        id: 'Llama-3.2-3B-Instruct',
+        name: 'Llama 3.2 3B Instruct',
+        provider: 'Local',
+        category: 'Chat',
+        recommended: true,
+        description: 'Balanced Llama model',
+        contextWindow: 128000,
+        pricing: { prompt: 0, completion: 0 }
+    },
+    {
+        id: 'Phi-3.5-mini-instruct',
+        name: 'Phi-3.5 Mini Instruct',
+        provider: 'Local',
+        category: 'Chat',
+        recommended: true,
+        description: 'Microsoft compact model',
+        contextWindow: 32000,
+        pricing: { prompt: 0, completion: 0 }
+    },
+    {
+        id: 'Phi-4',
+        name: 'Phi-4',
+        provider: 'Local',
+        category: 'Chat',
+        recommended: true,
+        description: 'Latest Phi model',
+        contextWindow: 16384,
+        pricing: { prompt: 0, completion: 0 }
+    },
+    {
+        id: 'DeepSeek-R1-Distill-Llama-8B',
+        name: 'DeepSeek R1 8B',
+        provider: 'Local',
+        category: 'Reasoning',
+        recommended: true,
+        description: 'Reasoning model distilled from R1',
+        contextWindow: 32000,
+        pricing: { prompt: 0, completion: 0 }
+    },
+    {
+        id: 'DeepSeek-R1-Distill-Qwen-7B',
+        name: 'DeepSeek R1 7B',
+        provider: 'Local',
+        category: 'Reasoning',
+        recommended: true,
+        description: 'Reasoning model distilled from R1',
+        contextWindow: 32000,
+        pricing: { prompt: 0, completion: 0 }
+    }
+];
+
+// Group Lemonade models by category
+const LEMONADE_MODELS_BY_CATEGORY = {
+    'Reasoning': LEMONADE_MODELS.filter(m => m.category === 'Reasoning'),
+    'Chat Models': LEMONADE_MODELS.filter(m => m.category === 'Chat')
+};
+
 // Export for use in main app
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
         OPENROUTER_MODELS,
         MODELS_BY_CATEGORY,
         RECOMMENDED_MODELS,
+        LEMONADE_MODELS,
+        LEMONADE_MODELS_BY_CATEGORY,
         formatPricing,
         getModelById
     };

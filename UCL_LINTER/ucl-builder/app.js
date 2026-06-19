@@ -7,9 +7,12 @@
 // STATE MANAGEMENT
 // ============================================================================
 const AppState = {
+    provider: 'openrouter', // 'openrouter' or 'lemonade'
     apiKey: '',
     selectedModel: '',
     customModel: '',
+    lemonadeEndpoint: 'http://localhost:13305',
+    lemonadeApiKey: '',
     settings: {
         autoCopy: false,
         syntaxHighlight: true
@@ -38,32 +41,45 @@ document.addEventListener('DOMContentLoaded', () => {
 // ============================================================================
 function loadSettings() {
     try {
+        const provider = localStorage.getItem('ucl_provider') || 'openrouter';
         const apiKey = localStorage.getItem('ucl_api_key') || '';
         const model = localStorage.getItem('ucl_model') || '';
         const customModel = localStorage.getItem('ucl_custom_model') || '';
+        const lemonadeEndpoint = localStorage.getItem('ucl_lemonade_endpoint') || 'http://localhost:13305';
+        const lemonadeApiKey = localStorage.getItem('ucl_lemonade_api_key') || '';
         const autoCopy = localStorage.getItem('ucl_auto_copy') === 'true';
         const syntaxHighlight = localStorage.getItem('ucl_syntax_highlight') !== 'false';
 
+        AppState.provider = provider;
         AppState.apiKey = apiKey;
         AppState.selectedModel = model;
         AppState.customModel = customModel;
+        AppState.lemonadeEndpoint = lemonadeEndpoint;
+        AppState.lemonadeApiKey = lemonadeApiKey;
         AppState.settings.autoCopy = autoCopy;
         AppState.settings.syntaxHighlight = syntaxHighlight;
 
         // Update UI
+        const providerSelect = document.getElementById('providerSelect');
         const apiKeyInput = document.getElementById('apiKeyInput');
         const modelSelect = document.getElementById('modelSelect');
         const customModelInput = document.getElementById('customModelInput');
+        const lemonadeEndpointInput = document.getElementById('lemonadeEndpointInput');
+        const lemonadeApiKeyInput = document.getElementById('lemonadeApiKeyInput');
         const autoCopyCheck = document.getElementById('autoCopyCheck');
         const syntaxHighlightCheck = document.getElementById('syntaxHighlightCheck');
 
+        if (providerSelect) providerSelect.value = provider;
         if (apiKeyInput) apiKeyInput.value = apiKey;
         if (modelSelect) modelSelect.value = model;
         if (customModelInput) customModelInput.value = customModel;
+        if (lemonadeEndpointInput) lemonadeEndpointInput.value = lemonadeEndpoint;
+        if (lemonadeApiKeyInput) lemonadeApiKeyInput.value = lemonadeApiKey;
         if (autoCopyCheck) autoCopyCheck.checked = autoCopy;
         if (syntaxHighlightCheck) syntaxHighlightCheck.checked = syntaxHighlight;
 
         updateApiKeyStatus();
+        updateProviderUI();
     } catch (error) {
         console.error('Error loading settings:', error);
     }
@@ -71,25 +87,36 @@ function loadSettings() {
 
 function saveSettings() {
     try {
+        const providerSelect = document.getElementById('providerSelect');
         const apiKeyInput = document.getElementById('apiKeyInput');
         const modelSelect = document.getElementById('modelSelect');
         const customModelInput = document.getElementById('customModelInput');
+        const lemonadeEndpointInput = document.getElementById('lemonadeEndpointInput');
+        const lemonadeApiKeyInput = document.getElementById('lemonadeApiKeyInput');
         const autoCopyCheck = document.getElementById('autoCopyCheck');
         const syntaxHighlightCheck = document.getElementById('syntaxHighlightCheck');
 
-        AppState.apiKey = apiKeyInput.value.trim();
-        AppState.selectedModel = modelSelect.value;
-        AppState.customModel = customModelInput.value.trim();
-        AppState.settings.autoCopy = autoCopyCheck.checked;
-        AppState.settings.syntaxHighlight = syntaxHighlightCheck.checked;
+        AppState.provider = providerSelect ? providerSelect.value : 'openrouter';
+        AppState.apiKey = apiKeyInput ? apiKeyInput.value.trim() : '';
+        AppState.selectedModel = modelSelect ? modelSelect.value : '';
+        AppState.customModel = customModelInput ? customModelInput.value.trim() : '';
+        AppState.lemonadeEndpoint = lemonadeEndpointInput ? lemonadeEndpointInput.value.trim() : 'http://localhost:13305';
+        AppState.lemonadeApiKey = lemonadeApiKeyInput ? lemonadeApiKeyInput.value.trim() : '';
+        AppState.settings.autoCopy = autoCopyCheck ? autoCopyCheck.checked : false;
+        AppState.settings.syntaxHighlight = syntaxHighlightCheck ? syntaxHighlightCheck.checked : true;
 
+        localStorage.setItem('ucl_provider', AppState.provider);
         localStorage.setItem('ucl_api_key', AppState.apiKey);
         localStorage.setItem('ucl_model', AppState.selectedModel);
         localStorage.setItem('ucl_custom_model', AppState.customModel);
+        localStorage.setItem('ucl_lemonade_endpoint', AppState.lemonadeEndpoint);
+        localStorage.setItem('ucl_lemonade_api_key', AppState.lemonadeApiKey);
         localStorage.setItem('ucl_auto_copy', AppState.settings.autoCopy);
         localStorage.setItem('ucl_syntax_highlight', AppState.settings.syntaxHighlight);
 
         updateApiKeyStatus();
+        updateProviderUI();
+        populateModels();
         closeModal('settingsModal');
         showToast('Settings saved successfully', 'success');
     } catch (error) {
@@ -102,12 +129,37 @@ function updateApiKeyStatus() {
     const statusDiv = document.getElementById('apiKeyStatus');
     if (!statusDiv) return;
 
-    if (AppState.apiKey) {
-        statusDiv.textContent = '✓ API key saved';
+    if (AppState.provider === 'openrouter') {
+        if (AppState.apiKey) {
+            statusDiv.textContent = '✓ OpenRouter API key saved';
+            statusDiv.className = 'api-key-status success';
+        } else {
+            statusDiv.textContent = '⚠ No OpenRouter API key configured';
+            statusDiv.className = 'api-key-status error';
+        }
+    } else if (AppState.provider === 'lemonade') {
+        statusDiv.textContent = '✓ Local Lemonade server: ' + AppState.lemonadeEndpoint;
         statusDiv.className = 'api-key-status success';
-    } else {
-        statusDiv.textContent = '⚠ No API key configured';
-        statusDiv.className = 'api-key-status error';
+    } else if (AppState.provider === 'openai_compat') {
+        statusDiv.textContent = '✓ Local server: ' + AppState.lemonadeEndpoint;
+        statusDiv.className = 'api-key-status success';
+    }
+}
+
+// Show/hide provider-specific settings sections
+function updateProviderUI() {
+    const openrouterSection = document.getElementById('openrouterSettings');
+    const lemonadeSection = document.getElementById('lemonadeSettings');
+    const providerSelect = document.getElementById('providerSelect');
+
+    if (providerSelect) {
+        const provider = providerSelect.value;
+        if (openrouterSection) {
+            openrouterSection.style.display = (provider === 'openrouter') ? '' : 'none';
+        }
+        if (lemonadeSection) {
+            lemonadeSection.style.display = (provider === 'lemonade' || provider === 'openai_compat') ? '' : 'none';
+        }
     }
 }
 
@@ -121,8 +173,18 @@ function populateModels() {
     // Clear existing options except first
     modelSelect.innerHTML = '<option value="">Select a model...</option>';
 
+    // Get models based on provider
+    let modelsByCategory;
+    if (AppState.provider === 'lemonade') {
+        modelsByCategory = LEMONADE_MODELS_BY_CATEGORY;
+    } else if (AppState.provider === 'openai_compat') {
+        modelsByCategory = LEMONADE_MODELS_BY_CATEGORY; // Same models, but user can type custom
+    } else {
+        modelsByCategory = MODELS_BY_CATEGORY;
+    }
+
     // Add models by category
-    for (const [category, models] of Object.entries(MODELS_BY_CATEGORY)) {
+    for (const [category, models] of Object.entries(modelsByCategory)) {
         const optgroup = document.createElement('optgroup');
         optgroup.label = category;
 
@@ -315,7 +377,143 @@ document.getElementById('inputPrompt')?.addEventListener('input', updateCharCoun
 document.getElementById('outputPrompt')?.addEventListener('input', updateCharCounts);
 
 // ============================================================================
-// UCL OPTIMIZATION (OpenRouter API)
+// LEMONADE MODEL MANAGEMENT
+// ============================================================================
+
+// Ensure model is loaded before making inference requests
+async function loadModelBeforeOptimize(modelName) {
+    if (!lemonadeClient) return true;
+
+    try {
+        // Check server health first
+        const isRunning = await lemonadeClient.isServerRunning();
+        if (!isRunning) {
+            showToast('Lemonade server not running. Start with: lemonade-server', 'error');
+            setStatus('Server Offline', 'error');
+            return false;
+        }
+
+        // Check if model is already loaded
+        const isLoaded = await lemonadeClient.isModelLoaded(modelName);
+        if (isLoaded) {
+            console.log(`Model ${modelName} already loaded`);
+            return true;
+        }
+
+        // Model not loaded - try to load it
+        console.log(`Loading model ${modelName}...`);
+        setStatus('Loading model...', 'warning');
+        showLoading(true);
+
+        await lemonadeClient.loadModel(modelName);
+
+        showToast(`Model ${modelName} loaded successfully!`, 'success');
+        setStatus('Model Ready', 'success');
+        return true;
+
+    } catch (error) {
+        console.error('Model load error:', error);
+
+        // If load fails, model might not be installed - offer to install
+        if (error.message.includes('not found') || error.message.includes('not registered')) {
+            const install = confirm(
+                `Model "${modelName}" is not installed.\n\n` +
+                `Would you like to download and install it now?`
+            );
+            if (install) {
+                return await installModelWithProgress(modelName);
+            }
+            return false;
+        }
+
+        showToast(`Failed to load model: ${error.message}`, 'error');
+        setStatus('Error', 'error');
+        return false;
+    }
+}
+
+// Install model with progress tracking via SSE
+async function installModelWithProgress(modelName) {
+    try {
+        setStatus('Downloading model...', 'warning');
+
+        // Show progress in the status area
+        const progressEl = document.getElementById('downloadProgress');
+        if (progressEl) {
+            progressEl.style.display = 'block';
+        }
+
+        await lemonadeClient.pullModel(modelName, (event) => {
+            if (event.type === 'progress') {
+                const percent = event.percent || 0;
+                const downloaded = lemonadeClient.formatBytes(event.bytes_downloaded || 0);
+                const total = lemonadeClient.formatBytes(event.bytes_total || 0);
+
+                // Update progress bar
+                const progressBar = document.getElementById('downloadProgressBar');
+                const progressText = document.getElementById('downloadProgressText');
+
+                if (progressBar) {
+                    progressBar.style.width = `${percent}%`;
+                }
+                if (progressText) {
+                    progressText.textContent = `${percent}% (${downloaded} / ${total})`;
+                }
+
+                console.log(`Download progress: ${percent}%`);
+            } else if (event.type === 'complete') {
+                console.log('Download complete!');
+            }
+        });
+
+        // Hide progress
+        const progressEl = document.getElementById('downloadProgress');
+        if (progressEl) {
+            progressEl.style.display = 'none';
+        }
+
+        showToast(`Model ${modelName} installed! Loading...`, 'success');
+
+        // Auto-load after install
+        await lemonadeClient.loadModel(modelName);
+        showToast(`Model ${modelName} ready!`, 'success');
+        setStatus('Model Ready', 'success');
+        return true;
+
+    } catch (error) {
+        console.error('Install error:', error);
+        showToast(`Install failed: ${error.message}`, 'error');
+        setStatus('Error', 'error');
+
+        // Hide progress
+        const progressEl = document.getElementById('downloadProgress');
+        if (progressEl) {
+            progressEl.style.display = 'none';
+        }
+        return false;
+    }
+}
+
+// Fetch and display performance stats after optimization
+async function showPerformanceStats() {
+    if (!lemonadeClient || AppState.provider !== 'lemonade') return;
+
+    try {
+        const stats = await lemonadeClient.getStats();
+        if (stats) {
+            const ttft = stats.time_to_first_token?.toFixed(2) || '?';
+            const tps = stats.tokens_per_second?.toFixed(1) || '?';
+            console.log(`Performance: ${ttft}s to first token, ${tps} tokens/sec`);
+            showToast(`${tps} tokens/sec, ${ttft}s to first token`, 'info');
+        }
+    } catch (error) {
+        // Stats are optional, don't show error
+        console.log('Could not fetch stats:', error.message);
+    }
+}
+
+// ============================================================================
+// UCL OPTIMIZATION (OpenRouter API / Lemonade / OpenAI-compatible)
 // ============================================================================
 async function optimizeWithUCL() {
     const inputPrompt = document.getElementById('inputPrompt').value.trim();
@@ -325,14 +523,32 @@ async function optimizeWithUCL() {
         return;
     }
 
-    // Get API key and model
-    const apiKey = AppState.customModel || AppState.apiKey;
     const model = AppState.customModel || AppState.selectedModel;
 
-    if (!AppState.apiKey) {
-        showToast('Please configure your OpenRouter API key in settings', 'error');
-        openModal('settingsModal');
-        return;
+    // Validate based on provider
+    if (AppState.provider === 'openrouter') {
+        if (!AppState.apiKey) {
+            showToast('Please configure your OpenRouter API key in settings', 'error');
+            openModal('settingsModal');
+            return;
+        }
+    } else if (AppState.provider === 'lemonade' || AppState.provider === 'openai_compat') {
+        if (!AppState.lemonadeEndpoint) {
+            showToast('Please configure your local server endpoint in settings', 'error');
+            openModal('settingsModal');
+            return;
+        }
+
+        // Initialize Lemonade client if needed
+        if (!lemonadeClient || lemonadeClient.endpoint !== AppState.lemonadeEndpoint) {
+            initLemonadeClient(AppState.lemonadeEndpoint);
+        }
+
+        // For Lemonade: ensure model is loaded before inference
+        if (AppState.provider === 'lemonade') {
+            const isLoaded = await loadModelBeforeOptimize(model);
+            if (!isLoaded) return;
+        }
     }
 
     if (!model) {
@@ -344,30 +560,59 @@ async function optimizeWithUCL() {
     setStatus('Optimizing...', 'warning');
 
     try {
-        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${AppState.apiKey}`,
-                'HTTP-Referer': window.location.href,
-                'X-Title': 'UCL Prompt Builder'
-            },
-            body: JSON.stringify({
-                model: model,
-                messages: [
-                    {
-                        role: 'system',
-                        content: getUCLSystemPrompt()
-                    },
-                    {
-                        role: 'user',
-                        content: inputPrompt
-                    }
-                ],
-                temperature: 0.7,
-                max_tokens: 4000
-            })
-        });
+        let response;
+
+        if (AppState.provider === 'openrouter') {
+            // OpenRouter API
+            response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${AppState.apiKey}`,
+                    'HTTP-Referer': window.location.href,
+                    'X-Title': 'UCL Prompt Builder'
+                },
+                body: JSON.stringify({
+                    model: model,
+                    messages: [
+                        { role: 'system', content: getUCLSystemPrompt() },
+                        { role: 'user', content: inputPrompt }
+                    ],
+                    temperature: 0.7,
+                    max_tokens: 4000
+                })
+            });
+        } else {
+            // Lemonade or any OpenAI-compatible local server
+            let endpoint = AppState.lemonadeEndpoint;
+            // Ensure endpoint ends with /v1/chat/completions
+            if (!endpoint.endsWith('/v1/chat/completions')) {
+                endpoint = endpoint.replace(/\/$/, '') + '/v1/chat/completions';
+            }
+
+            const headers = {
+                'Content-Type': 'application/json'
+            };
+
+            // Add API key if provided (optional for local servers)
+            if (AppState.lemonadeApiKey) {
+                headers['Authorization'] = `Bearer ${AppState.lemonadeApiKey}`;
+            }
+
+            response = await fetch(endpoint, {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify({
+                    model: model,
+                    messages: [
+                        { role: 'system', content: getUCLSystemPrompt() },
+                        { role: 'user', content: inputPrompt }
+                    ],
+                    temperature: 0.7,
+                    max_tokens: 4000
+                })
+            });
+        }
 
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
@@ -386,6 +631,9 @@ async function optimizeWithUCL() {
 
         showToast('Prompt optimized successfully!', 'success');
         setStatus('Ready', 'success');
+
+        // Show performance stats for Lemonade
+        showPerformanceStats();
 
     } catch (error) {
         console.error('Optimization error:', error);
