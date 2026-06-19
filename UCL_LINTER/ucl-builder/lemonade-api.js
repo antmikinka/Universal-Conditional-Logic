@@ -94,6 +94,27 @@ class LemonadeClient {
         }
     }
 
+    async getAvailableModels(showAll = false) {
+        try {
+            const url = showAll
+                ? `${this.endpoint}/v1/models?show_all=true`
+                : `${this.endpoint}/v1/models`;
+
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Get models failed: ${response.status}`);
+            }
+
+            const data = await response.json();
+            // Filter for downloaded models by default
+            const models = data.data || [];
+            return models.filter(m => showAll || m.downloaded === true);
+        } catch (error) {
+            console.error('Get available models error:', error);
+            throw error;
+        }
+    }
+
     async loadModel(modelName, options = {}) {
         try {
             const body = {

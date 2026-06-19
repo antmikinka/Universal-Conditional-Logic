@@ -23,11 +23,11 @@ const AppState = {
 // ============================================================================
 // INITIALIZATION
 // ============================================================================
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     console.log('🚀  UCL Prompt Builder Initializing...');
 
     loadSettings();
-    populateModels();
+    await populateModels();
     renderSyntaxCategories();
     attachEventListeners();
     updateCharCounts();
@@ -85,7 +85,7 @@ function loadSettings() {
     }
 }
 
-function saveSettings() {
+async function saveSettings() {
     try {
         const providerSelect = document.getElementById('providerSelect');
         const apiKeyInput = document.getElementById('apiKeyInput');
@@ -116,7 +116,7 @@ function saveSettings() {
 
         updateApiKeyStatus();
         updateProviderUI();
-        populateModels();
+        await populateModels();
         closeModal('settingsModal');
         showToast('Settings saved successfully', 'success');
     } catch (error) {
@@ -166,7 +166,7 @@ function updateProviderUI() {
 // ============================================================================
 // MODELS POPULATION
 // ============================================================================
-function populateModels() {
+async function populateModels() {
     const modelSelect = document.getElementById('modelSelect');
     if (!modelSelect) return;
 
@@ -174,17 +174,22 @@ function populateModels() {
     modelSelect.innerHTML = '<option value="">Select a model...</option>';
 
     // Get models based on provider
-    let modelsByCategory;
-    if (AppState.provider === 'lemonade') {
-        modelsByCategory = LEMONADE_MODELS_BY_CATEGORY;
-    } else if (AppState.provider === 'openai_compat') {
-        modelsByCategory = LEMONADE_MODELS_BY_CATEGORY; // Same models, but user can type custom
+    if (AppState.provider === 'lemonade' || AppState.provider === 'openai_compat') {
+        // Fetch actual models from Lemonade server
+        await populateLemonadeModels(modelSelect);
     } else {
-        modelsByCategory = MODELS_BY_CATEGORY;
+        // Use static OpenRouter models
+        populateOpenRouterModels(modelSelect);
     }
 
-    // Add models by category
-    for (const [category, models] of Object.entries(modelsByCategory)) {
+    // Restore selected model
+    if (AppState.selectedModel) {
+        modelSelect.value = AppState.selectedModel;
+    }
+}
+
+function populateOpenRouterModels(modelSelect) {
+    for (const [category, models] of Object.entries(MODELS_BY_CATEGORY)) {
         const optgroup = document.createElement('optgroup');
         optgroup.label = category;
 
@@ -198,10 +203,87 @@ function populateModels() {
 
         modelSelect.appendChild(optgroup);
     }
+}
 
-    // Restore selected model
-    if (AppState.selectedModel) {
-        modelSelect.value = AppState.selectedModel;
+async function populateLemonadeModels(modelSelect) {
+    try {
+        // Show loading state
+        const loadingOption = document.createElement('option');
+        loadingOption.disabled = true;
+        loadingOption.selected = true;
+        loadingOption.textContent = 'Fetching models from Lemonade...';
+        modelSelect.appendChild(loadingOption);
+
+        // Fetch models from Lemonade server
+        const models = await lemonadeClient.getAvailableModels(false);
+
+        // Clear loading message
+        modelSelect.innerHTML = '<option value="">Select a model...</option>';
+
+        if (models.length === 0) {
+            const noModelsOption = document.createElement('option');
+            noModelsOption.disabled = true;
+            noModelsOption.textContent = 'No models downloaded. Use Lemonade CLI to install models.';
+            modelSelect.appendChild(noModelsOption);
+            return;
+        }
+
+        // Group models by recipe/type
+        const modelsByRecipe = {};
+        models.forEach(model => {
+            const recipe = model.recipe || 'other';
+            if (!modelsByRecipe[recipe]) {
+                modelsByRecipe[recipe] = [];
+            }
+            modelsByRecipe[recipe].push(model);
+        });
+
+        // Add models grouped by recipe
+        for (const [recipe, recipeModels] of Object.entries(modelsByRecipe)) {
+            const optgroup = document.createElement('optgroup');
+            optgroup.label = `${recipe.toUpperCase()} Models`;
+
+            recipeModels.forEach(model => {
+                const option = document.createElement('option');
+                option.value = model.id;
+
+                // Build display text with metadata
+                let displayText = model.id;
+                const details = [];
+
+                if (model.size) {
+                    details.push(`${model.size}GB`);
+                }
+                if (model.max_context_window) {
+                    details.push(`${(model.max_context_window / 1024).toFixed(1)}K ctx`);
+                }
+                if (model.labels && model.labels.length > 0) {
+                    details.push(model.labels.join(', '));
+                }
+
+                if (details.length > 0) {
+                    displayText += ` (${details.join(' · ')})`;
+                }
+
+                option.textContent = displayText;
+                optgroup.appendChild(option);
+            });
+
+            modelSelect.appendChild(optgroup);
+        }
+
+        console.log(`✓ Loaded ${models.length} models from Lemonade server`);
+    } catch (error) {
+        console.error('Failed to fetch Lemonade models:', error);
+
+        // Show error state
+        modelSelect.innerHTML = '<option value="">Select a model...</option>';
+        const errorOption = document.createElement('option');
+        errorOption.disabled = true;
+        errorOption.textContent = `Error: Cannot connect to Lemonade server (${AppState.lemonadeEndpoint})`;
+        modelSelect.appendChild(errorOption);
+
+        showToast('Cannot connect to Lemonade server. Is it running?', 'error');
     }
 }
 
