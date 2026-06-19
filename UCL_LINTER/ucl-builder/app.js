@@ -466,8 +466,7 @@ async function installModelWithProgress(modelName) {
             }
         });
 
-        // Hide progress
-        const progressEl = document.getElementById('downloadProgress');
+        // Hide progress (reuse progressEl from line 441)
         if (progressEl) {
             progressEl.style.display = 'none';
         }
@@ -485,8 +484,7 @@ async function installModelWithProgress(modelName) {
         showToast(`Install failed: ${error.message}`, 'error');
         setStatus('Error', 'error');
 
-        // Hide progress
-        const progressEl = document.getElementById('downloadProgress');
+        // Hide progress (reuse progressEl from line 441)
         if (progressEl) {
             progressEl.style.display = 'none';
         }
