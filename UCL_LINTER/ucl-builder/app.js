@@ -20,6 +20,9 @@ const AppState = {
     initialized: false
 };
 
+// Initialize Lemonade client
+let lemonadeClient = new LemonadeClient(AppState.lemonadeEndpoint);
+
 // ============================================================================
 // INITIALIZATION
 // ============================================================================
@@ -104,6 +107,9 @@ async function saveSettings() {
         AppState.lemonadeApiKey = lemonadeApiKeyInput ? lemonadeApiKeyInput.value.trim() : '';
         AppState.settings.autoCopy = autoCopyCheck ? autoCopyCheck.checked : false;
         AppState.settings.syntaxHighlight = syntaxHighlightCheck ? syntaxHighlightCheck.checked : true;
+
+        // Update Lemonade client with new endpoint
+        lemonadeClient = new LemonadeClient(AppState.lemonadeEndpoint);
 
         localStorage.setItem('ucl_provider', AppState.provider);
         localStorage.setItem('ucl_api_key', AppState.apiKey);
