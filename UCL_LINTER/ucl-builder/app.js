@@ -216,8 +216,10 @@ function populateOpenRouterModels(modelSelect) {
 }
 
 async function populateLemonadeModels(modelSelect) {
-    // Recipes that produce LLM (text generation) models — exclude image, TTS, transcription, embedding
+    // Recipes that produce LLM (text generation) models
     const LLM_RECIPES = ['llamacpp', 'flm', 'ryzenai-llm'];
+    // Labels that indicate non-LLM models (even if recipe matches)
+    const NON_LLM_LABELS = ['image', 'edit', 'transcription', 'realtime-transcription', 'embeddings', 'tts', 'audio'];
 
     try {
         // Show loading state
@@ -230,8 +232,14 @@ async function populateLemonadeModels(modelSelect) {
         // Fetch models from Lemonade server
         const allModels = await lemonadeClient.getAvailableModels(false);
 
-        // Filter to LLM models only (exclude image, TTS, transcription, embedding)
-        const models = allModels.filter(m => LLM_RECIPES.includes(m.recipe));
+        // Filter to LLM models only (exclude image, TTS, transcription, embedding by recipe AND labels)
+        const models = allModels.filter(m => {
+            // Must have an LLM recipe
+            if (!LLM_RECIPES.includes(m.recipe)) return false;
+            // Must not have non-LLM labels
+            if (m.labels && m.labels.some(l => NON_LLM_LABELS.includes(l))) return false;
+            return true;
+        });
 
         // Clear loading message
         modelSelect.innerHTML = '<option value="">Select a model...</option>';
