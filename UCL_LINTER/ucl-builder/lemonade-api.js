@@ -293,19 +293,3 @@ class LemonadeClient {
         return device;
     }
 }
-
-// Global instance (initialized when Lemonade provider is selected)
-let lemonadeClient = null;
-
-function initLemonadeClient(endpoint) {
-    lemonadeClient = new LemonadeClient(endpoint);
-    return lemonadeClient;
-}
-
-// Export for use in other modules
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = {
-        LemonadeClient,
-        initLemonadeClient
-    };
-}

@@ -20,8 +20,8 @@ const AppState = {
     initialized: false
 };
 
-// Initialize Lemonade client
-let lemonadeClient = new LemonadeClient(AppState.lemonadeEndpoint);
+// Lemonade client - initialized after settings are loaded in DOMContentLoaded
+let lemonadeClient = null;
 
 // ============================================================================
 // INITIALIZATION
@@ -30,10 +30,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log('🚀  UCL Prompt Builder Initializing...');
 
     loadSettings();
+    // Initialize Lemonade client AFTER settings are restored (endpoint may have changed)
+    lemonadeClient = new LemonadeClient(AppState.lemonadeEndpoint);
     await populateModels();
     renderSyntaxCategories();
     attachEventListeners();
     updateCharCounts();
+    startServerStatusPolling();
 
     AppState.initialized = true;
     console.log('✓ UCL Prompt Builder Ready!');
@@ -123,6 +126,7 @@ async function saveSettings() {
         updateApiKeyStatus();
         updateProviderUI();
         await populateModels();
+        startServerStatusPolling();
         closeModal('settingsModal');
         showToast('Settings saved successfully', 'success');
     } catch (error) {
@@ -212,6 +216,9 @@ function populateOpenRouterModels(modelSelect) {
 }
 
 async function populateLemonadeModels(modelSelect) {
+    // Recipes that produce LLM (text generation) models — exclude image, TTS, transcription, embedding
+    const LLM_RECIPES = ['llamacpp', 'flm', 'ryzenai-llm'];
+
     try {
         // Show loading state
         const loadingOption = document.createElement('option');
@@ -221,10 +228,21 @@ async function populateLemonadeModels(modelSelect) {
         modelSelect.appendChild(loadingOption);
 
         // Fetch models from Lemonade server
-        const models = await lemonadeClient.getAvailableModels(false);
+        const allModels = await lemonadeClient.getAvailableModels(false);
+
+        // Filter to LLM models only (exclude image, TTS, transcription, embedding)
+        const models = allModels.filter(m => LLM_RECIPES.includes(m.recipe));
 
         // Clear loading message
         modelSelect.innerHTML = '<option value="">Select a model...</option>';
+
+        if (allModels.length > 0 && models.length === 0) {
+            const noLLMOption = document.createElement('option');
+            noLLMOption.disabled = true;
+            noLLMOption.textContent = 'No LLM models found. Only image/TTS/embedding models are installed.';
+            modelSelect.appendChild(noLLMOption);
+            return;
+        }
 
         if (models.length === 0) {
             const noModelsOption = document.createElement('option');
@@ -278,16 +296,30 @@ async function populateLemonadeModels(modelSelect) {
             modelSelect.appendChild(optgroup);
         }
 
-        console.log(`✓ Loaded ${models.length} models from Lemonade server`);
+        console.log(`✓ Loaded ${models.length} LLM models from Lemonade server (filtered ${allModels.length} total)`);
     } catch (error) {
         console.error('Failed to fetch Lemonade models:', error);
 
-        // Show error state
+        // Show error state with retry option
         modelSelect.innerHTML = '<option value="">Select a model...</option>';
         const errorOption = document.createElement('option');
         errorOption.disabled = true;
         errorOption.textContent = `Error: Cannot connect to Lemonade server (${AppState.lemonadeEndpoint})`;
         modelSelect.appendChild(errorOption);
+
+        const retryOption = document.createElement('option');
+        retryOption.value = '__retry__';
+        retryOption.textContent = '🔄  Click here to retry connection...';
+        modelSelect.appendChild(retryOption);
+
+        // Listen for retry selection
+        const retryHandler = (e) => {
+            if (modelSelect.value === '__retry__') {
+                modelSelect.removeEventListener('change', retryHandler);
+                populateLemonadeModels(modelSelect);
+            }
+        };
+        modelSelect.addEventListener('change', retryHandler);
 
         showToast('Cannot connect to Lemonade server. Is it running?', 'error');
     }
@@ -599,6 +631,61 @@ async function showPerformanceStats() {
 }
 
 // ============================================================================
+// SERVER CONNECTION STATUS
+// ============================================================================
+
+let serverStatusInterval = null;
+const SERVER_STATUS_POLL_MS = 30000; // 30 seconds
+
+async function checkServerStatus() {
+    const statusEl = document.getElementById('serverStatus');
+    const dotEl = document.getElementById('serverStatusDot');
+    const textEl = document.getElementById('serverStatusText');
+    if (!statusEl || !dotEl || !textEl) return;
+
+    // Only show for local providers
+    if (AppState.provider !== 'lemonade' && AppState.provider !== 'openai_compat') {
+        statusEl.classList.add('hidden');
+        stopServerStatusPolling();
+        return;
+    }
+
+    statusEl.classList.remove('hidden');
+    statusEl.className = 'server-status checking';
+    textEl.textContent = 'Checking...';
+
+    try {
+        const running = await lemonadeClient.isServerRunning();
+        if (running) {
+            statusEl.className = 'server-status connected';
+            textEl.textContent = 'Connected';
+            statusEl.title = `Connected to ${AppState.lemonadeEndpoint}`;
+        } else {
+            statusEl.className = 'server-status disconnected';
+            textEl.textContent = 'Offline';
+            statusEl.title = `Cannot reach ${AppState.lemonadeEndpoint}`;
+        }
+    } catch {
+        statusEl.className = 'server-status disconnected';
+        textEl.textContent = 'Offline';
+        statusEl.title = `Cannot reach ${AppState.lemonadeEndpoint}`;
+    }
+}
+
+function startServerStatusPolling() {
+    stopServerStatusPolling();
+    checkServerStatus();
+    serverStatusInterval = setInterval(checkServerStatus, SERVER_STATUS_POLL_MS);
+}
+
+function stopServerStatusPolling() {
+    if (serverStatusInterval) {
+        clearInterval(serverStatusInterval);
+        serverStatusInterval = null;
+    }
+}
+
+// ============================================================================
 // UCL OPTIMIZATION (OpenRouter API / Lemonade / OpenAI-compatible)
 // ============================================================================
 async function optimizeWithUCL() {
@@ -627,7 +714,7 @@ async function optimizeWithUCL() {
 
         // Initialize Lemonade client if needed
         if (!lemonadeClient || lemonadeClient.endpoint !== AppState.lemonadeEndpoint) {
-            initLemonadeClient(AppState.lemonadeEndpoint);
+            lemonadeClient = new LemonadeClient(AppState.lemonadeEndpoint);
         }
 
         // For Lemonade: ensure model is loaded before inference
