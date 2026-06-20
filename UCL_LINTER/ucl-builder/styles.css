@@ -106,6 +106,64 @@ body {
 }
 
 /* ============================================================================
+   SERVER CONNECTION STATUS INDICATOR
+   ========================================================================== */
+.server-status {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    border-radius: var(--radius-lg);
+    background: var(--glass-bg-light);
+    border: 1px solid var(--glass-border);
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: default;
+    transition: all var(--transition-fast);
+    min-width: 0;
+}
+
+.server-status:hover {
+    border-color: var(--accent-primary);
+}
+
+.server-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.server-status.connected .server-status-dot {
+    background: var(--accent-success);
+    box-shadow: 0 0 8px var(--accent-success);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.server-status.disconnected .server-status-dot {
+    background: var(--accent-error);
+    box-shadow: 0 0 8px var(--accent-error);
+}
+
+.server-status.checking .server-status-dot {
+    background: var(--accent-warning);
+    box-shadow: 0 0 8px var(--accent-warning);
+    animation: pulse 0.8s ease-in-out infinite;
+}
+
+.server-status.hidden {
+    display: none;
+}
+
+.server-status-text {
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ============================================================================
    HEADER
    ========================================================================== */
 .app-header {
