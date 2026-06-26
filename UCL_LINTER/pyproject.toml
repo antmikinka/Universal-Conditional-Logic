@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ucl-linter"
+version = "2.0.0"
+description = "Universal Conditional Logic (UCL) - Mathematical framework for AI prompt optimization"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Anthony Mikinka"}
+]
+requires-python = ">=3.8"
+keywords = ["prompt-engineering", "llm", "ucl", "optimization", "ai"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Text Processing :: Linguistic",
+]
+
+# No external dependencies - pure Python standard library
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/antmikinka/Universal-Conditional-Logic"
+Repository = "https://github.com/antmikinka/Universal-Conditional-Logic"
+Paper = "https://arxiv.org/abs/2601.00880"
+
+[project.scripts]
+ucl-analyze = "prompt_analyzer:main"
+ucl-demo = "ucl_demo:main"
+
+[tool.setuptools]
+py-modules = ["core", "domains", "builder", "prompt_analyzer", "ucl_demo", "__init__"]

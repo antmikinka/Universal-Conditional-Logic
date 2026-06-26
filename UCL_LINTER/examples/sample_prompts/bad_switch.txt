@@ -1,0 +1,27 @@
+^^SWITCH: question_type^^
+    ^^CASE: mathematics^^
+        Process the mathematical question.
+        Apply mathematical reasoning.
+        Show all steps.
+    ^^/CASE^^
+    
+    ^^CASE: physics^^
+        Process the physics question.
+        Apply physics principles.
+        Include units in answer.
+    ^^/CASE^^
+    
+    ^^CASE: chemistry^^
+        Process the chemistry question.
+        Apply chemical principles.
+        Balance equations properly.
+    ^^/CASE^^
+    
+    ^^CASE: biology^^
+        Process the biology question.
+        Use scientific terminology.
+        Cite relevant concepts.
+    ^^/CASE^^
+^^/SWITCH^^
+
+Provide a detailed explanation of your reasoning.
