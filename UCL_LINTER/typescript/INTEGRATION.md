@@ -1,5 +1,21 @@
 # UCL-Tool Integration with pi.dev System Prompt Builder
 
+> **MOVED:** This documentation has been reorganized into a self-contained
+> package at [`../pi-dev-integration/`](../pi-dev-integration/).
+>
+> - **Quick start:** [`../pi-dev-integration/README.md`](../pi-dev-integration/README.md)
+> - **Architecture:** [`../pi-dev-integration/docs/ARCHITECTURE.md`](../pi-dev-integration/docs/ARCHITECTURE.md)
+> - **API reference:** [`../pi-dev-integration/docs/API-REFERENCE.md`](../pi-dev-integration/docs/API-REFERENCE.md)
+> - **Migration guide:** [`../pi-dev-integration/docs/MIGRATION-GUIDE.md`](../pi-dev-integration/docs/MIGRATION-GUIDE.md)
+> - **Performance data:** [`../pi-dev-integration/docs/PERFORMANCE.md`](../pi-dev-integration/docs/PERFORMANCE.md)
+> - **Source files:** [`../pi-dev-integration/src/`](../pi-dev-integration/src/)
+> - **Examples:** [`../pi-dev-integration/examples/`](../pi-dev-integration/examples/)
+>
+> The files in this `typescript/` directory are kept for reference but are no
+> longer maintained. Use the copies in `pi-dev-integration/src/` instead.
+
+---
+
 This guide shows how to integrate UCL-Tool into the pi.dev build system for dynamic tool injection into system prompts.
 
 ## Architecture Overview
