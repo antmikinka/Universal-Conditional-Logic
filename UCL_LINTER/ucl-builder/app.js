@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     lemonadeClient = new LemonadeClient(AppState.lemonadeEndpoint);
     await populateModels();
     renderSyntaxCategories();
+    await initToolsUI();  // Initialize Tool UI (tabs, domain selector, preview) - async for dynamic tool loading
     attachEventListeners();
     updateCharCounts();
     startServerStatusPolling();
@@ -444,10 +445,22 @@ function insertSyntax(syntax) {
 }
 
 // ============================================================================
-// SEARCH FUNCTIONALITY
+// SEARCH FUNCTIONALITY (handles both Syntax and Tools tabs)
 // ============================================================================
 document.getElementById('syntaxSearch')?.addEventListener('input', (e) => {
     const query = e.target.value.toLowerCase();
+
+    // Check which tab is active
+    const toolsTab = document.querySelector('.sidebar-tab[data-tab="tools"]');
+    const isToolsTab = toolsTab && toolsTab.classList.contains('active');
+
+    if (isToolsTab) {
+        // Filter tools
+        filterTools(query);
+        return;
+    }
+
+    // Filter syntax categories
     const categories = document.querySelectorAll('.category');
 
     categories.forEach(category => {
@@ -826,7 +839,7 @@ async function optimizeWithUCL() {
 }
 
 function getUCLSystemPrompt() {
-    return `You are an expert in Universal Conditional Logic (UCL) prompt optimization.
+    let prompt = `You are an expert in Universal Conditional Logic (UCL) prompt optimization.
 
 Your task is to convert user prompts into UCL-optimized format following these rules:
 
@@ -844,9 +857,16 @@ Your task is to convert user prompts into UCL-optimized format following these r
    - Keep O_s (structural overhead) low
 5. Optimize for S* ≈ 0.509 (optimal specification threshold)
 6. Wrap domain-specific logic in keyword CONDITIONS
-7. Use appropriate directive types (REQUIRE, ENFORCE, VALIDATE, etc.)
+7. Use appropriate directive types (REQUIRE, ENFORCE, VALIDATE, etc.)`;
 
-Return ONLY the optimized UCL prompt, no explanations or commentary.`;
+    // Append tool context if domains are selected
+    const toolContext = getToolContextForPrompt();
+    if (toolContext) {
+        prompt += toolContext;
+    }
+
+    prompt += `\n\nReturn ONLY the optimized UCL prompt, no explanations or commentary.`;
+    return prompt;
 }
 
 // ============================================================================
@@ -1059,5 +1079,5 @@ function escapeHtml(text) {
 // CONSOLE BRANDING
 // ============================================================================
 console.log('%c⚡ UCL Prompt Builder', 'font-size: 24px; font-weight: bold; background: linear-gradient(135deg, #00d4ff, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent;');
-console.log('%cUniversal Conditional Logic Framework v2.0', 'font-size: 14px; color: #a0a0b0;');
+console.log('%cUniversal Conditional Logic Framework v3.0 — with 71 Tool Integrations', 'font-size: 14px; color: #a0a0b0;');
 console.log('%cBuilt with ❤️ for optimal prompt engineering', 'font-size: 12px; color: #6b7280;');

@@ -1,0 +1,115 @@
+{
+  "name": "clear_thought",
+  "description": "Structured reasoning: thinking, analysis, decisions, patterns",
+  "category": "mcp_server",
+  "icon": "🧠",
+  "keywords": ["think", "reason", "analyze", "decide", "debug", "pattern", "mental_model"],
+  "tools": {
+    "sequential_thinking": {
+      "name": "sequential_thinking",
+      "description": "Dynamic problem-solving through sequential thought steps",
+      "parameters": [
+        { "name": "thought", "type": "string", "required": true, "description": "Current thinking step" },
+        { "name": "thoughtNumber", "type": "integer", "required": true, "description": "Current thought number" },
+        { "name": "totalThoughts", "type": "integer", "required": true, "description": "Estimated total thoughts needed" },
+        { "name": "nextThoughtNeeded", "type": "boolean", "required": true, "description": "Whether another step is needed" }
+      ],
+      "keywords": ["think", "reason", "step", "analyze", "problem"]
+    },
+    "collaborative_reasoning": {
+      "name": "collaborative_reasoning",
+      "description": "Simulate expert collaboration with diverse perspectives",
+      "parameters": [
+        { "name": "topic", "type": "string", "required": true, "description": "Topic for collaboration" },
+        { "name": "personas", "type": "array", "required": true, "description": "List of expert personas" },
+        { "name": "stage", "type": "enum", "required": true, "description": "Stage", "constraints": ["problem-definition", "ideation", "critique", "integration", "decision", "reflection"] }
+      ],
+      "keywords": ["collaborate", "perspective", "expert", "team"]
+    },
+    "debugging_approach": {
+      "name": "debugging_approach",
+      "description": "Apply systematic debugging approaches to issues",
+      "parameters": [
+        { "name": "approachName", "type": "enum", "required": true, "description": "Method", "constraints": ["binary_search", "reverse_engineering", "divide_conquer", "backtracking", "cause_elimination", "program_slicing"] },
+        { "name": "issue", "type": "string", "required": true, "description": "Description of the issue" },
+        { "name": "steps", "type": "array", "required": false, "description": "Debugging steps" }
+      ],
+      "keywords": ["debug", "fix", "error", "issue", "troubleshoot"]
+    },
+    "decision_framework": {
+      "name": "decision_framework",
+      "description": "Structured decision analysis and rational choice",
+      "parameters": [
+        { "name": "decisionStatement", "type": "string", "required": true, "description": "What decision needs to be made" },
+        { "name": "options", "type": "array", "required": true, "description": "Available options with descriptions" },
+        { "name": "analysisType", "type": "enum", "required": true, "description": "Type", "constraints": ["pros-cons", "weighted-criteria", "decision-tree", "expected-value", "scenario-analysis"] },
+        { "name": "stage", "type": "enum", "required": true, "description": "Stage", "constraints": ["problem-definition", "options-generation", "criteria-definition", "evaluation", "sensitivity-analysis", "decision"] }
+      ],
+      "keywords": ["decide", "choice", "option", "evaluate", "compare"]
+    },
+    "design_pattern": {
+      "name": "design_pattern",
+      "description": "Apply software design patterns to architecture",
+      "parameters": [
+        { "name": "patternName", "type": "enum", "required": true, "description": "Pattern", "constraints": ["modular_architecture", "api_integration", "state_management", "async_processing", "scalability", "security", "agentic_design"] },
+        { "name": "context", "type": "string", "required": true, "description": "Problem context" },
+        { "name": "implementation", "type": "array", "required": false, "description": "Implementation steps" }
+      ],
+      "keywords": ["pattern", "design", "architecture", "structure"]
+    },
+    "mental_model": {
+      "name": "mental_model",
+      "description": "Apply structured mental models to problem-solving",
+      "parameters": [
+        { "name": "modelName", "type": "enum", "required": true, "description": "Model", "constraints": ["first_principles", "opportunity_cost", "error_propagation", "rubber_duck", "pareto_principle", "occams_razor"] },
+        { "name": "problem", "type": "string", "required": true, "description": "Problem to analyze" },
+        { "name": "steps", "type": "array", "required": false, "description": "Analysis steps" }
+      ],
+      "keywords": ["model", "framework", "think", "perspective"]
+    },
+    "metacognitive_monitoring": {
+      "name": "metacognitive_monitoring",
+      "description": "Systematic self-monitoring of knowledge and reasoning quality",
+      "parameters": [
+        { "name": "task", "type": "string", "required": true, "description": "Task being monitored" },
+        { "name": "stage", "type": "enum", "required": true, "description": "Stage", "constraints": ["knowledge-assessment", "planning", "execution", "monitoring", "evaluation", "reflection"] },
+        { "name": "overallConfidence", "type": "float", "required": true, "description": "Overall confidence 0-1" },
+        { "name": "uncertaintyAreas", "type": "array", "required": false, "description": "Areas of uncertainty" }
+      ],
+      "keywords": ["monitor", "confidence", "uncertainty", "self-assess", "quality"]
+    },
+    "programming_paradigm": {
+      "name": "programming_paradigm",
+      "description": "Apply different programming paradigms to problems",
+      "parameters": [
+        { "name": "paradigmName", "type": "enum", "required": true, "description": "Paradigm", "constraints": ["imperative", "procedural", "object_oriented", "functional", "declarative", "logic", "event_driven", "concurrent", "reactive"] },
+        { "name": "problem", "type": "string", "required": true, "description": "Problem to solve" },
+        { "name": "approach", "type": "array", "required": false, "description": "Approach steps" }
+      ],
+      "keywords": ["paradigm", "programming", "approach", "style"]
+    },
+    "scientific_method": {
+      "name": "scientific_method",
+      "description": "Apply formal scientific reasoning and hypothesis testing",
+      "parameters": [
+        { "name": "stage", "type": "enum", "required": true, "description": "Stage", "constraints": ["observation", "question", "hypothesis", "experiment", "analysis", "conclusion", "iteration"] },
+        { "name": "inquiryId", "type": "string", "required": true, "description": "Unique inquiry identifier" },
+        { "name": "iteration", "type": "integer", "required": true, "description": "Current iteration number" },
+        { "name": "nextStageNeeded", "type": "boolean", "required": true, "description": "Whether another stage is needed" }
+      ],
+      "keywords": ["science", "hypothesis", "experiment", "test", "evidence"]
+    },
+    "structured_argumentation": {
+      "name": "structured_argumentation",
+      "description": "Systematic dialectical reasoning and argument analysis",
+      "parameters": [
+        { "name": "claim", "type": "string", "required": true, "description": "The argument claim" },
+        { "name": "premises", "type": "array", "required": true, "description": "Supporting premises" },
+        { "name": "conclusion", "type": "string", "required": true, "description": "Derived conclusion" },
+        { "name": "argumentType", "type": "enum", "required": true, "description": "Type", "constraints": ["thesis", "antithesis", "synthesis", "objection", "rebuttal"] },
+        { "name": "confidence", "type": "float", "required": true, "description": "Confidence 0-1" }
+      ],
+      "keywords": ["argument", "claim", "premise", "logic", "debate"]
+    }
+  }
+}

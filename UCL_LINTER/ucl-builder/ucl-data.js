@@ -326,6 +326,56 @@ const UCL_SYNTAX = {
                 severity: 'HIGH'
             }
         }
+    },
+
+    'Tool Syntax': {
+        description: 'UCL tool integration syntax for 71 pre-built tools across 9 domains',
+        items: {
+            'Tool Directive': {
+                syntax: '[[TOOL: tool_name]]',
+                description: 'Reference a specific tool by name. Activates within a ^^CONDITION^^ block',
+                example: '[[TOOL: read_file]]',
+                insertable: true
+            },
+            'Parameter Directive': {
+                syntax: '[[PARAM: name:type]]',
+                description: 'Define a tool parameter with name and type (string, integer, boolean, object, array)',
+                example: '[[PARAM: path:string]] [[PARAM: encoding:string]]',
+                insertable: true
+            },
+            'Tool Condition Block': {
+                syntax: '^^CONDITION: keyword1, keyword2^^\n  [[TOOL: tool_name]]\n  [[PARAM: name:type]]\n^^/CONDITION^^',
+                description: 'Wrap tool references in keyword conditions for activation',
+                example: '^^CONDITION: file, read, open^^\n  [[TOOL: read_file]]\n  [[PARAM: path:string]]\n^^/CONDITION^^',
+                insertable: true,
+                priority: 'HIGH'
+            },
+            'Tool Group': {
+                syntax: '^^CONDITION: shared_keywords^^\n  [[TOOL: tool1]] ...\n  [[TOOL: tool2]] ...\n^^/CONDITION^^',
+                description: 'Group multiple tools under shared condition for lower O_s overhead',
+                example: '^^CONDITION: file, path, directory^^\n  [[TOOL: read_file]]\n  [[TOOL: write_file]]\n  [[TOOL: list_dir]]\n^^/CONDITION^^',
+                insertable: true
+            },
+            '{{UCL_TOOLS}} Placeholder': {
+                syntax: '{{UCL_TOOLS}}',
+                description: 'Placeholder that expands to full tool definitions for selected domains (78% overhead reduction vs JSON Schema)',
+                example: '{{UCL_TOOLS}}',
+                insertable: true,
+                priority: 'HIGH'
+            },
+            'Required Parameter': {
+                syntax: '[[PARAM: name:type:required]]',
+                description: 'Mark a parameter as required',
+                example: '[[PARAM: path:string:required]]',
+                insertable: true
+            },
+            'Tool with Return Type': {
+                syntax: '[[TOOL: name]] → return_type',
+                description: 'Specify expected return type (string, boolean, object, array, integer)',
+                example: '[[TOOL: read_file]] → string',
+                insertable: true
+            }
+        }
     }
 };
 

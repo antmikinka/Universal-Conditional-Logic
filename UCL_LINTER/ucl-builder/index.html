@@ -35,7 +35,7 @@
                     <span class="title-icon">⚡</span>
                     UCL Prompt Builder
                 </h1>
-                <span class="version-badge">v2.0</span>
+                <span class="version-badge">v3.0 + Tools</span>
             </div>
             <div class="header-actions">
                 <div class="server-status" id="serverStatus" title="Server connection status">
@@ -332,7 +332,12 @@
                     <li><code>[[TYPE: content]]</code> - Directives</li>
                     <li><code>^^CONDITION^^</code> - Conditionals</li>
                     <li><code>&lt;section&gt;...&lt;/section&gt;</code> - Sections</li>
+                    <li><code>[[TOOL: name]]</code> - Tool references</li>
+                    <li><code>{{UCL_TOOLS}}</code> - Tool placeholder (78% overhead reduction)</li>
                 </ul>
+
+                <h4>Tool Integration:</h4>
+                <p>Switch to the <strong>Tools</strong> tab in the sidebar to select from 71 pre-built tools across 9 domains (filesystem, web, database, API, MCP, shell, Playwright, Chroma, ClearThought). Tools use keyword-conditional activation for minimal overhead.</p>
 
                 <div class="help-links">
                     <a href="https://github.com/antmikinka/Universal-Conditional-Logic" target="_blank" rel="noopener">
@@ -354,6 +359,9 @@
 
     <!-- Scripts -->
     <script src="ucl-data.js"></script>
+    <script src="tools-data.js"></script>
+    <script src="tools/tool-loader.js"></script>
+    <script src="tools.js"></script>
     <script src="models.js"></script>
     <script src="lemonade-api.js"></script>
     <script src="app.js"></script>

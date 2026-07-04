@@ -1,0 +1,77 @@
+{
+  "name": "filesystem",
+  "description": "Local file system operations",
+  "category": "original",
+  "icon": "📁",
+  "keywords": ["file", "path", "directory", "read", "write", "delete", "move", "copy"],
+  "tools": {
+    "read_file": {
+      "name": "read_file",
+      "description": "Read file content from disk",
+      "parameters": [
+        { "name": "path", "type": "string", "required": true, "description": "Path to the file" },
+        { "name": "encoding", "type": "string", "required": false, "description": "File encoding", "default": "utf-8" }
+      ],
+      "keywords": ["read", "file", "open", "load"],
+      "return_type": "string",
+      "examples": [{ "input": "read_file('/etc/hosts')", "output": "127.0.0.1 localhost" }]
+    },
+    "write_file": {
+      "name": "write_file",
+      "description": "Write content to a file",
+      "parameters": [
+        { "name": "path", "type": "string", "required": true, "description": "Path to the file" },
+        { "name": "content", "type": "string", "required": true, "description": "Content to write" }
+      ],
+      "keywords": ["write", "save", "create"],
+      "return_type": "boolean"
+    },
+    "list_dir": {
+      "name": "list_dir",
+      "description": "List directory contents",
+      "parameters": [
+        { "name": "path", "type": "string", "required": true, "description": "Directory path" }
+      ],
+      "keywords": ["list", "directory", "folder", "ls"],
+      "return_type": "array"
+    },
+    "delete_file": {
+      "name": "delete_file",
+      "description": "Delete a file from disk",
+      "parameters": [
+        { "name": "path", "type": "string", "required": true, "description": "Path to the file" }
+      ],
+      "keywords": ["delete", "remove"],
+      "return_type": "boolean"
+    },
+    "move_file": {
+      "name": "move_file",
+      "description": "Move or rename a file",
+      "parameters": [
+        { "name": "source", "type": "string", "required": true, "description": "Source path" },
+        { "name": "dest", "type": "string", "required": true, "description": "Destination path" }
+      ],
+      "keywords": ["move", "rename"],
+      "return_type": "boolean"
+    },
+    "copy_file": {
+      "name": "copy_file",
+      "description": "Copy a file to a new location",
+      "parameters": [
+        { "name": "source", "type": "string", "required": true, "description": "Source path" },
+        { "name": "dest", "type": "string", "required": true, "description": "Destination path" }
+      ],
+      "keywords": ["copy", "duplicate"],
+      "return_type": "boolean"
+    },
+    "file_info": {
+      "name": "file_info",
+      "description": "Get file metadata (size, modified time, permissions)",
+      "parameters": [
+        { "name": "path", "type": "string", "required": true, "description": "Path to the file" }
+      ],
+      "keywords": ["info", "stat", "metadata", "size"],
+      "return_type": "object"
+    }
+  }
+}

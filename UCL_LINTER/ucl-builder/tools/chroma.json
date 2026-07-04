@@ -1,0 +1,105 @@
+{
+  "name": "chroma",
+  "description": "Chroma vector DB: collections, documents, similarity search",
+  "category": "mcp_server",
+  "icon": "🧬",
+  "keywords": ["chroma", "vector", "embedding", "collection", "document", "similarity"],
+  "tools": {
+    "chroma_create_collection": {
+      "name": "chroma_create_collection",
+      "description": "Create a new Chroma collection",
+      "parameters": [
+        { "name": "collection_name", "type": "string", "required": true, "description": "Name of the collection" },
+        { "name": "embedding_function_name", "type": "string", "required": false, "description": "Embedding function: default, cohere, openai, jina" }
+      ],
+      "keywords": ["create", "collection", "new", "vector"]
+    },
+    "chroma_delete_collection": {
+      "name": "chroma_delete_collection",
+      "description": "Delete a Chroma collection",
+      "parameters": [
+        { "name": "collection_name", "type": "string", "required": true, "description": "Name of the collection to delete" }
+      ],
+      "keywords": ["delete", "collection", "remove", "drop"]
+    },
+    "chroma_list_collections": {
+      "name": "chroma_list_collections",
+      "description": "List all collection names in the database",
+      "parameters": [
+        { "name": "limit", "type": "integer", "required": false, "description": "Maximum collections to return" },
+        { "name": "offset", "type": "integer", "required": false, "description": "Offset for pagination" }
+      ],
+      "keywords": ["list", "collections", "all", "show"]
+    },
+    "chroma_add_documents": {
+      "name": "chroma_add_documents",
+      "description": "Add documents to a Chroma collection",
+      "parameters": [
+        { "name": "collection_name", "type": "string", "required": true, "description": "Collection to add to" },
+        { "name": "documents", "type": "array", "required": true, "description": "List of text documents" },
+        { "name": "ids", "type": "array", "required": true, "description": "List of document IDs" },
+        { "name": "metadatas", "type": "array", "required": false, "description": "List of metadata dicts" }
+      ],
+      "keywords": ["add", "document", "insert", "store", "ingest"]
+    },
+    "chroma_get_documents": {
+      "name": "chroma_get_documents",
+      "description": "Get documents from a collection by ID or filter",
+      "parameters": [
+        { "name": "collection_name", "type": "string", "required": true, "description": "Collection to query" },
+        { "name": "ids", "type": "array", "required": false, "description": "Document IDs to retrieve" },
+        { "name": "where", "type": "object", "required": false, "description": "Metadata filter" },
+        { "name": "limit", "type": "integer", "required": false, "description": "Maximum documents" }
+      ],
+      "keywords": ["get", "document", "retrieve", "fetch", "find"]
+    },
+    "chroma_query_documents": {
+      "name": "chroma_query_documents",
+      "description": "Query documents by similarity search",
+      "parameters": [
+        { "name": "collection_name", "type": "string", "required": true, "description": "Collection to search" },
+        { "name": "query_texts", "type": "array", "required": true, "description": "Query strings for similarity search" },
+        { "name": "n_results", "type": "integer", "required": false, "description": "Number of results per query" },
+        { "name": "where", "type": "object", "required": false, "description": "Metadata filter" }
+      ],
+      "keywords": ["query", "search", "similarity", "find", "vector"]
+    },
+    "chroma_update_documents": {
+      "name": "chroma_update_documents",
+      "description": "Update documents in a collection",
+      "parameters": [
+        { "name": "collection_name", "type": "string", "required": true, "description": "Collection to update" },
+        { "name": "ids", "type": "array", "required": true, "description": "Document IDs to update" },
+        { "name": "documents", "type": "array", "required": false, "description": "New document text" },
+        { "name": "metadatas", "type": "array", "required": false, "description": "New metadata" }
+      ],
+      "keywords": ["update", "modify", "change", "edit"]
+    },
+    "chroma_delete_documents": {
+      "name": "chroma_delete_documents",
+      "description": "Delete documents from a collection",
+      "parameters": [
+        { "name": "collection_name", "type": "string", "required": true, "description": "Collection to delete from" },
+        { "name": "ids", "type": "array", "required": true, "description": "Document IDs to delete" }
+      ],
+      "keywords": ["delete", "remove", "document"]
+    },
+    "chroma_peek_collection": {
+      "name": "chroma_peek_collection",
+      "description": "Peek at documents in a collection",
+      "parameters": [
+        { "name": "collection_name", "type": "string", "required": true, "description": "Collection to peek at" },
+        { "name": "limit", "type": "integer", "required": false, "description": "Number of documents to peek" }
+      ],
+      "keywords": ["peek", "preview", "sample", "view"]
+    },
+    "chroma_get_collection_info": {
+      "name": "chroma_get_collection_info",
+      "description": "Get information about a collection",
+      "parameters": [
+        { "name": "collection_name", "type": "string", "required": true, "description": "Collection name" }
+      ],
+      "keywords": ["info", "collection", "metadata", "describe"]
+    }
+  }
+}

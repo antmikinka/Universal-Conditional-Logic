@@ -1,0 +1,186 @@
+{
+  "name": "playwright",
+  "description": "Browser automation via Playwright MCP",
+  "category": "mcp_server",
+  "icon": "🎭",
+  "keywords": ["browser", "playwright", "web", "page", "click", "navigate", "screenshot"],
+  "tools": {
+    "browser_navigate": {
+      "name": "browser_navigate",
+      "description": "Navigate to a URL in the browser",
+      "parameters": [
+        { "name": "url", "type": "string", "required": true, "description": "URL to navigate to" }
+      ],
+      "keywords": ["navigate", "url", "goto", "page"]
+    },
+    "browser_click": {
+      "name": "browser_click",
+      "description": "Click on an element on the page",
+      "parameters": [
+        { "name": "target", "type": "string", "required": true, "description": "Element selector or reference" },
+        { "name": "button", "type": "enum", "required": false, "description": "Mouse button", "constraints": ["left", "right", "middle"] },
+        { "name": "doubleClick", "type": "boolean", "required": false, "description": "Perform double click" }
+      ],
+      "keywords": ["click", "button", "element", "tap"]
+    },
+    "browser_type": {
+      "name": "browser_type",
+      "description": "Type text into an editable element",
+      "parameters": [
+        { "name": "target", "type": "string", "required": true, "description": "Element to type into" },
+        { "name": "text", "type": "string", "required": true, "description": "Text to type" },
+        { "name": "slowly", "type": "boolean", "required": false, "description": "Type one character at a time" },
+        { "name": "submit", "type": "boolean", "required": false, "description": "Press Enter after typing" }
+      ],
+      "keywords": ["type", "input", "text", "enter", "keyboard"]
+    },
+    "browser_snapshot": {
+      "name": "browser_snapshot",
+      "description": "Capture accessibility snapshot of the current page",
+      "parameters": [
+        { "name": "target", "type": "string", "required": false, "description": "Specific element to snapshot" },
+        { "name": "filename", "type": "string", "required": false, "description": "Save snapshot to file" }
+      ],
+      "keywords": ["snapshot", "accessibility", "capture", "page"]
+    },
+    "browser_take_screenshot": {
+      "name": "browser_take_screenshot",
+      "description": "Take a screenshot of the page or element",
+      "parameters": [
+        { "name": "type", "type": "enum", "required": true, "description": "Image format", "constraints": ["png", "jpeg"] },
+        { "name": "filename", "type": "string", "required": false, "description": "Save screenshot to file" },
+        { "name": "fullPage", "type": "boolean", "required": false, "description": "Screenshot full scrollable page" },
+        { "name": "target", "type": "string", "required": false, "description": "Specific element to screenshot" }
+      ],
+      "keywords": ["screenshot", "image", "capture", "photo"]
+    },
+    "browser_hover": {
+      "name": "browser_hover",
+      "description": "Hover over an element on the page",
+      "parameters": [
+        { "name": "target", "type": "string", "required": true, "description": "Element to hover over" }
+      ],
+      "keywords": ["hover", "mouseover", "element"]
+    },
+    "browser_press_key": {
+      "name": "browser_press_key",
+      "description": "Press a keyboard key",
+      "parameters": [
+        { "name": "key", "type": "string", "required": true, "description": "Key name (e.g. ArrowLeft, Enter, a)" }
+      ],
+      "keywords": ["key", "keyboard", "press", "shortcut"]
+    },
+    "browser_fill_form": {
+      "name": "browser_fill_form",
+      "description": "Fill multiple form fields at once",
+      "parameters": [
+        { "name": "fields", "type": "array", "required": true, "description": "List of field objects with target, name, type, value" }
+      ],
+      "keywords": ["form", "fill", "input", "field"]
+    },
+    "browser_select_option": {
+      "name": "browser_select_option",
+      "description": "Select an option in a dropdown",
+      "parameters": [
+        { "name": "target", "type": "string", "required": true, "description": "Select element" },
+        { "name": "values", "type": "array", "required": true, "description": "Values to select" }
+      ],
+      "keywords": ["select", "dropdown", "option", "choose"]
+    },
+    "browser_drag": {
+      "name": "browser_drag",
+      "description": "Perform drag and drop between elements",
+      "parameters": [
+        { "name": "startTarget", "type": "string", "required": true, "description": "Source element" },
+        { "name": "endTarget", "type": "string", "required": true, "description": "Target element" }
+      ],
+      "keywords": ["drag", "drop", "move", "element"]
+    },
+    "browser_file_upload": {
+      "name": "browser_file_upload",
+      "description": "Upload one or multiple files",
+      "parameters": [
+        { "name": "paths", "type": "array", "required": true, "description": "Absolute file paths to upload" }
+      ],
+      "keywords": ["upload", "file", "attach"]
+    },
+    "browser_handle_dialog": {
+      "name": "browser_handle_dialog",
+      "description": "Handle an alert, confirm, or prompt dialog",
+      "parameters": [
+        { "name": "accept", "type": "boolean", "required": true, "description": "Accept or dismiss the dialog" },
+        { "name": "promptText", "type": "string", "required": false, "description": "Text for prompt dialogs" }
+      ],
+      "keywords": ["dialog", "alert", "confirm", "prompt"]
+    },
+    "browser_tabs": {
+      "name": "browser_tabs",
+      "description": "List, create, close, or select browser tabs",
+      "parameters": [
+        { "name": "action", "type": "enum", "required": true, "description": "Operation", "constraints": ["list", "new", "close", "select"] },
+        { "name": "index", "type": "integer", "required": false, "description": "Tab index for close/select" },
+        { "name": "url", "type": "string", "required": false, "description": "URL for new tab" }
+      ],
+      "keywords": ["tab", "window", "switch"]
+    },
+    "browser_navigate_back": {
+      "name": "browser_navigate_back",
+      "description": "Go back to the previous page",
+      "parameters": [],
+      "keywords": ["back", "history", "previous"]
+    },
+    "browser_wait_for": {
+      "name": "browser_wait_for",
+      "description": "Wait for text to appear or a time duration",
+      "parameters": [
+        { "name": "text", "type": "string", "required": false, "description": "Text to wait for" },
+        { "name": "textGone", "type": "string", "required": false, "description": "Text to wait for disappearance" },
+        { "name": "time", "type": "float", "required": false, "description": "Seconds to wait" }
+      ],
+      "keywords": ["wait", "delay", "timeout", "pause"]
+    },
+    "browser_evaluate": {
+      "name": "browser_evaluate",
+      "description": "Evaluate JavaScript expression on page",
+      "parameters": [
+        { "name": "function", "type": "string", "required": true, "description": "JavaScript function to evaluate" },
+        { "name": "target", "type": "string", "required": false, "description": "Element to evaluate on" },
+        { "name": "filename", "type": "string", "required": false, "description": "Save result to file" }
+      ],
+      "keywords": ["evaluate", "javascript", "js", "script", "execute"]
+    },
+    "browser_console_messages": {
+      "name": "browser_console_messages",
+      "description": "Return console messages from the page",
+      "parameters": [
+        { "name": "level", "type": "enum", "required": false, "description": "Log level", "constraints": ["info", "warning", "error", "debug"] },
+        { "name": "all", "type": "boolean", "required": false, "description": "Return all messages since session start" }
+      ],
+      "keywords": ["console", "log", "debug", "error", "message"]
+    },
+    "browser_network_requests": {
+      "name": "browser_network_requests",
+      "description": "Return list of network requests since page load",
+      "parameters": [
+        { "name": "static", "type": "boolean", "required": false, "description": "Include static resources" },
+        { "name": "filter", "type": "string", "required": false, "description": "URL regexp filter" }
+      ],
+      "keywords": ["network", "request", "http", "fetch", "api"]
+    },
+    "browser_close": {
+      "name": "browser_close",
+      "description": "Close the browser page",
+      "parameters": [],
+      "keywords": ["close", "quit", "exit", "browser"]
+    },
+    "browser_resize": {
+      "name": "browser_resize",
+      "description": "Resize the browser window",
+      "parameters": [
+        { "name": "width", "type": "integer", "required": true, "description": "Window width in pixels" },
+        { "name": "height", "type": "integer", "required": true, "description": "Window height in pixels" }
+      ],
+      "keywords": ["resize", "window", "viewport", "size"]
+    }
+  }
+}

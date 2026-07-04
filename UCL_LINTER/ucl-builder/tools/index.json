@@ -1,0 +1,29 @@
+{
+  "version": "1.0",
+  "description": "UCL Tool Domains Registry",
+  "domains": [
+    "filesystem",
+    "web",
+    "database",
+    "api",
+    "mcp",
+    "shell",
+    "playwright",
+    "chroma",
+    "clear_thought"
+  ],
+  "metadata": {
+    "totalDomains": 9,
+    "totalTools": 71,
+    "categories": {
+      "original": {
+        "label": "Core Domains",
+        "domains": ["filesystem", "web", "database", "api", "mcp", "shell"]
+      },
+      "mcp_server": {
+        "label": "MCP Server Domains",
+        "domains": ["playwright", "chroma", "clear_thought"]
+      }
+    }
+  }
+}

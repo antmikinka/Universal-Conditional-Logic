@@ -1,0 +1,58 @@
+{
+  "name": "mcp",
+  "description": "MCP (Model Context Protocol) operations",
+  "category": "original",
+  "icon": "🔗",
+  "keywords": ["mcp", "server", "protocol", "tool", "resource"],
+  "tools": {
+    "mcp_call": {
+      "name": "mcp_call",
+      "description": "Call a tool on an MCP server (maps to tools/call)",
+      "parameters": [
+        { "name": "server", "type": "string", "required": true, "description": "MCP server name" },
+        { "name": "tool", "type": "string", "required": true, "description": "Tool name to invoke" },
+        { "name": "arguments", "type": "object", "required": false, "description": "Tool arguments" }
+      ],
+      "keywords": ["mcp", "call", "invoke", "tool"],
+      "return_type": "object",
+      "examples": [{ "input": "mcp_call('filesystem', 'read_file', {'path': '/tmp/x'})", "output": "file contents..." }]
+    },
+    "mcp_list_tools": {
+      "name": "mcp_list_tools",
+      "description": "List available tools on an MCP server (maps to tools/list)",
+      "parameters": [
+        { "name": "server", "type": "string", "required": false, "description": "MCP server name (omit for all)" }
+      ],
+      "keywords": ["mcp", "tools", "list", "discover"],
+      "return_type": "array"
+    },
+    "mcp_list_resources": {
+      "name": "mcp_list_resources",
+      "description": "List available resources on an MCP server (maps to resources/list)",
+      "parameters": [
+        { "name": "server", "type": "string", "required": false, "description": "MCP server name (omit for all)" }
+      ],
+      "keywords": ["mcp", "resources", "list"],
+      "return_type": "array"
+    },
+    "mcp_read_resource": {
+      "name": "mcp_read_resource",
+      "description": "Read a resource from an MCP server (maps to resources/read)",
+      "parameters": [
+        { "name": "server", "type": "string", "required": true, "description": "MCP server name" },
+        { "name": "uri", "type": "string", "required": true, "description": "Resource URI" }
+      ],
+      "keywords": ["mcp", "resource", "read", "fetch"],
+      "return_type": "object"
+    },
+    "mcp_list_prompts": {
+      "name": "mcp_list_prompts",
+      "description": "List available prompts on an MCP server (maps to prompts/list)",
+      "parameters": [
+        { "name": "server", "type": "string", "required": false, "description": "MCP server name (omit for all)" }
+      ],
+      "keywords": ["mcp", "prompts", "list"],
+      "return_type": "array"
+    }
+  }
+}
