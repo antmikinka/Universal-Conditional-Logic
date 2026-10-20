@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Specification, overhead, and the 29.8% cut</title>
+    <meta name="description" content="The UCL preprint measured prompt specification. Token use fell 29.8%. S* sits near 0.509.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../site.css">
+</head>
+<body>
+    <div class="wrap">
+        <nav class="site-nav">
+            <a href="../">Home</a>
+            <a href="./">Blog</a>
+            <a href="../compressor.html">Converter</a>
+            <a href="../builder.html">Builder</a>
+        </nav>
+        <article>
+            <p class="kicker">9 Aug 2026</p>
+            <h1>Specification, overhead, and the 29.8% cut</h1>
+            <p>Universal Conditional Logic treats a prompt as something you can structure and overdo. The preprint is <a href="https://arxiv.org/abs/2601.00880">arXiv:2601.00880</a>.</p>
+            <h2>What was measured</h2>
+            <p>The repository’s design is 13 models, 7 conditions, and 4 iterations: 364 invocations. The conditions run from no system prompt, through a long baseline, to UCL versions v1 through v4.1. The analysis CSV is marked N=305. The builder’s About box cites that 305.</p>
+            <p>The reported result is a 29.8% token reduction, with quality held. Past a specification level of about S* = 0.509, more specification degraded quality. Version v2 is the over-specified case in the README. That curve is about prompts, not about tool JSON.</p>
+            <h2>What the formula is for</h2>
+            <p>Structural overhead is written O<sub>s</sub> = γ Σ ln(C<sub>k</sub>). It prices the pieces you add: conditions, switches, procedure length. Keyword conditions were the cheaper shape. A switch-heavy prompt paid more.</p>
+            <p>Do not add this 29.8% to the later tool-catalog token gap. One number is a specification study. The other is a name list versus a pasted schema. <a href="name-list.html">The tool note is separate.</a></p>
+            <p class="meta"><a href="https://github.com/antmikinka/Universal-Conditional-Logic">Code and data</a></p>
+        </article>
+    </div>
+</body>
+</html>

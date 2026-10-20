@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two ways to show a model its tools</title>
+    <meta name="description" content="Names-only tool text versus a pasted JSON schema, from the 408-cell Qwen3.6-35B run.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../site.css">
+</head>
+<body>
+    <div class="wrap">
+        <nav class="site-nav">
+            <a href="../">Home</a>
+            <a href="./">Blog</a>
+            <a href="../compressor.html">Converter</a>
+            <a href="../builder.html">Builder</a>
+        </nav>
+        <article>
+            <p class="kicker">23 Sep 2026</p>
+            <h1>Two ways to show a model its tools</h1>
+            <p>One side is handed the JSON schema. The other side is handed the name and a short line about what the tool does. The schema can stay on the computer that checks the call.</p>
+            <h2>One run</h2>
+            <p>Matrix <code>20260809T040554Z</code>. One seed. Qwen3.6-35B. 408 cells. No transport errors. Pass rate here means the scorer accepted the call, not a claim that native tools are incapable.</p>
+            <table>
+                <thead>
+                    <tr><th>What the model saw</th><th>Pass</th><th>Name match</th><th>Arg match</th><th>Mean tokens</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Names</td><td>85.4%</td><td>0.901</td><td>0.901</td><td>2,374</td></tr>
+                    <tr><td>Lean signatures</td><td>85.4%</td><td>0.922</td><td>0.901</td><td>2,829</td></tr>
+                    <tr><td>Full schema in the prompt</td><td>84.4%</td><td>0.896</td><td>0.885</td><td>4,307</td></tr>
+                    <tr><td>No list</td><td>77.1%</td><td>0.828</td><td>0.802</td><td>1,610</td></tr>
+                    <tr><td>Native tools (24 cells)</td><td>66.7%</td><td>0.979</td><td>0.688</td><td>4,150</td></tr>
+                </tbody>
+            </table>
+            <p>Names tied the lean signatures on pass rate and used fewer tokens than the pasted schema. The full schema did not buy accuracy on this suite. Native tools picked the right tool family often and lost ground on the argument check. Average latency sat around 32 to 37 seconds. The shorter catalog was not the faster one.</p>
+            <h2>What this does not say</h2>
+            <p>It is one seed. Multi-tool scenarios were the hard cells. A July harness that labeled one arm “UCL” was the arm that pasted the schema into the prompt, and that arm used more tokens than a name list plus native <code>tools=</code>. The label and the cheap format are not the same thing.</p>
+            <p>The <a href="../compressor.html">converter</a> turns a pasted OpenAI or MCP list into the name-list lines and counts the characters. The host still has to check the arguments. This page does not do that check.</p>
+        </article>
+    </div>
+</body>
+</html>

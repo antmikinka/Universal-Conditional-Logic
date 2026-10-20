@@ -14,17 +14,17 @@
         body {
             min-height: 100vh;
         }
-        .page-link {
-            display: block;
+        .site-nav {
+            display: flex;
+            gap: 0.75rem;
             max-width: 960px;
             margin: 1rem auto 0;
             padding: 0 1rem;
             font-family: system-ui, sans-serif;
             font-size: 0.85rem;
         }
-        .page-link a {
-            color: #8b92a5;
-        }
+        .site-nav a { color: #8b92a5; text-decoration: none; }
+        .site-nav a[aria-current="page"] { color: #e8eaed; }
         .ucl-widget {
             --ucl-bg: #0d0e11;
             --ucl-surface: #14161b;
@@ -215,7 +215,12 @@
     </style>
 </head>
 <body>
-    <p class="page-link"><a href="./">UCL Prompt Builder</a></p>
+    <nav class="site-nav">
+        <a href="./">Home</a>
+        <a href="blog/">Blog</a>
+        <a href="compressor.html" aria-current="page">Converter</a>
+        <a href="builder.html">Builder</a>
+    </nav>
     <section id="ucl-compressor" class="ucl-widget" aria-label="UCL Schema Compressor">
         <div class="ucl-header">
             <div>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCL Prompt Builder - OpenRouter & Local LLM Edition</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Build mathematically optimized AI prompts using Universal Conditional Logic (UCL) framework with OpenRouter and local LLM support (Lemonade, Ollama, LM Studio)">
+    <meta name="keywords" content="UCL, prompt engineering, AI, OpenRouter, Lemonade, Ollama, local LLM, prompt optimization">
+    <meta name="author" content="Anthony Mikinka">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="UCL Prompt Builder - OpenRouter & Local LLM Edition">
+    <meta property="og:description" content="Transform your prompts with Universal Conditional Logic optimization - now with local LLM support">
+    <meta property="og:type" content="website">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css?v=20260711c">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background-gradient"></div>
+    
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <h1 class="app-title">
+                    <span class="title-icon">⚡</span>
+                    UCL Prompt Builder
+                </h1>
+                <span class="version-badge">v4.0 + Optimizer</span>
+            </div>
+            <div class="header-actions">
+                <a class="header-text-link" href="./">Home</a>
+                <a class="header-text-link" href="blog/">Blog</a>
+                <a class="header-text-link" href="compressor.html">Converter</a>
+                <div class="server-status" id="serverStatus" title="Server connection status">
+                    <span class="server-status-dot" id="serverStatusDot"></span>
+                    <span class="server-status-text" id="serverStatusText">Server</span>
+                </div>
+                <button class="btn-icon" id="settingsBtn" title="Settings">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M12 1v6m0 6v6m0-13l4.5 2.5M7.5 11L3 8.5m13.5 2.5l4.5-2.5"/>
+                    </svg>
+                </button>
+                <button class="btn-icon" id="helpBtn" title="Help">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                        <circle cx="12" cy="17" r="0.5" fill="currentColor"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2 class="sidebar-title">UCL Syntax</h2>
+                <div class="sidebar-controls">
+                    <button class="btn-collapse" id="collapseAllBtn" title="Collapse All">−</button>
+                    <button class="btn-collapse" id="expandAllBtn" title="Expand All">+</button>
+                </div>
+            </div>
+            
+            <div class="search-container">
+                <input type="text" 
+                       class="search-input" 
+                       id="syntaxSearch" 
+                       placeholder="Search syntax...">
+            </div>
+
+            <div class="syntax-categories" id="syntaxCategories">
+                <!-- Categories will be dynamically inserted here -->
+            </div>
+        </aside>
+
+        <!-- Editor Area -->
+        <main class="editor-container">
+            <div class="editor-header">
+                <div class="model-selector-container">
+                    <label for="modelSelect">Model:</label>
+                    <select id="modelSelect" class="model-select">
+                        <option value="">Select a model...</option>
+                    </select>
+                </div>
+                <div class="status-indicator" id="statusIndicator">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Ready</span>
+                </div>
+            </div>
+
+            <div class="editor-panes">
+                <!-- Left Pane -->
+                <div class="editor-pane left-pane">
+                    <div class="pane-header">
+                        <h3 class="pane-title">Your Prompt</h3>
+                        <div class="pane-stats">
+                            <span id="inputCharCount">0</span> chars · 
+                            <span id="inputWordCount">0</span> words
+                        </div>
+                    </div>
+                    <textarea 
+                        id="inputPrompt" 
+                        class="prompt-textarea"
+                        placeholder="Enter your prompt here...&#10;&#10;Example:&#10;Write a Python function to calculate the factorial of a number."
+                        spellcheck="false"></textarea>
+                </div>
+
+                <!-- Right Pane -->
+                <div class="editor-pane right-pane">
+                    <div class="pane-header">
+                        <h3 class="pane-title">
+                            <span class="ucl-icon">⚡</span>
+                            UCL Optimized
+                        </h3>
+                        <div class="pane-stats">
+                            <span id="outputCharCount">0</span> chars · 
+                            <span id="outputWordCount">0</span> words
+                        </div>
+                    </div>
+                    <textarea 
+                        id="outputPrompt" 
+                        class="prompt-textarea ucl-output"
+                        placeholder="Your UCL-optimized prompt will appear here..."
+                        spellcheck="false"></textarea>
+                </div>
+            </div>
+
+            <!-- Action Bar -->
+            <div class="action-bar">
+                <button class="btn btn-primary" id="optimizeBtn">
+                    <svg class="btn-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                    </svg>
+                    Optimize with UCL
+                </button>
+                <button class="btn btn-secondary" id="copyBtn">
+                    <svg class="btn-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                    </svg>
+                    Copy Optimized
+                </button>
+                <button class="btn btn-secondary" id="swapBtn" title="Swap Prompts">
+                    <svg class="btn-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="17 1 21 5 17 9"/>
+                        <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
+                        <polyline points="7 23 3 19 7 15"/>
+                        <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+                    </svg>
+                    Swap
+                </button>
+                <button class="btn btn-secondary" id="clearBtn" title="Clear All">
+                    <svg class="btn-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6"/>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                    </svg>
+                    Clear
+                </button>
+                <button class="btn btn-secondary" id="downloadBtn" title="Download as TXT">
+                    <svg class="btn-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    Download
+                </button>
+            </div>
+
+            <!-- Download Progress Bar (Lemonade) -->
+            <div class="download-progress" id="downloadProgress" style="display:none;">
+                <div class="progress-header">
+                    <span>Downloading model...</span>
+                    <span id="downloadProgressText">0%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="downloadProgressBar" style="width: 0%"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Settings</h2>
+                <button class="modal-close" id="closeSettingsBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label for="providerSelect" class="setting-label">
+                        LLM Provider
+                    </label>
+                    <select id="providerSelect" class="setting-input" onchange="updateProviderUI()">
+                        <option value="openrouter">OpenRouter (Cloud - 20+ models)</option>
+                        <option value="lemonade">Lemonade (Local - Free)</option>
+                        <option value="openai_compat">Custom OpenAI-Compatible (Local)</option>
+                    </select>
+                    <small class="setting-help">
+                        Choose cloud (OpenRouter) or local (Lemonade, Ollama, LM Studio, etc.)
+                    </small>
+                </div>
+
+                <!-- OpenRouter Settings -->
+                <div id="openrouterSettings">
+                    <div class="setting-group">
+                        <label for="apiKeyInput" class="setting-label">
+                            OpenRouter API Key
+                            <span class="required">*</span>
+                        </label>
+                        <div class="input-with-toggle">
+                            <input
+                                type="password"
+                                id="apiKeyInput"
+                                class="setting-input"
+                                placeholder="sk-or-v1-...">
+                            <button class="toggle-visibility" id="toggleApiKey" type="button">
+                                👁️
+                            </button>
+                        </div>
+                        <small class="setting-help">
+                            Get your API key from
+                            <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">OpenRouter</a>
+                        </small>
+                    </div>
+                </div>
+
+                <!-- Lemonade / Local Settings -->
+                <div id="lemonadeSettings" style="display:none;">
+                    <div class="setting-group">
+                        <label for="lemonadeEndpointInput" class="setting-label">
+                            Local Server Endpoint
+                        </label>
+                        <input
+                            type="text"
+                            id="lemonadeEndpointInput"
+                            class="setting-input"
+                            placeholder="http://localhost:13305">
+                        <small class="setting-help">
+                            <strong>Lemonade:</strong> http://localhost:13305 &nbsp;|&nbsp;
+                            <strong>Ollama:</strong> http://localhost:11434 &nbsp;|&nbsp;
+                            <strong>LM Studio:</strong> http://localhost:1234
+                        </small>
+                    </div>
+
+                    <div class="setting-group">
+                        <label for="lemonadeApiKeyInput" class="setting-label">
+                            API Key (optional)
+                        </label>
+                        <div class="input-with-toggle">
+                            <input
+                                type="password"
+                                id="lemonadeApiKeyInput"
+                                class="setting-input"
+                                placeholder="Leave blank for local servers">
+                        </div>
+                        <small class="setting-help">
+                            Most local servers don't require an API key. Lemonade: set via LEMONADE_API_KEY env var.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="api-key-status" id="apiKeyStatus"></div>
+
+                <div class="setting-group">
+                    <label for="customModelInput" class="setting-label">
+                        Custom Model ID (optional)
+                    </label>
+                    <input
+                        type="text"
+                        id="customModelInput"
+                        class="setting-input"
+                        placeholder="Override dropdown with custom model ID">
+                    <small class="setting-help">
+                        Type any model ID to override the dropdown selection
+                    </small>
+                </div>
+
+                <div class="setting-group">
+                    <label class="setting-label">Preferences</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="autoCopyCheck">
+                            <span>Auto-copy optimized prompt</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="syntaxHighlightCheck" checked>
+                            <span>Enable syntax highlighting</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelSettingsBtn">Cancel</button>
+                <button class="btn btn-primary" id="saveSettingsBtn">Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">About UCL</h2>
+                <button class="modal-close" id="closeHelpBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h3>Universal Conditional Logic Framework</h3>
+                <p>UCL is a mathematical framework for AI prompt optimization based on empirical research (N=305, p < 2.89×10⁻¹³).</p>
+                
+                <h4>Key Principles:</h4>
+                <ul>
+                    <li><strong>Always use [[CRITICAL:]]</strong> - +9.3% quality bonus</li>
+                    <li><strong>Keyword-based CONDITIONS</strong> - Lower structural overhead</li>
+                    <li><strong>Avoid SWITCH statements</strong> - High O_s penalty</li>
+                    <li><strong>Optimal specification</strong> - S* ≈ 0.509</li>
+                </ul>
+
+                <h4>Core Syntax:</h4>
+                <ul>
+                    <li><code>{{concept:name:attribute}}</code> - Concepts</li>
+                    <li><code>[[TYPE: content]]</code> - Directives</li>
+                    <li><code>^^CONDITION^^</code> - Conditionals</li>
+                    <li><code>&lt;section&gt;...&lt;/section&gt;</code> - Sections</li>
+                    <li><code>[[TOOL: name]]</code> - Tool references</li>
+                    <li><code>{{UCL_TOOLS}}</code> - Tool placeholder (78% overhead reduction)</li>
+                </ul>
+
+                <h4>Tool Integration:</h4>
+                <p>Switch to the <strong>Tools</strong> tab in the sidebar to select from 71 pre-built tools across 9 domains (filesystem, web, database, API, MCP, shell, Playwright, Chroma, ClearThought). Tools use keyword-conditional activation for minimal overhead.</p>
+
+                <div class="help-links">
+                    <a href="https://github.com/antmikinka/Universal-Conditional-Logic" target="_blank" rel="noopener">
+                        View on GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Optimizing with UCL...</p>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Scripts (cache-bust v20260711a) -->
+    <script src="ucl-data.js?v=20260711c"></script>
+    <script src="tools-data.js?v=20260711c"></script>
+    <script src="tools/tool-loader.js?v=20260711c"></script>
+    <script src="tools.js?v=20260711c"></script>
+    <script src="models.js?v=20260711c"></script>
+    <script src="lemonade-api.js?v=20260711c"></script>
+    <script src="app.js?v=20260711c"></script>
+    <script type="module">
+        import { initOptimizerUI, disposeOptimizerUI, onStartOptimization, onStopOptimization } from './optimizer/optimizer-ui.js?v=20260711c';
+        import { initOptimizerDashboard, updateDashboardIteration, updateDashboardComplete, updateDashboardStatus, renderScoreChart } from './optimizer/optimizer-dashboard.js?v=20260711c';
+        import { ModelOptimizerOrchestrator } from './optimizer/orchestrator.js?v=20260711c';
+        import { StorageManager } from './optimizer/storage-manager.js?v=20260711c';
+        import { ModelRegistry } from './optimizer/model-registry.js?v=20260711c';
+        import { TestEvaluator } from './optimizer/test-evaluator.js?v=20260711c';
+        import { OptimizationHistory } from './optimizer/optimization-history.js?v=20260711c';
+        import { QualityScorer } from './optimizer/quality-scorer.js?v=20260711c';
+        import { PromptAdapter } from './optimizer/prompt-adapter.js?v=20260711c';
+        import { IterationController } from './optimizer/iteration-controller.js?v=20260711c';
+
+        // Make dashboard functions available globally for cross-module calls
+        window.initOptimizerDashboard = initOptimizerDashboard;
+        window.updateDashboardIteration = updateDashboardIteration;
+        window.updateDashboardComplete = updateDashboardComplete;
+        window.updateDashboardStatus = updateDashboardStatus;
+        window.onStartOptimization = onStartOptimization;
+        window.onStopOptimization = onStopOptimization;
+        window.renderScoreChart = renderScoreChart;
+
+        // Expose optimizer classes globally
+        window.ModelOptimizerOrchestrator = ModelOptimizerOrchestrator;
+        window.StorageManager = StorageManager;
+        window.ModelRegistry = ModelRegistry;
+        window.TestEvaluator = TestEvaluator;
+        window.OptimizationHistory = OptimizationHistory;
+        window.QualityScorer = QualityScorer;
+        window.PromptAdapter = PromptAdapter;
+        window.IterationController = IterationController;
+
+        // Initialize optimizer UI after DOM is ready
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                await initOptimizerUI();
+                console.log('[Module] Optimizer UI loaded');
+            } catch (err) {
+                console.error('[Module] Failed to init optimizer UI:', err);
+            }
+        });
+    </script>
+</body>
+</html>
