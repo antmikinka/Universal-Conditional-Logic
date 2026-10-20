@@ -93,6 +93,12 @@
             font-family: var(--ucl-mono);
             color: var(--ucl-muted);
             gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .ucl-tabs { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+        .ucl-tab[aria-selected="true"] {
+            border-color: var(--ucl-accent);
+            color: var(--ucl-accent);
         }
         .ucl-pane-tag { font-weight: 600; color: var(--ucl-text); }
         .ucl-textarea, .ucl-output {
@@ -225,7 +231,7 @@
         <div class="ucl-header">
             <div>
                 <h1 class="ucl-title">The Book vs. The Name List</h1>
-                <p class="ucl-subtitle">Paste an OpenAI <code>tools</code> list or an MCP <code>inputSchema</code> array. The name list is what the model reads. The schema stays on the host.</p>
+                <p class="ucl-subtitle">Paste an OpenAI <code>tools</code> list or an MCP <code>inputSchema</code> array. The name list is what the model reads. The host tabs are source you copy. They were not part of the 408-cell run.</p>
             </div>
             <div class="ucl-presets">
                 <button type="button" class="ucl-btn" data-preset="minimal">3 Coding Tools</button>
@@ -244,7 +250,11 @@
             </div>
             <div class="ucl-pane">
                 <div class="ucl-pane-bar">
-                    <span class="ucl-pane-tag">Name list (sent to the model)</span>
+                    <div class="ucl-tabs" role="tablist">
+                        <button type="button" class="ucl-btn ucl-tab" data-view="namelist" role="tab" aria-selected="true">1. Name list</button>
+                        <button type="button" class="ucl-btn ucl-tab" data-view="python" role="tab" aria-selected="false">2. Host rulebook (Py)</button>
+                        <button type="button" class="ucl-btn ucl-tab" data-view="typescript" role="tab" aria-selected="false">3. Host rulebook (TS)</button>
+                    </div>
                     <div style="display:flex; align-items:center; gap:0.5rem;">
                         <span id="ucl-names-stats">0 chars · ~0 tokens</span>
                         <button type="button" id="ucl-copy-btn" class="ucl-btn ucl-btn-primary">Copy</button>
@@ -299,9 +309,10 @@
                 </span>
                 <span>1.0 longer catalog</span>
             </div>
-            <p class="ucl-note" id="ucl-sketch-note">S* = 0.509 is the peak from the prompt-specification study. The dots are a density sketch of the text in these two panes. They are not a new measurement of that study, and they are not the August 2026 tool-call pass rates.</p>
+            <p class="ucl-note" id="ucl-sketch-note">S* = 0.509 is the peak from the prompt-specification study. The dots are a density sketch of the text in these two panes. They are not a new measurement of that study, and they are not the August 2026 tool-call pass rates. On that tool run the names row matched arguments at 0.901. The 0.688 argument match is the native-tools row, 24 cells. The alias list in the host files is a convenience, not that measurement.</p>
         </div>
     </section>
+    <script src="ucl-codegen.js"></script>
     <script>
         (function () {
             const root = document.getElementById("ucl-compressor");
@@ -332,6 +343,25 @@
             const outputEl = root.querySelector("#ucl-output");
             const errorEl = root.querySelector("#ucl-error");
             const copyBtn = root.querySelector("#ucl-copy-btn");
+            const viewButtons = root.querySelectorAll("[data-view]");
+            let activeView = "namelist";
+            let cachedOutputs = { namelist: "", python: "", typescript: "" };
+
+            function showView(view) {
+                activeView = view;
+                viewButtons.forEach((button) => {
+                    button.setAttribute("aria-selected", String(button.getAttribute("data-view") === view));
+                });
+                outputEl.textContent = cachedOutputs[view] || "";
+                const shown = outputEl.textContent.length;
+                const stats = root.querySelector("#ucl-names-stats");
+                if (view === "namelist") {
+                    const tokens = Math.ceil(shown / 3.8);
+                    stats.textContent = shown.toLocaleString() + " chars \u00b7 ~" + tokens.toLocaleString() + " tok";
+                } else {
+                    stats.textContent = shown.toLocaleString() + " chars \u00b7 host only";
+                }
+            }
 
             function extractTools(parsed) {
                 const list = Array.isArray(parsed) ? parsed : (parsed.tools || parsed.functions || [parsed]);
@@ -373,15 +403,22 @@
                 const rawText = inputEl.value.trim();
                 if (!rawText) {
                     errorEl.style.display = "none";
-                    outputEl.textContent = "";
+                    cachedOutputs = { namelist: "", python: "", typescript: "" };
+                    showView(activeView);
                     return;
                 }
                 try {
-                    const tools = extractTools(JSON.parse(rawText));
+                    const parsed = JSON.parse(rawText);
+                    const tools = extractTools(parsed);
                     if (!tools.length) throw new Error("No tools found. Paste a tools array, an MCP list, or one tool object.");
                     errorEl.style.display = "none";
                     const nameListText = tools.map((tool) => tool.name + " \u2014 " + tool.description).join("\n");
-                    outputEl.textContent = nameListText;
+                    cachedOutputs = {
+                        namelist: nameListText,
+                        python: UCLCodegen.generatePython(parsed),
+                        typescript: UCLCodegen.generateTypeScript(parsed)
+                    };
+                    showView(activeView);
 
                     const bookChars = rawText.length;
                     const namesChars = nameListText.length;
@@ -394,7 +431,7 @@
                     const namesSketch = Math.min(0.55, 0.34 + (tools.length * 0.015));
 
                     root.querySelector("#ucl-book-stats").textContent = bookChars.toLocaleString() + " chars \u00b7 ~" + bookTokens.toLocaleString() + " tok";
-                    root.querySelector("#ucl-names-stats").textContent = namesChars.toLocaleString() + " chars \u00b7 ~" + namesTokens.toLocaleString() + " tok";
+                    if (activeView !== "namelist") showView(activeView);
                     root.querySelector("#ucl-stat-saved").textContent = pctSaved.toFixed(1) + "%";
                     root.querySelector("#ucl-stat-chars").textContent = bookChars.toLocaleString() + " \u2192 " + namesChars.toLocaleString() + " chars";
                     root.querySelector("#ucl-stat-tokens").textContent = (tokenDelta >= 0 ? "-" : "+") + Math.abs(tokenDelta).toLocaleString() + " tok";
@@ -420,6 +457,9 @@
                 }
             }
 
+            viewButtons.forEach((button) => {
+                button.addEventListener("click", () => showView(button.getAttribute("data-view")));
+            });
             root.querySelectorAll("[data-preset]").forEach((btn) => {
                 btn.addEventListener("click", () => {
                     inputEl.value = JSON.stringify(PRESETS[btn.getAttribute("data-preset")], null, 2);
