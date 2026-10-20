@@ -228,7 +228,36 @@ body {
 
 .header-actions {
     display: flex;
+    align-items: center;
     gap: var(--gap-md);
+}
+
+.header-text-link {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 0.4rem 0.7rem;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+}
+
+.header-text-link:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-primary);
+}
+
+.ucl-compressor-frame {
+    display: none;
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    border: 0;
+    background: #0d0e11;
+}
+
+.ucl-compressor-frame.active {
+    display: block;
 }
 
 .btn-icon {

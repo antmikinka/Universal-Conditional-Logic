@@ -128,6 +128,7 @@ function renderSidebarTabs() {
         { id: 'pipeline',  icon: '🔀', label: 'Pipeline' },
         { id: 'convert',   icon: '🔄', label: 'Convert' },
         { id: 'optimizer', icon: '🎯', label: 'Optimizer' },
+        { id: 'compress',  icon: '📉', label: 'Compress' },
         { id: 'context',   icon: '📁', label: 'Context' },
     ];
 
@@ -286,6 +287,7 @@ function switchSidebarTab(tabName) {
         pipeline: 'Search pipeline...',
         convert: 'Search convert options...',
         optimizer: 'Search optimizer...',
+        compress: 'Name list compressor...',
         context: 'Search context files...'
     };
     const searchInput = document.getElementById('syntaxSearch');
@@ -301,6 +303,7 @@ function switchSidebarTab(tabName) {
     const actionBar = document.querySelector('.action-bar');
     let dashboard = document.querySelector('.optimizer-dashboard');
     let contextView = document.querySelector('.context-conversation');
+    let compressorFrame = document.querySelector('.ucl-compressor-frame');
 
     if (tabName === 'optimizer') {
         // Show optimizer dashboard in editor area
@@ -310,6 +313,9 @@ function switchSidebarTab(tabName) {
         if (contextView) {
             contextView.classList.remove('active');
             contextView.style.display = 'none';
+        }
+        if (compressorFrame) {
+            compressorFrame.classList.remove('active');
         }
 
         if (!dashboard) {
@@ -333,6 +339,7 @@ function switchSidebarTab(tabName) {
         if (editorPanes) editorPanes.style.display = 'none';
         if (actionBar) actionBar.style.display = 'none';
         if (dashboard) { dashboard.classList.remove('active'); dashboard.style.display = 'none'; }
+        if (compressorFrame) compressorFrame.classList.remove('active');
 
         if (!contextView) {
             const editorContainer = document.querySelector('.editor-container');
@@ -349,6 +356,26 @@ function switchSidebarTab(tabName) {
                 window.renderContextConversation(contextView);
             }
         }
+    } else if (tabName === 'compress') {
+        if (editorHeader) editorHeader.style.display = 'none';
+        if (editorPanes) editorPanes.style.display = 'none';
+        if (actionBar) actionBar.style.display = 'none';
+        if (dashboard) { dashboard.classList.remove('active'); dashboard.style.display = 'none'; }
+        if (contextView) {
+            contextView.classList.remove('active');
+            contextView.style.display = 'none';
+        }
+        if (!compressorFrame) {
+            const editorContainer = document.querySelector('.editor-container');
+            if (editorContainer) {
+                compressorFrame = document.createElement('iframe');
+                compressorFrame.className = 'ucl-compressor-frame';
+                compressorFrame.title = 'Name list compressor';
+                compressorFrame.src = 'compressor.html';
+                editorContainer.appendChild(compressorFrame);
+            }
+        }
+        if (compressorFrame) compressorFrame.classList.add('active');
     } else {
         // Show standard editor (for convert, syntax, tools, pipeline)
         if (editorHeader) editorHeader.style.display = '';
@@ -359,6 +386,7 @@ function switchSidebarTab(tabName) {
             contextView.classList.remove('active');
             contextView.style.display = 'none';
         }
+        if (compressorFrame) compressorFrame.classList.remove('active');
     }
 
     // Animate the scroll indicator pill

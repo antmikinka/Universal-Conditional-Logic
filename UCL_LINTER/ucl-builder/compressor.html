@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCL Name List — Schema Compressor</title>
+    <meta name="description" content="Paste an OpenAI tools list or an MCP inputSchema and see the name list the model would read. Character counts are exact. Token counts are a chars/3.8 estimate.">
+    <style>
+        html, body {
+            margin: 0;
+            background: #0d0e11;
+            color: #e8eaed;
+        }
+        body {
+            min-height: 100vh;
+        }
+        .page-link {
+            display: block;
+            max-width: 960px;
+            margin: 1rem auto 0;
+            padding: 0 1rem;
+            font-family: system-ui, sans-serif;
+            font-size: 0.85rem;
+        }
+        .page-link a {
+            color: #8b92a5;
+        }
+        .ucl-widget {
+            --ucl-bg: #0d0e11;
+            --ucl-surface: #14161b;
+            --ucl-border: #262932;
+            --ucl-text: #e8eaed;
+            --ucl-muted: #8b92a5;
+            --ucl-accent: #10b981;
+            --ucl-warn: #f59e0b;
+            --ucl-danger: #ef4444;
+            --ucl-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            --ucl-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: var(--ucl-sans);
+            background: var(--ucl-bg);
+            color: var(--ucl-text);
+            border: 1px solid var(--ucl-border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            max-width: 960px;
+            margin: 1rem auto 2rem;
+            box-sizing: border-box;
+        }
+        .ucl-widget * { box-sizing: border-box; }
+        .ucl-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--ucl-border);
+            padding-bottom: 0.75rem;
+        }
+        .ucl-title { font-size: 1.1rem; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+        .ucl-subtitle { font-size: 0.85rem; color: var(--ucl-muted); margin: 0.25rem 0 0; }
+        .ucl-presets { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+        .ucl-btn {
+            background: var(--ucl-surface);
+            color: var(--ucl-text);
+            border: 1px solid var(--ucl-border);
+            border-radius: 6px;
+            padding: 0.35rem 0.65rem;
+            font-size: 0.75rem;
+            font-family: var(--ucl-mono);
+            cursor: pointer;
+        }
+        .ucl-btn:hover { border-color: var(--ucl-muted); background: #1c1f26; }
+        .ucl-btn-primary { border-color: rgba(16, 185, 129, 0.4); color: var(--ucl-accent); }
+        .ucl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem; }
+        @media (max-width: 720px) { .ucl-grid { grid-template-columns: 1fr; } }
+        .ucl-pane {
+            display: flex;
+            flex-direction: column;
+            background: var(--ucl-surface);
+            border: 1px solid var(--ucl-border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .ucl-pane-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0.75rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid var(--ucl-border);
+            font-size: 0.75rem;
+            font-family: var(--ucl-mono);
+            color: var(--ucl-muted);
+            gap: 0.5rem;
+        }
+        .ucl-pane-tag { font-weight: 600; color: var(--ucl-text); }
+        .ucl-textarea, .ucl-output {
+            width: 100%;
+            height: 260px;
+            padding: 0.75rem;
+            background: transparent;
+            color: var(--ucl-text);
+            border: none;
+            font-family: var(--ucl-mono);
+            font-size: 0.8rem;
+            line-height: 1.5;
+            resize: vertical;
+            outline: none;
+            margin: 0;
+            overflow-y: auto;
+            white-space: pre;
+        }
+        .ucl-output { color: #a7f3d0; }
+        .ucl-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-bottom: 1rem; }
+        @media (max-width: 720px) { .ucl-metrics { grid-template-columns: repeat(2, 1fr); } }
+        .ucl-card {
+            background: var(--ucl-surface);
+            border: 1px solid var(--ucl-border);
+            border-radius: 8px;
+            padding: 0.75rem;
+        }
+        .ucl-card-label {
+            font-size: 0.72rem;
+            color: var(--ucl-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.35rem;
+        }
+        .ucl-card-value { font-family: var(--ucl-mono); font-size: 1.25rem; font-weight: 600; }
+        .ucl-card-sub { font-size: 0.72rem; color: var(--ucl-muted); margin-top: 0.25rem; font-family: var(--ucl-mono); }
+        .ucl-paradox-box {
+            background: var(--ucl-surface);
+            border: 1px solid var(--ucl-border);
+            border-radius: 8px;
+            padding: 0.85rem 1rem;
+        }
+        .ucl-paradox-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .ucl-track {
+            position: relative;
+            height: 10px;
+            background: linear-gradient(90deg, #3b82f6 0%, #10b981 48%, #10b981 54%, #f59e0b 70%, #ef4444 100%);
+            border-radius: 999px;
+            margin: 1.4rem 0 0.5rem;
+        }
+        .ucl-threshold-line {
+            position: absolute;
+            left: 50.9%;
+            top: -5px;
+            bottom: -5px;
+            width: 2px;
+            background: #ffffff;
+            z-index: 2;
+        }
+        .ucl-threshold-label {
+            position: absolute;
+            left: 50.9%;
+            top: -20px;
+            transform: translateX(-50%);
+            font-family: var(--ucl-mono);
+            font-size: 0.68rem;
+            color: var(--ucl-text);
+            white-space: nowrap;
+        }
+        .ucl-marker {
+            position: absolute;
+            top: 50%;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid #0d0e11;
+            z-index: 3;
+        }
+        .ucl-marker-book { background: var(--ucl-danger); }
+        .ucl-marker-names { background: var(--ucl-accent); }
+        .ucl-legend {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.72rem;
+            color: var(--ucl-muted);
+            font-family: var(--ucl-mono);
+            margin-top: 0.4rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .ucl-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 4px;
+        }
+        .ucl-error {
+            color: var(--ucl-danger);
+            font-size: 0.78rem;
+            font-family: var(--ucl-mono);
+            margin: 0 0 0.75rem;
+            display: none;
+        }
+        .ucl-note {
+            margin: 0.75rem 0 0;
+            font-size: 0.75rem;
+            color: var(--ucl-muted);
+            line-height: 1.45;
+        }
+    </style>
+</head>
+<body>
+    <p class="page-link"><a href="./">UCL Prompt Builder</a></p>
+    <section id="ucl-compressor" class="ucl-widget" aria-label="UCL Schema Compressor">
+        <div class="ucl-header">
+            <div>
+                <h1 class="ucl-title">The Book vs. The Name List</h1>
+                <p class="ucl-subtitle">Paste an OpenAI <code>tools</code> list or an MCP <code>inputSchema</code> array. The name list is what the model reads. The schema stays on the host.</p>
+            </div>
+            <div class="ucl-presets">
+                <button type="button" class="ucl-btn" data-preset="minimal">3 Coding Tools</button>
+                <button type="button" class="ucl-btn" data-preset="catalog">8-Tool Agent Catalog</button>
+                <button type="button" class="ucl-btn" data-preset="mcp">Bloated MCP Server</button>
+            </div>
+        </div>
+
+        <div class="ucl-grid">
+            <div class="ucl-pane">
+                <div class="ucl-pane-bar">
+                    <span class="ucl-pane-tag">Whole Book (JSON Schema)</span>
+                    <span id="ucl-book-stats">0 chars · ~0 tokens</span>
+                </div>
+                <textarea id="ucl-input" class="ucl-textarea" spellcheck="false" aria-label="Paste JSON schema here"></textarea>
+            </div>
+            <div class="ucl-pane">
+                <div class="ucl-pane-bar">
+                    <span class="ucl-pane-tag">Name list (sent to the model)</span>
+                    <div style="display:flex; align-items:center; gap:0.5rem;">
+                        <span id="ucl-names-stats">0 chars · ~0 tokens</span>
+                        <button type="button" id="ucl-copy-btn" class="ucl-btn ucl-btn-primary">Copy</button>
+                    </div>
+                </div>
+                <pre id="ucl-output" class="ucl-output" aria-live="polite"></pre>
+            </div>
+        </div>
+
+        <div id="ucl-error" class="ucl-error"></div>
+
+        <div class="ucl-metrics">
+            <div class="ucl-card">
+                <div class="ucl-card-label">Catalog reduction</div>
+                <div class="ucl-card-value" id="ucl-stat-saved" style="color: var(--ucl-accent);">0%</div>
+                <div class="ucl-card-sub" id="ucl-stat-chars">0 → 0 chars</div>
+            </div>
+            <div class="ucl-card">
+                <div class="ucl-card-label">Est. token delta / turn</div>
+                <div class="ucl-card-value" id="ucl-stat-tokens">0</div>
+                <div class="ucl-card-sub" id="ucl-stat-10turn">chars ÷ 3.8, not a tokenizer</div>
+            </div>
+            <div class="ucl-card">
+                <div class="ucl-card-label">Schema nodes on the host</div>
+                <div class="ucl-card-value" id="ucl-stat-os">0</div>
+                <div class="ucl-card-sub" id="ucl-stat-nodes">Σ ln(C_k) stays with the schema</div>
+            </div>
+            <div class="ucl-card">
+                <div class="ucl-card-label">Density sketch</div>
+                <div class="ucl-card-value" id="ucl-stat-regime">—</div>
+                <div class="ucl-card-sub" id="ucl-stat-s">Book 0.00 → names 0.00</div>
+            </div>
+        </div>
+
+        <div class="ucl-paradox-box">
+            <div class="ucl-paradox-header">
+                <span><strong>Prompt-study peak</strong> (<a href="https://arxiv.org/abs/2601.00880" style="color: inherit;">arXiv:2601.00880</a>)</span>
+                <span id="ucl-quality-note" style="font-family: var(--ucl-mono); font-size: 0.75rem; color: var(--ucl-muted);"></span>
+            </div>
+            <div class="ucl-track">
+                <div class="ucl-threshold-label">S* = 0.509</div>
+                <div class="ucl-threshold-line"></div>
+                <div id="ucl-marker-book" class="ucl-marker ucl-marker-book" title="Whole book density sketch"></div>
+                <div id="ucl-marker-names" class="ucl-marker ucl-marker-names" title="Name list density sketch"></div>
+            </div>
+            <div class="ucl-legend">
+                <span>0.0 shorter catalog</span>
+                <span>
+                    <span class="ucl-dot" style="background: var(--ucl-accent);"></span>Name list
+                    &nbsp;&nbsp;
+                    <span class="ucl-dot" style="background: var(--ucl-danger);"></span>Whole book
+                </span>
+                <span>1.0 longer catalog</span>
+            </div>
+            <p class="ucl-note" id="ucl-sketch-note">S* = 0.509 is the peak from the prompt-specification study. The dots are a density sketch of the text in these two panes. They are not a new measurement of that study, and they are not the August 2026 tool-call pass rates.</p>
+        </div>
+    </section>
+    <script>
+        (function () {
+            const root = document.getElementById("ucl-compressor");
+            const PRESETS = {
+                minimal: [
+                    { type: "function", function: { name: "read_file", description: "Read the contents of a UTF-8 text file from the workspace.", parameters: { type: "object", properties: { path: { type: "string", description: "Relative path to the file" }, start_line: { type: "integer", description: "Optional 1-indexed start line" }, end_line: { type: "integer", description: "Optional 1-indexed end line" } }, required: ["path"], additionalProperties: false } } },
+                    { type: "function", function: { name: "list_dir", description: "List files and directories inside a given folder path.", parameters: { type: "object", properties: { path: { type: "string", description: "Directory path to inspect" }, recursive: { type: "boolean", default: false } }, required: ["path"] } } },
+                    { type: "function", function: { name: "grep", description: "Search file contents using a regular expression pattern.", parameters: { type: "object", properties: { pattern: { type: "string", description: "Regex pattern to match" }, path: { type: "string", description: "Root directory or file to search" }, case_insensitive: { type: "boolean", default: false } }, required: ["pattern"] } } }
+                ],
+                catalog: [
+                    { name: "read_file", description: "Read a text file from disk.", parameters: { type: "object", properties: { path: { type: "string" }, encoding: { type: "string", enum: ["utf-8", "ascii"] } }, required: ["path"] } },
+                    { name: "write_file", description: "Write content to a file path, overwriting existing content.", parameters: { type: "object", properties: { path: { type: "string" }, content: { type: "string" }, create_dirs: { type: "boolean" } }, required: ["path", "content"] } },
+                    { name: "list_dir", description: "List folder contents and metadata.", parameters: { type: "object", properties: { path: { type: "string" }, include_hidden: { type: "boolean" } }, required: ["path"] } },
+                    { name: "grep", description: "Search file contents for a regex pattern.", parameters: { type: "object", properties: { query: { type: "string" }, path: { type: "string" }, glob: { type: "string" } }, required: ["query"] } },
+                    { name: "search", description: "Find files by name pattern across workspace.", parameters: { type: "object", properties: { pattern: { type: "string" }, max_results: { type: "integer", default: 50 } }, required: ["pattern"] } },
+                    { name: "run", description: "Execute a shell command in a sandboxed terminal.", parameters: { type: "object", properties: { command: { type: "string" }, cwd: { type: "string" }, timeout_ms: { type: "integer", default: 30000 } }, required: ["command"] } },
+                    { name: "git", description: "Run a read-only git inspection subcommand.", parameters: { type: "object", properties: { subcommand: { type: "string", enum: ["status", "diff", "log", "blame"] }, target: { type: "string" } }, required: ["subcommand"] } },
+                    { name: "http", description: "Send an HTTP request to a remote endpoint.", parameters: { type: "object", properties: { url: { type: "string" }, method: { type: "string", enum: ["GET", "POST", "PUT", "DELETE"] }, headers: { type: "object" }, body: { type: "string" } }, required: ["url", "method"] } }
+                ],
+                mcp: [
+                    { name: "github_search_issues", description: "Search GitHub issues and pull requests across repositories with complex filtering rules and pagination metadata.", inputSchema: { type: "object", properties: { owner: { type: "string", description: "Repository owner handle" }, repo: { type: "string", description: "Repository slug name" }, query: { type: "string", description: "Search keywords and qualifiers" }, state: { type: "string", enum: ["open", "closed", "all"], default: "open" }, labels: { type: "array", items: { type: "string" }, description: "Filter by label names" }, sort: { type: "string", enum: ["created", "updated", "comments"], default: "created" }, direction: { type: "string", enum: ["asc", "desc"], default: "desc" }, per_page: { type: "integer", minimum: 1, maximum: 100, default: 30 }, page: { type: "integer", minimum: 1, default: 1 } }, required: ["owner", "repo", "query"], additionalProperties: false } },
+                    { name: "postgres_execute_query", description: "Execute a read-only SQL query against the analytical database cluster with timeout and row-limit guards.", inputSchema: { type: "object", properties: { sql: { type: "string", description: "SELECT query string to execute" }, parameters: { type: "array", items: { type: "string" }, description: "Positional bind parameters" }, row_limit: { type: "integer", default: 500, maximum: 5000 }, timeout_seconds: { type: "number", default: 15.0 }, explain_analyze: { type: "boolean", default: false } }, required: ["sql"], additionalProperties: false } },
+                    { name: "slack_post_rich_message", description: "Post a formatted message or thread reply to a Slack channel with optional block-kit attachments.", inputSchema: { type: "object", properties: { channel_id: { type: "string", description: "Target Slack channel ID" }, text: { type: "string", description: "Fallback notification text" }, thread_ts: { type: "string", description: "Parent message timestamp for threading" }, unfurl_links: { type: "boolean", default: false }, blocks: { type: "array", items: { type: "object" }, description: "Block Kit JSON payload" } }, required: ["channel_id", "text"] } }
+                ]
+            };
+
+            const inputEl = root.querySelector("#ucl-input");
+            const outputEl = root.querySelector("#ucl-output");
+            const errorEl = root.querySelector("#ucl-error");
+            const copyBtn = root.querySelector("#ucl-copy-btn");
+
+            function extractTools(parsed) {
+                const list = Array.isArray(parsed) ? parsed : (parsed.tools || parsed.functions || [parsed]);
+                return list.map((item) => {
+                    const fn = item.function || item;
+                    const name = String(fn.name || "unnamed_tool");
+                    const rawDesc = fn.description || "";
+                    const schema = fn.parameters || fn.inputSchema || fn.input_schema || {};
+                    return { name, description: compactDescription(rawDesc), schema };
+                }).filter((tool) => tool.name);
+            }
+
+            function compactDescription(desc) {
+                if (!desc) return "execute tool";
+                const firstClause = String(desc).split(/[.;\u2014\n]/)[0].trim();
+                const words = firstClause.replace(/^(This tool |Use this to |Allows you to )/i, "").split(/\s+/);
+                return words.slice(0, 8).join(" ").toLowerCase().replace(/[.,;:]+$/, "");
+            }
+
+            function countNodes(obj) {
+                if (!obj || typeof obj !== "object") return 1;
+                let count = 1;
+                for (const key of Object.keys(obj)) count += countNodes(obj[key]);
+                return count;
+            }
+
+            function schemaStats(tools) {
+                let nodes = 0;
+                let sumLn = 0;
+                tools.forEach((tool) => {
+                    const cK = Math.max(2, countNodes(tool.schema));
+                    nodes += cK;
+                    sumLn += Math.log(cK);
+                });
+                return { nodes, sumLn };
+            }
+
+            function update() {
+                const rawText = inputEl.value.trim();
+                if (!rawText) {
+                    errorEl.style.display = "none";
+                    outputEl.textContent = "";
+                    return;
+                }
+                try {
+                    const tools = extractTools(JSON.parse(rawText));
+                    if (!tools.length) throw new Error("No tools found. Paste a tools array, an MCP list, or one tool object.");
+                    errorEl.style.display = "none";
+                    const nameListText = tools.map((tool) => tool.name + " \u2014 " + tool.description).join("\n");
+                    outputEl.textContent = nameListText;
+
+                    const bookChars = rawText.length;
+                    const namesChars = nameListText.length;
+                    const bookTokens = Math.ceil(bookChars / 3.8);
+                    const namesTokens = Math.ceil(namesChars / 3.8);
+                    const pctSaved = bookChars > 0 ? Math.max(0, ((bookChars - namesChars) / bookChars) * 100) : 0;
+                    const tokenDelta = bookTokens - namesTokens;
+                    const stats = schemaStats(tools);
+                    const bookSketch = Math.min(0.95, 0.42 + (stats.sumLn * 0.02) + (bookChars / 18000));
+                    const namesSketch = Math.min(0.55, 0.34 + (tools.length * 0.015));
+
+                    root.querySelector("#ucl-book-stats").textContent = bookChars.toLocaleString() + " chars \u00b7 ~" + bookTokens.toLocaleString() + " tok";
+                    root.querySelector("#ucl-names-stats").textContent = namesChars.toLocaleString() + " chars \u00b7 ~" + namesTokens.toLocaleString() + " tok";
+                    root.querySelector("#ucl-stat-saved").textContent = pctSaved.toFixed(1) + "%";
+                    root.querySelector("#ucl-stat-chars").textContent = bookChars.toLocaleString() + " \u2192 " + namesChars.toLocaleString() + " chars";
+                    root.querySelector("#ucl-stat-tokens").textContent = (tokenDelta >= 0 ? "-" : "+") + Math.abs(tokenDelta).toLocaleString() + " tok";
+                    root.querySelector("#ucl-stat-10turn").textContent = "estimate \u00b7 chars \u00f7 3.8 \u00b7 " + (tokenDelta * 10).toLocaleString() + " / 10 turns";
+                    root.querySelector("#ucl-stat-os").textContent = String(stats.nodes);
+                    root.querySelector("#ucl-stat-nodes").textContent = "\u03a3 ln(C_k) = " + stats.sumLn.toFixed(2) + " \u00b7 paper O_s = \u03b3 \u00d7 that sum";
+
+                    const regimeEl = root.querySelector("#ucl-stat-regime");
+                    if (bookSketch > 0.509) {
+                        regimeEl.textContent = "Book past the line";
+                        regimeEl.style.color = "var(--ucl-danger)";
+                    } else {
+                        regimeEl.textContent = "Both near the line";
+                        regimeEl.style.color = "var(--ucl-accent)";
+                    }
+                    root.querySelector("#ucl-stat-s").textContent = "sketch " + bookSketch.toFixed(2) + " \u2192 " + namesSketch.toFixed(2);
+                    root.querySelector("#ucl-marker-book").style.left = (bookSketch * 100).toFixed(1) + "%";
+                    root.querySelector("#ucl-marker-names").style.left = (namesSketch * 100).toFixed(1) + "%";
+                    root.querySelector("#ucl-quality-note").textContent = tools.length + " tools";
+                } catch (err) {
+                    errorEl.style.display = "block";
+                    errorEl.textContent = "Invalid JSON: " + err.message;
+                }
+            }
+
+            root.querySelectorAll("[data-preset]").forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    inputEl.value = JSON.stringify(PRESETS[btn.getAttribute("data-preset")], null, 2);
+                    update();
+                });
+            });
+            inputEl.addEventListener("input", update);
+            copyBtn.addEventListener("click", async () => {
+                try {
+                    await navigator.clipboard.writeText(outputEl.textContent);
+                    const orig = copyBtn.textContent;
+                    copyBtn.textContent = "Copied";
+                    setTimeout(() => { copyBtn.textContent = orig; }, 1200);
+                } catch (err) {
+                    errorEl.style.display = "block";
+                    errorEl.textContent = "Copy failed: " + err.message;
+                }
+            });
+
+            inputEl.value = JSON.stringify(PRESETS.catalog, null, 2);
+            update();
+        })();
+    </script>
+</body>
+</html>
