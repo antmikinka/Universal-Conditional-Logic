@@ -1,0 +1,41 @@
+# Universal Conditional Logic (UCL)
+
+> A specification language for prompts, by Anthony Mikinka (arXiv:2601.00880), and a separate host-side pattern for tool calls. Two empirical results follow. Keep them apart.
+
+The model can be shown a short name list. The schema that checks the call can stay on the host. This file is the map of the public site. Figures below are copied from the preprint README or from matrix `20260809T040554Z`. The converter's built-in 8-tool preset (3,391 characters down to 399) is a different text.
+
+**1. System-prompt specification study (arXiv:2601.00880).**
+
+- Design: 13 models × 7 conditions × 4 iterations = 364 invocations. Conditions: `no_prompt`, `baseline`, `ucl_v1`, `ucl_v2`, `ucl_v3`, `ucl_v4`, `ucl_v4.1`.
+- The abstract also reports N=305 and 11 models. The analysis CSV is marked N=305. The reported t-test has 10 degrees of freedom.
+- README results table, baseline versus UCL v4: average output tokens 4,521 to 3,173, a 29.8% reduction (t(10) = 6.36, p < 0.001, Cohen's d = 2.01). The same table lists prompt size 17.6 KB to 9.6 KB, a 45.5% reduction, and quality score 0.82 to 0.89. The baseline prompt is 17,637 characters. The 29.8% figure is that output-token comparison.
+- The builder About box cites N=305 and Cohen's d = 1.15. Quote the README table when quoting the 29.8%.
+- Quality in the README follows an inverted-U in specification density S, peaking at S* ≈ 0.509. For S ≤ S*, Q(S) = a × S. For S > S*, Q(S) = Q_max − b(S − S*)². Structural overhead is O_s = γ × Σ ln(C_k). UCL v2 is the over-specified condition. The README states the curve. It does not publish numeric values for a, b, or γ.
+
+**2. Tool-calling catalog matrix (Qwen3.6-35B, run 20260809T040554Z).**
+
+- One seed. 408 cells. 0 transport errors. Overall pass 82.1% (335 / 408). Cell pass means the scorer required a name match and an argument-subset match. This matrix is documented here from that run. It is not a dataset in the Universal-Conditional-Logic repository.
+- Catalog characters recorded on every cell of that level: names 1,609; lean signatures 2,385; full schema 4,975; no list 373. Native tools recorded no catalog size (24 cells).
+- Names, 96 cells: 85.4% pass, name match 0.901, argument match 0.901, mean 2,374 tokens, mean latency 34.2 s.
+- Lean signatures, 96 cells: 85.4% pass, name match 0.922, argument match 0.901, mean 2,829 tokens, mean latency 35.8 s.
+- Full schema in the prompt, 96 cells: 84.4% pass, name match 0.896, argument match 0.885, mean 4,307 tokens, mean latency 32.4 s.
+- No list, 96 cells: 77.1% pass, name match 0.828, argument match 0.802, mean 1,610 tokens, mean latency 37.2 s.
+- Native `tools=`, 24 cells: 66.7% pass, name match 0.979, argument match 0.688, mean 4,150 tokens, mean latency 35.0 s.
+- Names used about 45% fewer mean tokens than the full schema (2,374 versus 4,307) and fewer catalog characters (1,609 versus 4,975, about 68%). The full schema did not raise the pass rate on this suite. The shorter catalog was slower: 34.2 s versus 32.4 s. Across levels, mean latency sits between 32.4 s and 37.2 s.
+- The matrix report says native tools often picked the right tool family and lost the argument check under its subset scorer (path and shell mapping). The converter's argument-alias table was not part of this run.
+- One seed. Scenario t2_s3 passed 0%. A July harness that used the label UCL was the arm that pasted the schema into the prompt.
+
+## Site
+
+- [Landing](https://antmikinka.github.io/Universal-Conditional-Logic/): The two results, kept apart.
+- [Specification note](https://antmikinka.github.io/Universal-Conditional-Logic/blog/token-efficiency.html): The 29.8% output-token comparison, the 364-invocation design, N=305, and S* ≈ 0.509.
+- [Tool-catalog note](https://antmikinka.github.io/Universal-Conditional-Logic/blog/name-list.html): The 408-cell table, including native tools at name match 0.979 and argument match 0.688.
+- [Blog index](https://antmikinka.github.io/Universal-Conditional-Logic/blog/): Both notes.
+- [Schema converter](https://antmikinka.github.io/Universal-Conditional-Logic/compressor.html): Paste an OpenAI `tools` list or an MCP `inputSchema`. The name list is the model-facing text. The Python and TypeScript tabs are host source to copy. The page does not run the checker.
+- [Prompt builder](https://antmikinka.github.io/Universal-Conditional-Logic/builder.html): Write a prompt, pick tools from the catalog, and run Convert against your model endpoint.
+
+## Optional
+
+- [arXiv:2601.00880](https://arxiv.org/abs/2601.00880): Universal Conditional Logic: A Formal Language for Prompt Engineering. Anthony Mikinka.
+- [Repository](https://github.com/antmikinka/Universal-Conditional-Logic): Preprint experiment code, prompts, and model responses under `00_ARXiv_Code`.
+- [Two ways to show a model its tools](https://anthonymikinka.com/posts/two-tool-call-methods/): Author essay on the same matrix. Its catalog sizes, 1,584 and 4,980, differ from the score-file constants 1,609 and 4,975 above.
