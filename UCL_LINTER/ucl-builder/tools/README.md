@@ -99,3 +99,34 @@ if (ToolLoader.isLoaded()) {
 ## Fallback
 
 If dynamic loading fails, the system falls back to `tools-data.js` which contains the same data as hardcoded JavaScript.
+
+## Import from JSON or an MCP server
+
+The Tools tab in the builder has an Import form. Start the page with
+`python serve_nocache.py` and open `http://localhost:8765`. Paste JSON or
+name an MCP command, then Insert UCL to drop the block into the prompt.
+Check "Save into tools/" if the domain should survive a reload.
+
+The page loads whatever `index.json` lists. The same converter runs from
+`UCL_LINTER` without the browser:
+
+```bash
+python tool_importer.py --json my_tools.json --name my_tools --tools-dir ucl-builder/tools
+python tool_importer.py --mcp npx --mcp-arg -y --mcp-arg @playwright/mcp --name playwright_live --tools-dir ucl-builder/tools
+```
+
+Accepted JSON is an OpenAI `{"tools":[...]}` envelope, a bare list, an MCP
+`tools/list` result (`inputSchema`), or a domain file already in this folder.
+
+`--framing newline` is the MCP spec. Pass `--framing content-length` for a
+peer that speaks LSP-style frames (Loom's stdio client is one of them).
+
+The same run can also write the three artifacts without editing this catalog:
+
+```bash
+python tool_importer.py --json my_tools.json --name my_tools --out-dir ./out --print none
+```
+
+That writes `my_tools.ucl.txt` (grouped `^^CONDITION^^` block), `my_tools.domain.json`
+(this folder's shape), and `my_tools.openai.json` (the envelope Loom already
+passes to native function calling).

@@ -21,7 +21,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=20260711c">
 </head>
 <body>
     <!-- Animated Background -->
@@ -35,7 +35,7 @@
                     <span class="title-icon">⚡</span>
                     UCL Prompt Builder
                 </h1>
-                <span class="version-badge">v3.0 + Tools</span>
+                <span class="version-badge">v4.0 + Optimizer</span>
             </div>
             <div class="header-actions">
                 <div class="server-status" id="serverStatus" title="Server connection status">
@@ -357,13 +357,54 @@
     <!-- Toast Notifications -->
     <div class="toast-container" id="toastContainer"></div>
 
-    <!-- Scripts -->
-    <script src="ucl-data.js"></script>
-    <script src="tools-data.js"></script>
-    <script src="tools/tool-loader.js"></script>
-    <script src="tools.js"></script>
-    <script src="models.js"></script>
-    <script src="lemonade-api.js"></script>
-    <script src="app.js"></script>
+    <!-- Scripts (cache-bust v20260711a) -->
+    <script src="ucl-data.js?v=20260711c"></script>
+    <script src="tools-data.js?v=20260711c"></script>
+    <script src="tools/tool-loader.js?v=20260711c"></script>
+    <script src="tools.js?v=20260711c"></script>
+    <script src="models.js?v=20260711c"></script>
+    <script src="lemonade-api.js?v=20260711c"></script>
+    <script src="app.js?v=20260711c"></script>
+    <script type="module">
+        import { initOptimizerUI, disposeOptimizerUI, onStartOptimization, onStopOptimization } from './optimizer/optimizer-ui.js?v=20260711c';
+        import { initOptimizerDashboard, updateDashboardIteration, updateDashboardComplete, updateDashboardStatus, renderScoreChart } from './optimizer/optimizer-dashboard.js?v=20260711c';
+        import { ModelOptimizerOrchestrator } from './optimizer/orchestrator.js?v=20260711c';
+        import { StorageManager } from './optimizer/storage-manager.js?v=20260711c';
+        import { ModelRegistry } from './optimizer/model-registry.js?v=20260711c';
+        import { TestEvaluator } from './optimizer/test-evaluator.js?v=20260711c';
+        import { OptimizationHistory } from './optimizer/optimization-history.js?v=20260711c';
+        import { QualityScorer } from './optimizer/quality-scorer.js?v=20260711c';
+        import { PromptAdapter } from './optimizer/prompt-adapter.js?v=20260711c';
+        import { IterationController } from './optimizer/iteration-controller.js?v=20260711c';
+
+        // Make dashboard functions available globally for cross-module calls
+        window.initOptimizerDashboard = initOptimizerDashboard;
+        window.updateDashboardIteration = updateDashboardIteration;
+        window.updateDashboardComplete = updateDashboardComplete;
+        window.updateDashboardStatus = updateDashboardStatus;
+        window.onStartOptimization = onStartOptimization;
+        window.onStopOptimization = onStopOptimization;
+        window.renderScoreChart = renderScoreChart;
+
+        // Expose optimizer classes globally
+        window.ModelOptimizerOrchestrator = ModelOptimizerOrchestrator;
+        window.StorageManager = StorageManager;
+        window.ModelRegistry = ModelRegistry;
+        window.TestEvaluator = TestEvaluator;
+        window.OptimizationHistory = OptimizationHistory;
+        window.QualityScorer = QualityScorer;
+        window.PromptAdapter = PromptAdapter;
+        window.IterationController = IterationController;
+
+        // Initialize optimizer UI after DOM is ready
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                await initOptimizerUI();
+                console.log('[Module] Optimizer UI loaded');
+            } catch (err) {
+                console.error('[Module] Failed to init optimizer UI:', err);
+            }
+        });
+    </script>
 </body>
 </html>

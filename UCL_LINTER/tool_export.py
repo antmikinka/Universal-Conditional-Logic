@@ -202,6 +202,119 @@ def to_json_schema_batch(tools: List[ToolDefinition]) -> Dict[str, Any]:
 
 
 # =============================================================================
+# WEBSITE CATALOG + GROUPED UCL
+# =============================================================================
+
+def choose_domain_keywords(tools: List[ToolDefinition],
+                           name: str,
+                           explicit: Optional[List[str]] = None,
+                           limit: int = 8) -> List[str]:
+    """Pick the shared ^^CONDITION^^ keywords for a domain.
+
+    Explicit keywords win. Otherwise name words come first, then the
+    keywords that show up on the most tools. Capped so the group
+    condition stays shorter than repeating every tool keyword.
+    """
+    if explicit:
+        chosen: List[str] = []
+        for kw in explicit:
+            text = str(kw).strip().lower()
+            if text and text not in chosen:
+                chosen.append(text)
+            if len(chosen) >= limit:
+                break
+        return chosen or [name.lower()]
+
+    counts: Dict[str, int] = {}
+    for tool in tools:
+        for kw in tool.keywords:
+            counts[kw] = counts.get(kw, 0) + 1
+    ranked = sorted(counts, key=lambda kw: (-counts[kw], kw))
+    name_words = [part.lower() for part in name.split("_") if len(part) > 1]
+    chosen = []
+    for word in name_words + ranked:
+        if word not in chosen:
+            chosen.append(word)
+        if len(chosen) >= limit:
+            break
+    return chosen or [name.lower()]
+
+
+def tool_to_website(tool: ToolDefinition) -> Dict[str, Any]:
+    """One tool in the ucl-builder ``tools/*.json`` shape."""
+    parameters = []
+    for param in tool.parameters:
+        entry: Dict[str, Any] = {
+            "name": param.name,
+            "type": param.param_type,
+            "required": param.required,
+        }
+        if param.description:
+            entry["description"] = param.description
+        if param.default is not None:
+            entry["default"] = param.default
+        if param.param_type == "enum":
+            entry["constraints"] = list(param.constraints.get("values", []))
+        if "min" in param.constraints:
+            entry["minimum"] = param.constraints["min"]
+        if "max" in param.constraints:
+            entry["maximum"] = param.constraints["max"]
+        if "pattern" in param.constraints:
+            entry["pattern"] = param.constraints["pattern"]
+        parameters.append(entry)
+
+    payload: Dict[str, Any] = {
+        "name": tool.name,
+        "description": tool.description,
+        "parameters": parameters,
+        "keywords": list(tool.keywords),
+    }
+    if tool.return_type:
+        payload["return_type"] = tool.return_type
+    if tool.examples:
+        payload["examples"] = [
+            {"input": example.input_text, "output": example.output_text}
+            for example in tool.examples
+        ]
+    return payload
+
+
+def to_website_domain(tools: List[ToolDefinition],
+                      name: str,
+                      description: str = "",
+                      keywords: Optional[List[str]] = None,
+                      category: str = "original",
+                      icon: str = "🔧") -> Dict[str, Any]:
+    """Domain document loaded by ``ucl-builder/tools/tool-loader.js``."""
+    if not description:
+        description = f"Auto-imported domain: {name} ({len(tools)} tools)"
+    return {
+        "name": name,
+        "description": description,
+        "category": category,
+        "icon": icon,
+        "keywords": choose_domain_keywords(tools, name, explicit=keywords),
+        "tools": {tool.name: tool_to_website(tool) for tool in tools},
+    }
+
+
+def render_tools_ucl(tools: List[ToolDefinition],
+                     name: str,
+                     description: str = "",
+                     keywords: Optional[List[str]] = None) -> str:
+    """Canonical grouped UCL for a tool list. One shared ^^CONDITION^^."""
+    if not description:
+        description = f"Auto-imported domain: {name} ({len(tools)} tools)"
+    group = ToolGroup(
+        name=name,
+        keywords=choose_domain_keywords(tools, name, explicit=keywords),
+        tools=list(tools),
+        description=description,
+    )
+    return group.render()
+
+
+# =============================================================================
 # JSON BLOCK DETECTION IN TEXT
 # =============================================================================
 

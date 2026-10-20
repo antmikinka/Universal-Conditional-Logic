@@ -139,6 +139,32 @@ const ToolLoader = {
     },
 
     /**
+     * Add or replace a domain produced by POST /api/convert-tools.
+     * If the JSON catalog failed to load, seed the cache from the
+     * hardcoded fallback first so the built-in domains stay visible.
+     */
+    registerDomain(domain) {
+        if (!domain || !domain.name || !domain.tools) {
+            throw new Error('Imported domain is missing a name or tools');
+        }
+        if (!this._loaded && typeof UCL_TOOL_DOMAINS !== 'undefined') {
+            Object.entries(UCL_TOOL_DOMAINS).forEach(([key, value]) => {
+                if (!this._cache.has(key)) this._cache.set(key, value);
+            });
+        }
+        this._cache.set(domain.name, domain);
+        this._loaded = true;
+        if (this._metadata && Array.isArray(this._metadata.domains)) {
+            if (!this._metadata.domains.includes(domain.name)) {
+                this._metadata.domains.push(domain.name);
+            }
+            if (this._metadata.metadata) {
+                this._metadata.metadata.totalDomains = this._cache.size;
+            }
+        }
+    },
+
+    /**
      * Clear the cache and reset state
      */
     clearCache() {

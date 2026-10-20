@@ -14,19 +14,29 @@ Provides:
 6. import_mcp_server() — auto-import an entire MCP server as a domain
 7. import_mcp_servers() — batch import multiple MCP servers
 8. auto_build() — full pipeline: import + build prompt
+9. convert_tools() — one list in, three artifacts out:
+   canonical UCL text, website domain JSON, OpenAI tool envelope
 
 Usage:
     from tool_importer import (
         import_from_json_file,
         import_mcp_server,
+        convert_tools,
+        write_website_domain,
         auto_build,
     )
 
     # Import tools from a JSON file
     tools = import_from_json_file("my_tools.json")
 
-    # Auto-discover tools from an MCP server
+    # Auto-discover tools from an MCP server.
+    # framing="newline" is the MCP spec. Use "content-length" for peers
+    # that speak LSP-style frames (Loom's StdioMCPClient is one of them).
     domain = import_mcp_server("npx", args=["@playwright/mcp"])
+
+    # Three artifacts from a JSON file, a list, or a live server
+    converted = convert_tools(name="playwright", json_path="tools.json")
+    write_website_domain(converted, "ucl-builder/tools")
 
     # Full pipeline: migrate prompt + add MCP servers
     built = auto_build(
@@ -37,10 +47,12 @@ Usage:
 """
 
 from __future__ import annotations
+import argparse
 import json
-import subprocess
+import re
 import sys
-import os
+from dataclasses import dataclass, field
+from pathlib import Path
 from typing import List, Dict, Any, Tuple, Optional
 
 try:
@@ -50,8 +62,11 @@ try:
     )
     from .tool_export import (
         keyword_heuristic, from_json_schema_batch, migrate_prompt,
+        choose_domain_keywords, to_website_domain, render_tools_ucl,
+        to_json_schema_batch,
     )
     from .tool_domains import MCPServerTemplate
+    from .mcp_stdio import MCPStdioSession, FRAMINGS
 except ImportError:
     from core import (
         ToolParameter, ToolExample, ToolDefinition, ToolGroup,
@@ -59,8 +74,11 @@ except ImportError:
     )
     from tool_export import (
         keyword_heuristic, from_json_schema_batch, migrate_prompt,
+        choose_domain_keywords, to_website_domain, render_tools_ucl,
+        to_json_schema_batch,
     )
     from tool_domains import MCPServerTemplate
+    from mcp_stdio import MCPStdioSession, FRAMINGS
 
 
 # =============================================================================
@@ -195,84 +213,53 @@ def auto_domain(tools: List[ToolDefinition],
 # MCP SERVER AUTO-DISCOVERY
 # =============================================================================
 
-def _mcp_jsonrpc(proc, method: str, params: dict = None,
-                 id: int = 1, timeout: float = 10) -> dict:
+def _list_mcp_raw(command: str,
+                  args: List[str] = None,
+                  timeout: float = 15,
+                  env: Dict[str, str] = None,
+                  framing: str = "newline") -> List[Dict[str, Any]]:
+    """Handshake with an MCP stdio server and return the raw tools/list array.
+
+    ``framing="newline"`` matches the MCP spec (2026-07-28). Pass
+    ``framing="content-length"`` for peers that use LSP-style frames,
+    including Loom's StdioMCPClient.
     """
-    Send a JSON-RPC request to an MCP server subprocess and read response.
+    if framing not in FRAMINGS:
+        raise ValueError(f"framing must be one of {FRAMINGS}, got {framing!r}")
 
-    Args:
-        proc: subprocess.Popen object
-        method: JSON-RPC method name
-        params: Method parameters
-        id: Request ID
-        timeout: Seconds to wait for response
+    with MCPStdioSession(
+        command,
+        args=args or [],
+        env=env,
+        framing=framing,
+        timeout=timeout,
+    ) as session:
+        init_response = session.request("initialize", {
+            "protocolVersion": "2024-11-05",
+            "capabilities": {},
+            "clientInfo": {"name": "ucl-tool-importer", "version": "1.0.0"},
+        })
+        if "error" in init_response:
+            raise RuntimeError(f"MCP initialize failed: {init_response['error']}")
 
-    Returns:
-        Parsed JSON response dict
-    """
-    request = {
-        "jsonrpc": "2.0",
-        "method": method,
-        "id": id,
-    }
-    if params is not None:
-        request["params"] = params
+        session.notify("notifications/initialized")
 
-    # Send request
-    request_line = json.dumps(request) + "\n"
-    proc.stdin.write(request_line)
-    proc.stdin.flush()
+        tools_response = session.request("tools/list", {})
+        if "error" in tools_response:
+            raise RuntimeError(f"MCP tools/list failed: {tools_response['error']}")
 
-    # Read response (line by line until we get a complete JSON object with matching id)
-    import select
-    response_lines = []
-    start_time = __import__('time').time()
-
-    while True:
-        if __import__('time').time() - start_time > timeout:
-            raise TimeoutError(
-                f"MCP server did not respond to '{method}' within {timeout}s"
-            )
-
-        line = proc.stdout.readline()
-        if not line:
-            if proc.poll() is not None:
-                raise RuntimeError(
-                    f"MCP server exited with code {proc.returncode}"
-                )
-            continue
-
-        line = line.strip()
-        if not line:
-            continue
-
-        try:
-            response = json.loads(line)
-            if response.get("id") == id:
-                return response
-            # Notification or different id — skip
-        except json.JSONDecodeError:
-            continue
-
-
-def _mcp_notification(proc, method: str, params: dict = None):
-    """Send a JSON-RPC notification (no response expected)."""
-    notification = {
-        "jsonrpc": "2.0",
-        "method": method,
-    }
-    if params is not None:
-        notification["params"] = params
-
-    line = json.dumps(notification) + "\n"
-    proc.stdin.write(line)
-    proc.stdin.flush()
+        result = tools_response.get("result") or {}
+        mcp_tools = result.get("tools") or []
+        if not isinstance(mcp_tools, list):
+            raise RuntimeError("MCP tools/list result did not contain a tools array")
+        return mcp_tools
 
 
 def discover_mcp_tools(command: str,
                        args: List[str] = None,
                        timeout: float = 15,
-                       env: Dict[str, str] = None) -> List[ToolDefinition]:
+                       env: Dict[str, str] = None,
+                       framing: str = "newline") -> List[ToolDefinition]:
     """
     Connect to an MCP server and discover its tools.
 
@@ -285,114 +272,28 @@ def discover_mcp_tools(command: str,
         args: Command arguments (e.g. ["@playwright/mcp"])
         timeout: Seconds to wait for server response
         env: Additional environment variables
+        framing: "newline" (MCP spec) or "content-length" (Loom / LSP-style)
 
     Returns:
         List of ToolDefinition objects
 
     Example:
         tools = discover_mcp_tools("npx", args=["@playwright/mcp"])
-        # → 20 ToolDefinitions for Playwright browser tools
+        # → ToolDefinitions for that server's tools
     """
-    args = args or []
-
-    # Build environment
-    full_env = dict(os.environ)
-    if env:
-        full_env.update(env)
-
-    # Launch MCP server
-    try:
-        proc = subprocess.Popen(
-            [command] + args,
-            stdin=subprocess.PIPE,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-            encoding='utf-8',
-            env=full_env,
-        )
-    except FileNotFoundError:
-        raise RuntimeError(
-            f"Cannot launch MCP server: '{command}' not found. "
-            f"Make sure it's installed and in PATH."
-        )
-
-    try:
-        # Step 1: Initialize
-        init_response = _mcp_jsonrpc(proc, "initialize", {
-            "protocolVersion": "2024-11-05",
-            "capabilities": {},
-            "clientInfo": {"name": "ucl-tool-importer", "version": "1.0.0"},
-        }, id=1, timeout=timeout)
-
-        if "error" in init_response:
-            raise RuntimeError(
-                f"MCP initialize failed: {init_response['error']}"
-            )
-
-        # Step 2: Send initialized notification
-        _mcp_notification(proc, "notifications/initialized")
-
-        # Step 3: List tools
-        tools_response = _mcp_jsonrpc(proc, "tools/list", {}, id=2, timeout=timeout)
-
-        if "error" in tools_response:
-            raise RuntimeError(
-                f"MCP tools/list failed: {tools_response['error']}"
-            )
-
-        result = tools_response.get("result", {})
-        mcp_tools = result.get("tools", [])
-
-        # Step 4: Convert to ToolDefinitions
-        tool_defs = []
-        for tool in mcp_tools:
-            name = tool.get("name", "")
-            description = tool.get("description", "")
-            input_schema = tool.get("inputSchema", {})
-
-            # Convert MCP format to OpenAI format for from_json_schema_batch
-            openai_format = {
-                "type": "function",
-                "function": {
-                    "name": name,
-                    "description": description,
-                    "parameters": input_schema,
-                }
-            }
-
-            # Auto-generate keywords
-            keywords = keyword_heuristic(name, description)
-
-            # Create ToolDefinition
-            tool_def = ToolDefinition.from_json_schema_tool(
-                openai_format, keywords=keywords
-            )
-            tool_defs.append(tool_def)
-
-        return tool_defs
-
-    finally:
-        # Clean up subprocess
-        try:
-            proc.stdin.close()
-        except Exception:
-            pass
-        try:
-            proc.terminate()
-            proc.wait(timeout=3)
-        except Exception:
-            try:
-                proc.kill()
-            except Exception:
-                pass
+    raw_tools = _list_mcp_raw(
+        command, args=args, timeout=timeout, env=env, framing=framing
+    )
+    tools, _meta, _warnings = definitions_from_payload({"tools": raw_tools})
+    return tools
 
 
 def import_mcp_server(command: str,
                       args: List[str] = None,
                       server_name: str = None,
                       timeout: float = 15,
-                      env: Dict[str, str] = None) -> MCPServerTemplate:
+                      env: Dict[str, str] = None,
+                      framing: str = "newline") -> MCPServerTemplate:
     """
     Auto-import an entire MCP server as a UCL-Tool domain.
 
@@ -421,7 +322,9 @@ def import_mcp_server(command: str,
             for p in parts[:2]
         ).lower()
 
-    tools = discover_mcp_tools(command, args, timeout=timeout, env=env)
+    tools = discover_mcp_tools(
+        command, args, timeout=timeout, env=env, framing=framing
+    )
 
     # Auto-derive keywords from all tools
     all_kw = set()
@@ -466,6 +369,7 @@ def import_mcp_servers(servers: Dict[str, Dict[str, Any]],
         args = config.get("args", [])
         env = config.get("env", None)
         server_timeout = config.get("timeout", timeout)
+        framing = config.get("framing", "newline")
 
         domain = import_mcp_server(
             command=command,
@@ -473,6 +377,7 @@ def import_mcp_servers(servers: Dict[str, Dict[str, Any]],
             server_name=name,
             timeout=server_timeout,
             env=env,
+            framing=framing,
         )
         results.append(domain)
 
@@ -591,6 +496,473 @@ def auto_build(identity: str,
 # EXPORTS
 # =============================================================================
 
+# =============================================================================
+# ONE LIST, THREE ARTIFACTS
+# =============================================================================
+
+_DOMAIN_NAME = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
+
+
+def sanitize_tool_name(name: str) -> str:
+    """Make an MCP or JSON tool name legal for ToolDefinition."""
+    text = re.sub(r"[^A-Za-z0-9_]+", "_", (name or "").strip())
+    text = re.sub(r"_+", "_", text).strip("_")
+    if text and text[0].isdigit():
+        text = "tool_" + text
+    return text
+
+
+def _split_payload(data: Any) -> Tuple[List[Any], Dict[str, Any]]:
+    """Return (tool items, domain metadata) for the shapes convert_tools accepts."""
+    if isinstance(data, list):
+        return data, {}
+    if not isinstance(data, dict):
+        raise ValueError(
+            f"Tool payload must be a dict or list, got {type(data).__name__}"
+        )
+    if "tools" not in data:
+        return [data], {}
+    tools = data.get("tools")
+    meta = {
+        key: data[key]
+        for key in ("name", "description", "keywords", "category", "icon")
+        if key in data
+    }
+    if isinstance(tools, dict):
+        return list(tools.values()), meta
+    if isinstance(tools, list):
+        return tools, meta
+    raise ValueError("The 'tools' field must be a list or a website domain object")
+
+
+def _website_parameters_to_schema(parameters: List[Dict[str, Any]]) -> Dict[str, Any]:
+    properties: Dict[str, Any] = {}
+    required: List[str] = []
+    for param in parameters:
+        if not isinstance(param, dict) or not param.get("name"):
+            continue
+        pname = str(param["name"])
+        raw_type = str(param.get("type") or "string")
+        prop: Dict[str, Any] = {}
+        if raw_type == "enum":
+            values = list(param.get("constraints") or [])
+            prop["type"] = "string"
+            if values:
+                prop["enum"] = values
+        elif raw_type == "float":
+            prop["type"] = "number"
+        elif raw_type == "file":
+            prop["type"] = "string"
+        else:
+            prop["type"] = raw_type
+        if param.get("description"):
+            prop["description"] = param["description"]
+        if "default" in param:
+            prop["default"] = param["default"]
+        if "minimum" in param:
+            prop["minimum"] = param["minimum"]
+        if "maximum" in param:
+            prop["maximum"] = param["maximum"]
+        if "pattern" in param:
+            prop["pattern"] = param["pattern"]
+        properties[pname] = prop
+        if param.get("required"):
+            required.append(pname)
+    return {"type": "object", "properties": properties, "required": required}
+
+
+def _to_openai_tool(item: Dict[str, Any]) -> Tuple[Optional[Dict[str, Any]], Dict[str, Any]]:
+    """Normalize one record to an OpenAI function tool plus catalog extras."""
+    extras: Dict[str, Any] = {
+        "keywords": [],
+        "return_type": "",
+        "examples": [],
+        "param_types": {},
+    }
+    if isinstance(item.get("function"), dict):
+        func = item["function"]
+        extras["keywords"] = item.get("keywords") or func.get("keywords") or []
+        extras["return_type"] = item.get("return_type") or func.get("return_type") or ""
+        extras["examples"] = item.get("examples") or func.get("examples") or []
+        return item, extras
+
+    parameters = item.get("parameters")
+    if isinstance(parameters, list):
+        for param in parameters:
+            if isinstance(param, dict) and param.get("type") == "file" and param.get("name"):
+                extras["param_types"][str(param["name"])] = "file"
+        openai = {
+            "type": "function",
+            "function": {
+                "name": item.get("name") or "",
+                "description": item.get("description") or "",
+                "parameters": _website_parameters_to_schema(parameters),
+            },
+        }
+        extras["keywords"] = item.get("keywords") or []
+        extras["return_type"] = item.get("return_type") or ""
+        extras["examples"] = item.get("examples") or []
+        return openai, extras
+
+    schema = item.get("inputSchema", item.get("input_schema"))
+    if schema is None and isinstance(parameters, dict):
+        schema = parameters
+    if schema is not None or "name" in item:
+        if not isinstance(schema, dict):
+            schema = {"type": "object", "properties": {}}
+        openai = {
+            "type": "function",
+            "function": {
+                "name": item.get("name") or "",
+                "description": item.get("description") or "",
+                "parameters": schema,
+            },
+        }
+        extras["keywords"] = item.get("keywords") or []
+        extras["return_type"] = item.get("return_type") or ""
+        extras["examples"] = item.get("examples") or []
+        return openai, extras
+
+    return None, extras
+
+
+def definitions_from_payload(
+    data: Any,
+    auto_keywords: bool = True,
+) -> Tuple[List[ToolDefinition], Dict[str, Any], List[str]]:
+    """Parse a JSON file, MCP tools/list result, or website domain into tools."""
+    items, meta = _split_payload(data)
+    warnings: List[str] = []
+    tools: List[ToolDefinition] = []
+    used = set()
+
+    for item in items:
+        if not isinstance(item, dict):
+            warnings.append("skipped a tool entry that was not an object")
+            continue
+        openai, extras = _to_openai_tool(item)
+        if openai is None:
+            warnings.append("skipped an unrecognized tool entry")
+            continue
+        func = openai.setdefault("function", {})
+        raw_name = str(func.get("name") or "")
+        clean = sanitize_tool_name(raw_name)
+        if not clean:
+            warnings.append(f"skipped a tool with an empty name ({raw_name!r})")
+            continue
+        if clean != raw_name:
+            warnings.append(f"renamed tool {raw_name!r} to {clean!r}")
+        base = clean
+        suffix = 2
+        while clean in used:
+            clean = f"{base}_{suffix}"
+            suffix += 1
+        if clean != base:
+            warnings.append(f"renamed duplicate {base!r} to {clean!r}")
+        used.add(clean)
+        func["name"] = clean
+
+        explicit = [str(kw) for kw in (extras.get("keywords") or []) if str(kw).strip()]
+        if explicit:
+            keywords = explicit
+        elif auto_keywords:
+            keywords = keyword_heuristic(clean, func.get("description") or "")
+        else:
+            keywords = []
+
+        try:
+            tool = ToolDefinition.from_json_schema_tool(openai, keywords=keywords)
+        except (ValueError, KeyError, TypeError) as exc:
+            warnings.append(f"skipped {clean!r}: {exc}")
+            used.discard(clean)
+            continue
+
+        return_type = extras.get("return_type") or ""
+        if return_type:
+            tool.return_type = str(return_type)
+        examples = []
+        for example in extras.get("examples") or []:
+            if isinstance(example, dict) and example.get("input"):
+                examples.append(ToolExample(
+                    input_text=str(example.get("input")),
+                    output_text=str(example.get("output") or ""),
+                ))
+        tool.examples = examples
+        for param in tool.parameters:
+            if extras.get("param_types", {}).get(param.name) == "file":
+                param.param_type = "file"
+        tools.append(tool)
+
+    return tools, meta, warnings
+
+
+@dataclass
+class ToolConversion:
+    """One tool list rendered for the prompt builder, the website, and Loom."""
+
+    name: str
+    tools: List[ToolDefinition]
+    ucl_text: str
+    website_domain: Dict[str, Any]
+    openai_envelope: Dict[str, Any]
+    source: str
+    warnings: List[str] = field(default_factory=list)
+
+
+def _check_domain_name(name: str) -> str:
+    if not name or not _DOMAIN_NAME.match(name):
+        raise ValueError(
+            "Domain name must start with a letter or underscore and contain "
+            f"only letters, digits, and underscores. Got {name!r}."
+        )
+    return name
+
+
+def convert_tools(
+    name: str,
+    data: Any = None,
+    json_path: str = None,
+    mcp_command: str = None,
+    mcp_args: List[str] = None,
+    description: str = "",
+    keywords: List[str] = None,
+    category: str = None,
+    icon: str = None,
+    framing: str = "newline",
+    timeout: float = 15,
+    env: Dict[str, str] = None,
+    auto_keywords: bool = True,
+) -> ToolConversion:
+    """Turn a JSON file, an in-memory list, or a live MCP server into three artifacts.
+
+    Exactly one of ``data``, ``json_path``, or ``mcp_command`` is required.
+    ``website_domain`` matches ``ucl-builder/tools/*.json``.
+    ``openai_envelope`` is what Loom's tool prompt and function-calling loop consume.
+    ``ucl_text`` is the canonical grouped ``^^CONDITION^^`` / ``[[TOOL:]]`` block.
+    """
+    sources = [data is not None, bool(json_path), bool(mcp_command)]
+    if sum(sources) != 1:
+        raise ValueError("Pass exactly one of data, json_path, or mcp_command")
+    _check_domain_name(name)
+
+    meta: Dict[str, Any] = {}
+    if mcp_command:
+        raw_tools = _list_mcp_raw(
+            mcp_command,
+            args=mcp_args,
+            timeout=timeout,
+            env=env,
+            framing=framing,
+        )
+        tools, meta, warnings = definitions_from_payload(
+            {"tools": raw_tools}, auto_keywords=auto_keywords
+        )
+        source = "mcp"
+    else:
+        if json_path:
+            with open(json_path, "r", encoding="utf-8") as handle:
+                data = json.load(handle)
+            source = "json"
+        else:
+            source = "list"
+        tools, meta, warnings = definitions_from_payload(
+            data, auto_keywords=auto_keywords
+        )
+
+    if not tools:
+        detail = "; ".join(warnings) if warnings else "the payload contained no tools"
+        raise ValueError(f"No tools to convert: {detail}")
+
+    if not description:
+        description = str(meta.get("description") or "")
+    if keywords is None and meta.get("keywords"):
+        keywords = list(meta["keywords"])
+    if category is None:
+        category = str(meta.get("category") or ("mcp_server" if source == "mcp" else "original"))
+    if icon is None:
+        icon = str(meta.get("icon") or ("🔌" if source == "mcp" else "📥"))
+
+    domain_keywords = choose_domain_keywords(tools, name, explicit=keywords)
+    return ToolConversion(
+        name=name,
+        tools=tools,
+        ucl_text=render_tools_ucl(
+            tools, name, description=description, keywords=domain_keywords
+        ),
+        website_domain=to_website_domain(
+            tools,
+            name,
+            description=description,
+            keywords=domain_keywords,
+            category=category,
+            icon=icon,
+        ),
+        openai_envelope=to_json_schema_batch(tools),
+        source=source,
+        warnings=warnings,
+    )
+
+
+def write_website_domain(
+    conversion: ToolConversion,
+    tools_dir: str,
+    update_index: bool = True,
+) -> Path:
+    """Write ``<name>.json`` into the website tools folder and refresh index.json."""
+    directory = Path(tools_dir)
+    directory.mkdir(parents=True, exist_ok=True)
+    domain_path = directory / f"{conversion.name}.json"
+    _write_json(domain_path, conversion.website_domain)
+    if update_index:
+        _update_tool_index(directory, conversion.name, conversion.website_domain.get("category", "original"))
+    return domain_path
+
+
+def write_artifact_dir(conversion: ToolConversion, out_dir: str) -> Dict[str, Path]:
+    """Write the three artifacts side by side, without touching the website index."""
+    directory = Path(out_dir)
+    directory.mkdir(parents=True, exist_ok=True)
+    ucl_path = directory / f"{conversion.name}.ucl.txt"
+    domain_path = directory / f"{conversion.name}.domain.json"
+    openai_path = directory / f"{conversion.name}.openai.json"
+    ucl_path.write_text(conversion.ucl_text, encoding="utf-8")
+    _write_json(domain_path, conversion.website_domain)
+    _write_json(openai_path, conversion.openai_envelope)
+    return {"ucl": ucl_path, "domain": domain_path, "openai": openai_path}
+
+
+def _write_json(path: Path, payload: Dict[str, Any]) -> None:
+    text = json.dumps(payload, indent=2, ensure_ascii=False) + "\n"
+    path.write_text(text, encoding="utf-8")
+
+
+def _update_tool_index(tools_dir: Path, name: str, category: str) -> None:
+    index_path = tools_dir / "index.json"
+    if index_path.is_file():
+        index = json.loads(index_path.read_text(encoding="utf-8"))
+    else:
+        index = {}
+    index.setdefault("version", "1.0")
+    index.setdefault("description", "UCL Tool Domains Registry")
+    domains = index.setdefault("domains", [])
+    if name not in domains:
+        domains.append(name)
+
+    meta = index.setdefault("metadata", {})
+    categories = meta.setdefault("categories", {})
+    categories.setdefault("original", {"label": "Core Domains", "domains": []})
+    categories.setdefault("mcp_server", {"label": "MCP Server Domains", "domains": []})
+    bucket = "mcp_server" if category == "mcp_server" else "original"
+    for key, entry in categories.items():
+        if not isinstance(entry, dict):
+            continue
+        names = [item for item in entry.get("domains", []) if item != name]
+        if key == bucket:
+            names.append(name)
+        entry["domains"] = names
+
+    total = 0
+    for domain_name in domains:
+        path = tools_dir / f"{domain_name}.json"
+        if not path.is_file():
+            continue
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            continue
+        tool_map = payload.get("tools") or {}
+        if isinstance(tool_map, dict):
+            total += len(tool_map)
+    meta["totalDomains"] = len(domains)
+    meta["totalTools"] = total
+    _write_json(index_path, index)
+
+
+def main(argv: List[str] = None) -> int:
+    """CLI: convert a JSON file or MCP server and optionally update the website catalog."""
+    parser = argparse.ArgumentParser(
+        description=(
+            "Convert an MCP server, a JSON file, or a tool list into UCL text, "
+            "a ucl-builder domain file, and an OpenAI tool envelope."
+        )
+    )
+    source = parser.add_mutually_exclusive_group(required=True)
+    source.add_argument("--json", dest="json_path", help="Tool JSON file")
+    source.add_argument("--mcp", dest="mcp_command", help="MCP stdio server executable")
+    parser.add_argument("--mcp-arg", action="append", default=[], help="Argument for the MCP server. Repeatable.")
+    parser.add_argument("--name", required=True, help="Domain name, used as the website filename")
+    parser.add_argument("--description", default="", help="Domain description")
+    parser.add_argument("--keyword", action="append", default=None, help="Shared activation keyword. Repeatable.")
+    parser.add_argument("--category", default=None, help="original or mcp_server. Default follows the source.")
+    parser.add_argument(
+        "--framing",
+        choices=list(FRAMINGS),
+        default="newline",
+        help="newline is the MCP spec. content-length matches Loom's stdio client.",
+    )
+    parser.add_argument("--timeout", type=float, default=15.0)
+    parser.add_argument("--tools-dir", help="Website tools directory. Writes <name>.json and updates index.json.")
+    parser.add_argument("--out-dir", help="Directory for <name>.ucl.txt, .domain.json, and .openai.json.")
+    parser.add_argument(
+        "--print",
+        dest="print_which",
+        choices=("ucl", "domain", "openai", "all", "none"),
+        default="ucl",
+        help="What to write to stdout.",
+    )
+    args = parser.parse_args(argv)
+
+    try:
+        conversion = convert_tools(
+            name=args.name,
+            json_path=args.json_path,
+            mcp_command=args.mcp_command,
+            mcp_args=args.mcp_arg,
+            description=args.description,
+            keywords=args.keyword,
+            category=args.category,
+            framing=args.framing,
+            timeout=args.timeout,
+        )
+    except (OSError, ValueError, RuntimeError, TimeoutError, json.JSONDecodeError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+
+    for warning in conversion.warnings:
+        print(f"warning: {warning}", file=sys.stderr)
+
+    if args.tools_dir:
+        path = write_website_domain(conversion, args.tools_dir)
+        print(f"wrote {path}", file=sys.stderr)
+        print(f"updated {Path(args.tools_dir) / 'index.json'}", file=sys.stderr)
+    if args.out_dir:
+        written = write_artifact_dir(conversion, args.out_dir)
+        for label, path in written.items():
+            print(f"wrote {label} {path}", file=sys.stderr)
+    print(f"tools: {len(conversion.tools)}", file=sys.stderr)
+
+    def emit(text: str) -> None:
+        try:
+            print(text)
+        except UnicodeEncodeError:
+            sys.stdout.buffer.write(text.encode("utf-8", errors="replace"))
+            sys.stdout.buffer.write(b"\n")
+
+    if args.print_which == "ucl":
+        emit(conversion.ucl_text)
+    elif args.print_which == "domain":
+        emit(json.dumps(conversion.website_domain, indent=2, ensure_ascii=False))
+    elif args.print_which == "openai":
+        emit(json.dumps(conversion.openai_envelope, indent=2, ensure_ascii=False))
+    elif args.print_which == "all":
+        emit(conversion.ucl_text)
+        emit("--- domain ---")
+        emit(json.dumps(conversion.website_domain, indent=2, ensure_ascii=False))
+        emit("--- openai ---")
+        emit(json.dumps(conversion.openai_envelope, indent=2, ensure_ascii=False))
+    return 0
+
+
 __all__ = [
     # File imports
     'import_from_json_file',
@@ -607,4 +979,16 @@ __all__ = [
 
     # Full pipeline
     'auto_build',
+
+    # Three-artifact converter
+    'convert_tools',
+    'write_website_domain',
+    'write_artifact_dir',
+    'definitions_from_payload',
+    'sanitize_tool_name',
+    'ToolConversion',
 ]
+
+
+if __name__ == "__main__":
+    sys.exit(main())
