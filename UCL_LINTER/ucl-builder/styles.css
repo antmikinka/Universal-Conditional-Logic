@@ -4440,3 +4440,135 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
+/* ============================================================================
+   SITE SKIN
+   The landing page and the blog use site.css: flat #0a0b14 and #151623,
+   a 1px line, Inter, and cyan as a text accent. These rules put the builder
+   on that surface. The sidebar, panes, and controls stay where they are.
+   ========================================================================== */
+
+.sidebar,
+.sidebar-header,
+.search-container,
+.editor-header,
+.pane-header,
+.action-bar,
+.sidebar-tabs,
+.download-progress,
+.loading-overlay,
+.modal {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+.sidebar,
+.sidebar-header,
+.search-container,
+.editor-header,
+.pane-header,
+.action-bar,
+.sidebar-tabs,
+.download-progress {
+    background: #151623;
+}
+
+.app-header {
+    background: #0a0b14;
+}
+
+.app-title {
+    background: none;
+    -webkit-text-fill-color: #ffffff;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.title-icon,
+.ucl-icon,
+.sidebar-tab-scroll-label {
+    filter: none;
+}
+
+.server-status.connected .server-status-dot,
+.server-status.disconnected .server-status-dot,
+.server-status.checking .server-status-dot,
+.status-dot,
+.scroll-dot.active {
+    box-shadow: none;
+}
+
+.btn::before {
+    display: none;
+}
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.optimizer-btn-primary,
+.optimizer-btn-primary:hover,
+.convert-btn-primary,
+.convert-btn-primary:hover,
+.context-btn-primary,
+.context-btn-primary:hover {
+    background: #151623;
+    color: #00d4ff;
+    border: 1px solid rgba(0, 212, 255, 0.45);
+    box-shadow: none;
+    transform: none;
+}
+
+.optimizer-btn-start,
+.optimizer-btn-start:hover {
+    background: #10b981;
+    color: #0a0b14;
+    border: 1px solid #10b981;
+    box-shadow: none;
+    transform: none;
+}
+
+.optimizer-btn-stop,
+.optimizer-btn-stop:hover {
+    background: #ef4444;
+    color: #ffffff;
+    border: 1px solid #ef4444;
+    box-shadow: none;
+    transform: none;
+}
+
+.btn-secondary:hover,
+.btn-icon:hover,
+.category-header:hover,
+.syntax-item:hover,
+.help-links a:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.search-input:focus,
+.model-select:focus {
+    box-shadow: none;
+}
+
+.progress-bar,
+.optimizer-progress-bar,
+.convert-progress-bar,
+.context-progress-bar,
+.composite-score-fill {
+    background: #00d4ff;
+}
+
+.sidebar-tab-scroll-track {
+    background: #0a0b14;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-tab-scroll-pill {
+    background: rgba(0, 212, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+}
+
+.ucl-compressor-frame {
+    background: #0a0b14;
+}
