@@ -35,7 +35,7 @@
     
     /* Layout */
     --sidebar-width: 420px;
-    --header-height: 70px;
+    --header-height: 52px;
     --gap-xs: 0.25rem;
     --gap-sm: 0.5rem;
     --gap-md: 1rem;
@@ -87,22 +87,7 @@ body {
    ANIMATED GRADIENT BACKGROUND
    ========================================================================== */
 .background-gradient {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: linear-gradient(
-        135deg,
-        #0a0b14 0%,
-        #151623 25%,
-        #1a1432 50%,
-        #0d1117 75%,
-        #0a0b14 100%
-    );
-    background-size: 400% 400%;
-    animation: gradientShift 15s ease infinite;
+    display: none;
 }
 
 @keyframes gradientShift {
@@ -175,11 +160,38 @@ body {
     position: sticky;
     top: 0;
     height: var(--header-height);
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
+    background: var(--bg-primary);
     border-bottom: 1px solid var(--glass-border);
     z-index: 100;
-    box-shadow: 0 4px 24px var(--glass-shadow);
+}
+
+.site-nav {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.site-nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.site-nav a[aria-current="page"] {
+    color: var(--text-primary);
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 .header-content {
@@ -199,7 +211,7 @@ body {
 }
 
 .app-title {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: 1.75rem;
     font-weight: 800;
     background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
@@ -342,7 +354,7 @@ body {
 }
 
 .sidebar-title {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: 1.25rem;
     font-weight: 700;
 }
@@ -624,7 +636,7 @@ body {
 }
 
 .pane-title {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: 1.125rem;
     font-weight: 700;
     display: flex;
@@ -827,7 +839,7 @@ body {
 }
 
 .modal-title {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: 1.5rem;
     font-weight: 700;
 }
@@ -997,7 +1009,7 @@ body {
    HELP MODAL CONTENT
    ========================================================================== */
 .modal-body h3 {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     color: var(--text-primary);
     margin-bottom: var(--gap-md);
 }
@@ -1176,6 +1188,28 @@ body {
 }
 
 @media (max-width: 768px) {
+    .header-content {
+        padding: 0 0.75rem;
+    }
+
+    .site-nav {
+        gap: 0.55rem;
+        font-size: 0.8rem;
+    }
+
+    .server-status-text {
+        display: none;
+    }
+
+    .header-actions {
+        gap: 0.4rem;
+    }
+
+    .btn-icon {
+        width: 34px;
+        height: 34px;
+    }
+
     .app-title {
         font-size: 1.25rem;
     }
@@ -1192,11 +1226,7 @@ body {
     .sidebar.active {
         left: 0;
     }
-    
-    .header-content {
-        padding: 0 var(--gap-lg);
-    }
-    
+
     .version-badge {
         display: none;
     }
@@ -3911,7 +3941,7 @@ body {
 }
 
 .dashboard-title {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: 24px;
     font-weight: 700;
     color: var(--text-primary);

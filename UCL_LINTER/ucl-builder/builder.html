@@ -20,29 +20,22 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="styles.css?v=20260711c">
+    <link rel="stylesheet" href="styles.css?v=20261021a">
 </head>
 <body>
-    <!-- Animated Background -->
-    <div class="background-gradient"></div>
-    
-    <!-- Header -->
     <header class="app-header">
         <div class="header-content">
-            <div class="logo-section">
-                <h1 class="app-title">
-                    <span class="title-icon">⚡</span>
-                    UCL Prompt Builder
-                </h1>
-                <span class="version-badge">v4.0 + Optimizer</span>
-            </div>
+            <nav class="site-nav" aria-label="Site">
+                <a href="./">Home</a>
+                <a href="blog/">Blog</a>
+                <a href="compressor.html">Converter</a>
+                <a href="builder.html" aria-current="page">Builder</a>
+            </nav>
+            <h1 class="visually-hidden">Prompt builder</h1>
             <div class="header-actions">
-                <a class="header-text-link" href="./">Home</a>
-                <a class="header-text-link" href="blog/">Blog</a>
-                <a class="header-text-link" href="compressor.html">Converter</a>
                 <div class="server-status" id="serverStatus" title="Server connection status">
                     <span class="server-status-dot" id="serverStatusDot"></span>
                     <span class="server-status-text" id="serverStatusText">Server</span>
