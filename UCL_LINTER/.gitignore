@@ -1,0 +1,32 @@
+# UCL Linter - Git Ignore
+# Only tracked files should be source code, docs, and examples
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Generated outputs
+outputs/
+
+# Environment
+.env
+.env.*
+*.env
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

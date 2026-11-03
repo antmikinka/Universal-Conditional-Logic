@@ -1,22 +1,28 @@
 # =============================================================================
-# WHITELIST .gitignore - Only 00_ARXiv_Code folder is pushed
+# Root .gitignore
 # =============================================================================
-# This repository is configured to ONLY track the paper-related work in
-# 00_ARXiv_Code. All other files (UCL_LINTER, docs, etc.) are excluded.
+# Previously this was an allowlist that published only 00_ARXiv_Code and the
+# README. After merging the UCL builder/linter work, the repo also tracks
+# UCL_LINTER/ (library, tests, docs, web app) and .github/ (CI + Pages).
 
-# Ignore everything in the root directory
-/*
-
-# But don't ignore .gitignore itself (required for git to work)
-!.gitignore
-
-# Whitelist: Root README.md (GitHub landing page)
-!/README.md
-
-# Whitelist: ONLY the 00_ARXiv_Code folder and all its contents
-!/00_ARXiv_Code/
-!/00_ARXiv_Code/**
-
-# SECURITY: Always exclude .env files (API keys, secrets)
-**/.env
+# SECURITY: never commit secrets
+.env
+.env.*
 *.env
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+build/
+dist/
+venv/
+.venv/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

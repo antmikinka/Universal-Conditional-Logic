@@ -1,0 +1,68 @@
+{
+  "name": "database",
+  "description": "Database operations: SQL queries and table management",
+  "category": "original",
+  "icon": "🗄️",
+  "keywords": ["database", "sql", "table", "query", "row", "db"],
+  "tools": {
+    "query_sql": {
+      "name": "query_sql",
+      "description": "Execute a SQL query and return results",
+      "parameters": [
+        { "name": "query", "type": "string", "required": true, "description": "SQL query string" },
+        { "name": "params", "type": "array", "required": false, "description": "Query parameters" }
+      ],
+      "keywords": ["query", "select", "sql", "search"],
+      "return_type": "array",
+      "examples": [{ "input": "query_sql('SELECT * FROM users WHERE id = ?', [1])", "output": "[{id: 1, name: 'Alice'}]" }]
+    },
+    "insert_row": {
+      "name": "insert_row",
+      "description": "Insert a row into a table",
+      "parameters": [
+        { "name": "table", "type": "string", "required": true, "description": "Table name" },
+        { "name": "data", "type": "object", "required": true, "description": "Column-value pairs" }
+      ],
+      "keywords": ["insert", "create", "add"],
+      "return_type": "object"
+    },
+    "update_row": {
+      "name": "update_row",
+      "description": "Update rows in a table matching a condition",
+      "parameters": [
+        { "name": "table", "type": "string", "required": true, "description": "Table name" },
+        { "name": "data", "type": "object", "required": true, "description": "Column-value pairs to update" },
+        { "name": "condition", "type": "string", "required": true, "description": "WHERE condition" }
+      ],
+      "keywords": ["update", "modify"],
+      "return_type": "integer"
+    },
+    "delete_row": {
+      "name": "delete_row",
+      "description": "Delete rows from a table matching a condition",
+      "parameters": [
+        { "name": "table", "type": "string", "required": true, "description": "Table name" },
+        { "name": "condition", "type": "string", "required": true, "description": "WHERE condition" }
+      ],
+      "keywords": ["delete", "remove"],
+      "return_type": "integer"
+    },
+    "create_table": {
+      "name": "create_table",
+      "description": "Create a new table with a schema",
+      "parameters": [
+        { "name": "name", "type": "string", "required": true, "description": "Table name" },
+        { "name": "schema", "type": "object", "required": true, "description": "Column definitions" }
+      ],
+      "keywords": ["create", "table", "schema"],
+      "return_type": "boolean"
+    },
+    "list_tables": {
+      "name": "list_tables",
+      "description": "List all tables in the database",
+      "parameters": [],
+      "keywords": ["list", "tables", "schema"],
+      "return_type": "array"
+    }
+  }
+}

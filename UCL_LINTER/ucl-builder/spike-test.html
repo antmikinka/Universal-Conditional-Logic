@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCL Warm-Up Spike Test</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        header h1 { font-size: 2em; margin-bottom: 10px; }
+        header p { opacity: 0.9; font-size: 1.1em; }
+        .content { padding: 30px; }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group label {
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+            font-family: 'Courier New', monospace;
+        }
+        button {
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        button:hover { background: #5568d3; transform: translateY(-1px); }
+        button:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+        .btn-secondary { background: #6c757d; }
+        .btn-secondary:hover { background: #5a6268; }
+        .button-group { display: flex; gap: 10px; flex-wrap: wrap; }
+        .warmup-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .step {
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+        }
+        .step.pending { border-left: 4px solid #ccc; }
+        .step.sending { border-left: 4px solid #ffc107; background: #fff9e6; }
+        .step.confirmed { border-left: 4px solid #28a745; background: #e8f5e9; }
+        .step.error { border-left: 4px solid #dc3545; background: #ffe6e6; }
+        .step-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .step-title { font-weight: 600; color: #333; }
+        .step-status {
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+        .step-status.pending { background: #e9ecef; color: #6c757d; }
+        .step-status.sending { background: #fff3cd; color: #856404; }
+        .step-status.confirmed { background: #d4edda; color: #155724; }
+        .step-status.error { background: #f8d7da; color: #721c24; }
+        .step-content {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .step-content pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .comparison-panel {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            border: 2px solid #ddd;
+        }
+        .comparison-panel h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        .comparison-panel textarea {
+            width: 100%;
+            min-height: 400px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            resize: vertical;
+        }
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .metric-card {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+        }
+        .metric-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .metric-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #667eea;
+        }
+        .metric-value.good { color: #28a745; }
+        .metric-value.bad { color: #dc3545; }
+        .quality-rating {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .quality-rating button {
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            font-size: 18px;
+        }
+        .quality-rating button.active {
+            background: #28a745;
+            transform: scale(1.1);
+        }
+        .log {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+        .log-entry { margin-bottom: 5px; }
+        .log-entry.info { color: #4fc3f7; }
+        .log-entry.success { color: #81c784; }
+        .log-entry.error { color: #e57373; }
+        .log-entry.warn { color: #ffb74d; }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s;
+        }
+        .collapsible {
+            cursor: pointer;
+            user-select: none;
+        }
+        .collapsible:hover { opacity: 0.8; }
+        .collapsible::before {
+            content: '▼ ';
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+        .collapsible.collapsed::before { transform: rotate(-90deg); }
+        .collapse-content {
+            max-height: 2000px;
+            overflow: hidden;
+            transition: max-height 0.3s;
+        }
+        .collapse-content.collapsed { max-height: 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔬 UCL Warm-Up Spike Test</h1>
+            <p>Validate the 8-message warm-up hypothesis for UCL generation</p>
+        </header>
+
+        <div class="content">
+            <!-- Settings Section -->
+            <div class="section">
+                <h2>⚙️ Settings</h2>
+                <div class="settings-grid">
+                    <div class="form-group">
+                        <label>Provider</label>
+                        <select id="provider">
+                            <option value="lemonade">Lemonade (Local)</option>
+                            <option value="openrouter">OpenRouter</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Endpoint</label>
+                        <input type="text" id="endpoint" value="http://localhost:13305" placeholder="http://localhost:13305">
+                    </div>
+                    <div class="form-group">
+                        <label>API Key (if required)</label>
+                        <input type="password" id="apiKey" placeholder="Optional for local">
+                    </div>
+                    <div class="form-group">
+                        <label>Model</label>
+                        <input type="text" id="model" value="Qwen2.5-7B-Instruct-1L-mlx" placeholder="Model name">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Warm-Up Messages Section -->
+            <div class="section">
+                <h2 class="collapsible" onclick="toggleCollapse(this)">📚 Warm-Up Messages (8 Steps)</h2>
+                <div class="collapse-content">
+                    <div class="warmup-steps" id="warmupSteps">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test Section -->
+            <div class="section">
+                <h2>🧪 Test Configuration</h2>
+                <div class="form-group">
+                    <label>Test Prompt (for UCL conversion)</label>
+                    <textarea id="testPrompt">Create a system prompt for a coding assistant that can read files, write files, and execute shell commands.</textarea>
+                </div>
+                <div class="button-group" style="margin-top: 15px;">
+                    <button onclick="runWarmupTest()">🔥 Run Warm-Up Test (8 messages + generation)</button>
+                    <button onclick="runSingleShotTest()" class="btn-secondary">⚡ Run Single-Shot Test (baseline)</button>
+                    <button onclick="resetTest()" class="btn-secondary">🔄 Reset</button>
+                </div>
+                <div class="progress-bar" style="margin-top: 15px;">
+                    <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+                </div>
+                <div style="margin-top: 10px; font-size: 14px; color: #666;">
+                    <span id="progressText">Ready to start</span>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="section">
+                <h2>📊 Results Comparison</h2>
+                <div class="metrics">
+                    <div class="metric-card">
+                        <div class="metric-label">Warm-Up Tokens</div>
+                        <div class="metric-value" id="warmupTokens">-</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Single-Shot Tokens</div>
+                        <div class="metric-value" id="singleShotTokens">-</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Warm-Up Output Length</div>
+                        <div class="metric-value" id="warmupLength">-</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Single-Shot Output Length</div>
+                        <div class="metric-value" id="singleShotLength">-</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Warm-Up UCL Syntax</div>
+                        <div class="metric-value" id="warmupSyntax">-</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Single-Shot UCL Syntax</div>
+                        <div class="metric-value" id="singleShotSyntax">-</div>
+                    </div>
+                </div>
+
+                <div class="comparison">
+                    <div class="comparison-panel">
+                        <h3>🔥 Warm-Up Output</h3>
+                        <textarea id="warmupOutput" placeholder="Run warm-up test to see results..."></textarea>
+                        <div style="margin-top: 10px;">
+                            <label>Quality Rating (1-5):</label>
+                            <div class="quality-rating" id="warmupRating">
+                                <button onclick="setRating('warmup', 1)">1</button>
+                                <button onclick="setRating('warmup', 2)">2</button>
+                                <button onclick="setRating('warmup', 3)">3</button>
+                                <button onclick="setRating('warmup', 4)">4</button>
+                                <button onclick="setRating('warmup', 5)">5</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comparison-panel">
+                        <h3>⚡ Single-Shot Output</h3>
+                        <textarea id="singleShotOutput" placeholder="Run single-shot test to see results..."></textarea>
+                        <div style="margin-top: 10px;">
+                            <label>Quality Rating (1-5):</label>
+                            <div class="quality-rating" id="singleShotRating">
+                                <button onclick="setRating('singleShot', 1)">1</button>
+                                <button onclick="setRating('singleShot', 2)">2</button>
+                                <button onclick="setRating('singleShot', 3)">3</button>
+                                <button onclick="setRating('singleShot', 4)">4</button>
+                                <button onclick="setRating('singleShot', 5)">5</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Log Section -->
+            <div class="section">
+                <h2 class="collapsible" onclick="toggleCollapse(this)">📝 Execution Log</h2>
+                <div class="collapse-content">
+                    <div class="log" id="logContainer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Warm-up message templates based on PIPELINE_IMPLEMENTATION_PLAN.md
+        const warmupMessages = [
+            {
+                step: 1,
+                phase: 'Syntax',
+                title: 'UCL Syntax Basics',
+                user: `You are learning Universal Conditional Logic (UCL) — a mathematical framework for prompt optimization. Here are the core directives you must know:
+
+[[CRITICAL: content]]     — HIGHEST PRIORITY. +9.3% quality. Always place at top.
+[[REQUIRE: requirement]]  — Specify required conditions
+[[TRANSFORM: src TO dst]] — Define transformation rules
+[[VALIDATE: rule]]        — Specify validation requirements
+[[ENFORCE: rule]]         — Strictly enforce a constraint
+[[APPLY: rule]]           — Apply specific logic
+[[TOOL: tool_name]]       — Reference a tool
+[[PARAM: name:type]]      — Define a tool parameter
+
+Key principle: The Over-Specification Paradox — more detail can degrade performance. Optimal specification threshold S* ≈ 0.509.
+
+Acknowledge that you understand these directives and their purposes.`,
+                assistant: null
+            },
+            {
+                step: 2,
+                phase: 'Syntax',
+                title: 'Conditional Logic Patterns',
+                user: `UCL uses conditional blocks to activate logic based on keywords. Here are the patterns:
+
+PATTERN 1 - Keyword Condition (RECOMMENDED):
+^^CONDITION: keyword1, keyword2^^
+  [[APPLY: domain-specific rules]]
+^^/CONDITION^^
+
+Example:
+^^CONDITION: matrix, eigenvalue, linear^^
+  [[APPLY: Linear algebra methods]]
+  [[REQUIRE: Matrix dimension validation]]
+^^/CONDITION^^
+
+PATTERN 2 - Tool Activation:
+^^CONDITION: file, read, open^^
+  [[TOOL: read_file]]
+  [[PARAM: path:string:required]]
+^^/CONDITION^^
+
+PATTERN 3 - SWITCH (NOT RECOMMENDED - high overhead):
+^^SWITCH: domain^^
+  ^^CASE: math^^ [[APPLY: Math rules]] ^^/CASE^^
+  ^^CASE: physics^^ [[APPLY: Physics]] ^^/CASE^^
+^^/SWITCH^^
+
+Key rule: Use keyword CONDITIONS instead of SWITCH to minimize structural overhead (O_s).
+
+Confirm you understand these conditional patterns.`,
+                assistant: null
+            },
+            {
+                step: 3,
+                phase: 'Tools',
+                title: 'Tool Definitions (Filesystem Domain)',
+                user: `Here are the tools you will work with, formatted as UCL directives:
+
+^^CONDITION: read, file, open, load^^
+  [[TOOL: read_file]]
+  [[PARAM: path:string:required]]
+  [[PARAM: encoding:string]]
+  // Read file content from disk
+^^/CONDITION^^
+
+^^CONDITION: write, save, create^^
+  [[TOOL: write_file]]
+  [[PARAM: path:string:required]]
+  [[PARAM: content:string:required]]
+  // Write content to a file
+^^/CONDITION^^
+
+^^CONDITION: delete, remove^^
+  [[TOOL: delete_file]]
+  [[PARAM: path:string:required]]
+  // Delete a file from disk
+^^/CONDITION^^
+
+^^CONDITION: list, directory, folder^^
+  [[TOOL: list_dir]]
+  [[PARAM: path:string:required]]
+  [[PARAM: recursive:boolean]]
+  // List files in a directory
+^^/CONDITION^^
+
+^^CONDITION: execute, run, shell, command^^
+  [[TOOL: exec_command]]
+  [[PARAM: command:string:required]]
+  [[PARAM: cwd:string]]
+  // Execute shell command
+^^/CONDITION^^
+
+Acknowledge these tools and their activation patterns.`,
+                assistant: null
+            },
+            {
+                step: 4,
+                phase: 'Tools',
+                title: 'Tool Parameters and Return Types',
+                user: `UCL tool parameters follow this syntax:
+
+[[PARAM: name:type]]              — Optional parameter
+[[PARAM: name:type:required]]     — Required parameter
+
+Types: string, integer, boolean, object, array
+
+Return types can be specified:
+[[TOOL: read_file]] → string
+[[TOOL: list_dir]] → array
+[[TOOL: exec_command]] → object
+
+Example with mixed parameters:
+^^CONDITION: search, find, query^^
+  [[TOOL: search_files]]
+  [[PARAM: pattern:string:required]]
+  [[PARAM: path:string]]
+  [[PARAM: max_results:integer]]
+  [[PARAM: case_sensitive:boolean]]
+  // Search for files matching pattern
+^^/CONDITION^^
+
+Confirm you understand parameter syntax and return types.`,
+                assistant: null
+            },
+            {
+                step: 5,
+                phase: 'Examples',
+                title: 'Conversion Examples (Natural Language → UCL)',
+                user: `Here are examples of converting natural language prompts into UCL format:
+
+EXAMPLE 1:
+Input: "Build me a chatbot that can search the web and answer questions"
+Output:
+[[CRITICAL: You are a research chatbot]]
+
+^^CONDITION: search, web, query, find^^
+  [[TOOL: web_search]]
+  [[PARAM: query:string:required]]
+  [[REQUIRE: Return top 5 results with URLs]]
+^^/CONDITION^^
+
+^^CONDITION: question, answer, explain^^
+  [[APPLY: Synthesize answers from search results]]
+  [[REQUIRE: Cite sources]]
+^^/CONDITION^^
+
+EXAMPLE 2:
+Input: "Create a code reviewer that checks Python style"
+Output:
+[[CRITICAL: You are a Python code reviewer]]
+
+^^CONDITION: review, check, lint, style^^
+  [[ENFORCE: PEP 8 compliance]]
+  [[VALIDATE: Type hint presence]]
+  [[APPLY: Static analysis rules]]
+^^/CONDITION^^
+
+EXAMPLE 3:
+Input: "Make an assistant that can manage files and run commands"
+Output:
+[[CRITICAL: You are a system administration assistant]]
+
+^^CONDITION: file, read, write, delete^^
+  [[TOOL: read_file]]
+  [[TOOL: write_file]]
+  [[TOOL: delete_file]]
+  [[PARAM: path:string:required]]
+^^/CONDITION^^
+
+^^CONDITION: execute, run, command, shell^^
+  [[TOOL: exec_command]]
+  [[PARAM: command:string:required]]
+  [[ENFORCE: Security validation]]
+^^/CONDITION^^
+
+Study these patterns. Acknowledge what you've learned.`,
+                assistant: null
+            },
+            {
+                step: 6,
+                phase: 'Examples',
+                title: 'Edge Cases and Complex Examples',
+                user: `Here are edge cases and complex conversion examples:
+
+EDGE CASE 1 - Multiple tools in one condition:
+Input: "Build a data analyst that can read CSVs, process data, and create visualizations"
+Output:
+[[CRITICAL: You are a data analysis assistant]]
+
+^^CONDITION: read, csv, data, file^^
+  [[TOOL: read_file]]
+  [[PARAM: path:string:required]]
+  [[APPLY: Parse CSV format]]
+^^/CONDITION^^
+
+^^CONDITION: process, analyze, transform, filter^^
+  [[APPLY: Statistical analysis methods]]
+  [[TRANSFORM: raw data TO insights]]
+  [[VALIDATE: Data integrity]]
+^^/CONDITION^^
+
+^^CONDITION: visualize, chart, plot, graph^^
+  [[APPLY: Create visualizations]]
+  [[REQUIRE: Clear labels and titles]]
+^^/CONDITION^^
+
+EDGE CASE 2 - Nested requirements:
+Input: "Create a secure API client that handles authentication"
+Output:
+[[CRITICAL: You are a secure API client]]
+
+^^CONDITION: authenticate, login, token^^
+  [[TOOL: http_request]]
+  [[PARAM: url:string:required]]
+  [[PARAM: credentials:object:required]]
+  [[ENFORCE: HTTPS only]]
+  [[VALIDATE: Token format]]
+  [[REQUIRE: Secure credential storage]]
+^^/CONDITION^^
+
+EDGE CASE 3 - Adaptive behavior:
+Input: "Build a tutor that adapts to student level"
+Output:
+[[CRITICAL: You are an adaptive tutor]]
+
+^^CONDITION: beginner, basic, fundamental^^
+  [[APPLY: Simplified explanations]]
+  [[REQUIRE: Step-by-step breakdown]]
+  [[EMPHASIZE: Clarity over complexity]]
+^^/CONDITION^^
+
+^^CONDITION: advanced, expert, complex^^
+  [[APPLY: Technical depth]]
+  [[REQUIRE: Real-world examples]]
+  [[EMPHASIZE: Nuance and edge cases]]
+^^/CONDITION^^
+
+Note edge case handling strategies. Acknowledge understanding.`,
+                assistant: null
+            },
+            {
+                step: 7,
+                phase: 'Rules',
+                title: 'Conversion Rules and Heuristics',
+                user: `Here are the conversion rules for mapping natural language to UCL:
+
+RULE 1 - Extract core identity:
+- Start with [[CRITICAL: You are X]] where X is the primary role
+- Example: "build a chatbot" → [[CRITICAL: You are a chatbot]]
+
+RULE 2 - Map capabilities to conditions:
+- Each capability becomes a ^^CONDITION^^ block
+- Extract keywords from the capability description
+- Example: "can search the web" → ^^CONDITION: search, web^^
+
+RULE 3 - Group related tools:
+- Tools with similar activation keywords go in one condition
+- Example: read_file, write_file, delete_file all under ^^CONDITION: file^^
+
+RULE 4 - Add quality directives:
+- Use [[REQUIRE:]] for output quality
+- Use [[ENFORCE:]] for constraints
+- Use [[VALIDATE:]] for verification
+- Use [[APPLY:]] for domain logic
+
+RULE 5 - Optimize for low overhead:
+- Prefer keyword CONDITIONS over SWITCH
+- Keep conditions focused (3-5 keywords max)
+- Avoid nested conditions
+
+RULE 6 - Parameter inference:
+- Required params marked with :required
+- Types inferred from context (path:string, count:integer)
+- Optional params omit :required
+
+RULE 7 - Anti-patterns to avoid:
+- No role-questioning: ^^CONDITION: if answer provided^^
+- No unconditional procedures
+- No large SWITCH statements (>4 cases)
+
+Summarize these conversion rules in your own words.`,
+                assistant: null
+            },
+            {
+                step: 8,
+                phase: 'Rules',
+                title: 'Output Format Requirements',
+                user: `Final requirements for UCL output format:
+
+FORMAT REQUIREMENTS:
+1. ALWAYS start with [[CRITICAL:]] directive at the very top
+2. Use ^^CONDITION: keywords^^ blocks for conditional logic
+3. Close all conditions with ^^/CONDITION^^
+4. Use proper directive syntax: [[TYPE: content]]
+5. Indent content inside conditions for readability
+6. Group related tools under shared conditions
+7. Add comments (// style) to explain complex logic
+
+QUALITY CRITERIA:
+- Valid UCL syntax (no malformed directives)
+- Appropriate keyword selection (3-5 per condition)
+- Proper parameter typing
+- Low structural overhead (O_s)
+- Clear, maintainable structure
+- No anti-patterns (role-questioning, large SWITCH, etc.)
+
+OUTPUT STRUCTURE:
+[[CRITICAL: Primary identity/role]]
+
+^^CONDITION: capability1_keywords^^
+  [[TOOL: tool_name]] or [[APPLY: logic]]
+  [[PARAM: name:type]]
+  [[REQUIRE/ENFORCE/VALIDATE: quality]]
+^^/CONDITION^^
+
+^^CONDITION: capability2_keywords^^
+  ...
+^^/CONDITION^^
+
+Confirm you are ready to convert prompts to UCL format following all rules and format requirements.`,
+                assistant: null
+            }
+        ];
+
+        let warmupConversation = [];
+        let warmupTokens = 0;
+        let singleShotTokens = 0;
+        let warmupOutput = '';
+        let singleShotOutput = '';
+        let ratings = { warmup: 0, singleShot: 0 };
+
+        // Initialize UI
+        function initUI() {
+            const container = document.getElementById('warmupSteps');
+            container.innerHTML = warmupMessages.map(msg => `
+                <div class="step pending" id="step${msg.step}">
+                    <div class="step-header">
+                        <div class="step-title">Step ${msg.step}: ${msg.title} (${msg.phase})</div>
+                        <div class="step-status pending" id="status${msg.step}">Pending</div>
+                    </div>
+                    <div class="step-content">
+                        <details>
+                            <summary style="cursor: pointer; font-weight: 500;">View message content</summary>
+                            <pre style="margin-top: 10px;">${escapeHtml(msg.user)}</pre>
+                        </details>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function log(message, type = 'info') {
+            const container = document.getElementById('logContainer');
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            container.appendChild(entry);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function updateProgress(current, total, message) {
+            const percent = (current / total) * 100;
+            document.getElementById('progressBar').style.width = `${percent}%`;
+            document.getElementById('progressText').textContent = message;
+        }
+
+        function updateStepStatus(step, status, response = null) {
+            const stepEl = document.getElementById(`step${step}`);
+            const statusEl = document.getElementById(`status${step}`);
+
+            stepEl.className = `step ${status}`;
+            statusEl.className = `step-status ${status}`;
+            statusEl.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+
+            if (response) {
+                const contentEl = stepEl.querySelector('.step-content');
+                contentEl.innerHTML = `
+                    <div style="margin-bottom: 10px;">
+                        <strong>User:</strong>
+                        <pre>${escapeHtml(warmupMessages[step - 1].user)}</pre>
+                    </div>
+                    <div>
+                        <strong>Assistant:</strong>
+                        <pre>${escapeHtml(response)}</pre>
+                    </div>
+                `;
+            }
+        }
+
+        async function callLemonadeAPI(messages, temperature = 0.7) {
+            const provider = document.getElementById('provider').value;
+            const endpoint = document.getElementById('endpoint').value;
+            const apiKey = document.getElementById('apiKey').value;
+            const model = document.getElementById('model').value;
+
+            let url;
+            let headers = { 'Content-Type': 'application/json' };
+
+            if (provider === 'openrouter') {
+                url = 'https://openrouter.ai/api/v1/chat/completions';
+                headers['Authorization'] = `Bearer ${apiKey}`;
+                headers['HTTP-Referer'] = window.location.href;
+                headers['X-Title'] = 'UCL Spike Test';
+            } else {
+                url = endpoint.replace(/\/$/, '') + '/v1/chat/completions';
+                if (apiKey) {
+                    headers['Authorization'] = `Bearer ${apiKey}`;
+                }
+            }
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify({
+                    model: model,
+                    messages: messages,
+                    temperature: temperature,
+                    max_tokens: 4000
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error?.message || `HTTP ${response.status}: ${response.statusText}`);
+            }
+
+            return await response.json();
+        }
+
+        async function runWarmupTest() {
+            log('Starting warm-up test...', 'info');
+            warmupConversation = [];
+            warmupTokens = 0;
+
+            const testPrompt = document.getElementById('testPrompt').value.trim();
+            if (!testPrompt) {
+                log('No test prompt provided', 'error');
+                return;
+            }
+
+            // Reset all steps
+            warmupMessages.forEach(msg => {
+                updateStepStatus(msg.step, 'pending');
+                warmupMessages[msg.step - 1].assistant = null;
+            });
+
+            // Execute 8 warm-up steps
+            for (let i = 0; i < warmupMessages.length; i++) {
+                const msg = warmupMessages[i];
+                updateStepStatus(msg.step, 'sending');
+                updateProgress(i, warmupMessages.length + 1, `Warm-up step ${i + 1}/8: ${msg.title}...`);
+                log(`Sending warm-up step ${i + 1}: ${msg.title}`, 'info');
+
+                try {
+                    // Add user message to conversation
+                    warmupConversation.push({
+                        role: 'user',
+                        content: msg.user
+                    });
+
+                    // Call API with full conversation history
+                    const response = await callLemonadeAPI(warmupConversation);
+                    const assistantResponse = response.choices[0].message.content;
+
+                    // Track tokens
+                    if (response.usage) {
+                        warmupTokens = response.usage.total_tokens;
+                        log(`Step ${i + 1} tokens: ${response.usage.total_tokens} (prompt: ${response.usage.prompt_tokens}, completion: ${response.usage.completion_tokens})`, 'info');
+                    }
+
+                    // Add assistant response to conversation
+                    warmupConversation.push({
+                        role: 'assistant',
+                        content: assistantResponse
+                    });
+
+                    warmupMessages[i].assistant = assistantResponse;
+                    updateStepStatus(msg.step, 'confirmed', assistantResponse);
+                    log(`Step ${i + 1} completed successfully`, 'success');
+
+                } catch (error) {
+                    updateStepStatus(msg.step, 'error');
+                    log(`Step ${i + 1} failed: ${error.message}`, 'error');
+                    throw error;
+                }
+            }
+
+            // Now send the test prompt with full warm-up context
+            updateProgress(8, 9, 'Generating UCL from test prompt...');
+            log('Sending test prompt with warm-up context...', 'info');
+
+            try {
+                warmupConversation.push({
+                    role: 'user',
+                    content: testPrompt + '\n\nConvert this to UCL format following all the rules and patterns you learned.'
+                });
+
+                const response = await callLemonadeAPI(warmupConversation);
+                warmupOutput = response.choices[0].message.content;
+
+                if (response.usage) {
+                    warmupTokens = response.usage.total_tokens;
+                    log(`Generation tokens: ${response.usage.total_tokens}`, 'info');
+                }
+
+                document.getElementById('warmupOutput').value = warmupOutput;
+                log('Warm-up test completed successfully!', 'success');
+
+                // Analyze output
+                analyzeOutput('warmup', warmupOutput);
+
+            } catch (error) {
+                log(`Generation failed: ${error.message}`, 'error');
+                throw error;
+            }
+
+            updateProgress(9, 9, 'Warm-up test complete!');
+        }
+
+        async function runSingleShotTest() {
+            log('Starting single-shot test (baseline)...', 'info');
+            updateProgress(0, 1, 'Running single-shot test...');
+
+            const testPrompt = document.getElementById('testPrompt').value.trim();
+            if (!testPrompt) {
+                log('No test prompt provided', 'error');
+                return;
+            }
+
+            // Use the same system prompt as the existing UCL Builder
+            const systemPrompt = `You are an expert in Universal Conditional Logic (UCL) prompt optimization.
+
+Your task is to convert user prompts into UCL-optimized format following these rules:
+
+1. ALWAYS start with [[CRITICAL:]] directive (+9.3% quality bonus)
+2. Use keyword-based ^^CONDITION^^ instead of SWITCH (lower O_s)
+3. Apply proper UCL syntax:
+   - Concepts: {{concept:name:attribute}}
+   - Directives: [[TYPE: content]]
+   - Transforms: [[TRANSFORM: source TO target]]
+   - Conditions: ^^CONDITION: keywords^^ ... ^^/CONDITION^^
+   - Sections: <name> ... </name>
+4. Avoid anti-patterns:
+   - No role-questioning conditionals
+   - Minimize SWITCH statements
+   - Keep O_s (structural overhead) low
+5. Optimize for S* ≈ 0.509 (optimal specification threshold)
+6. Wrap domain-specific logic in keyword CONDITIONS
+7. Use appropriate directive types (REQUIRE, ENFORCE, VALIDATE, etc.)
+
+Return ONLY the optimized UCL prompt, no explanations or commentary.`;
+
+            try {
+                const messages = [
+                    { role: 'system', content: systemPrompt },
+                    { role: 'user', content: testPrompt }
+                ];
+
+                const response = await callLemonadeAPI(messages);
+                singleShotOutput = response.choices[0].message.content;
+
+                if (response.usage) {
+                    singleShotTokens = response.usage.total_tokens;
+                    log(`Single-shot tokens: ${response.usage.total_tokens}`, 'info');
+                }
+
+                document.getElementById('singleShotOutput').value = singleShotOutput;
+                log('Single-shot test completed successfully!', 'success');
+
+                // Analyze output
+                analyzeOutput('singleShot', singleShotOutput);
+
+            } catch (error) {
+                log(`Single-shot test failed: ${error.message}`, 'error');
+                throw error;
+            }
+
+            updateProgress(1, 1, 'Single-shot test complete!');
+        }
+
+        function analyzeOutput(type, output) {
+            const length = output.length;
+            const syntaxElements = {
+                CRITICAL: (output.match(/\[\[CRITICAL:/g) || []).length,
+                CONDITION: (output.match(/\^\^CONDITION:/g) || []).length,
+                TOOL: (output.match(/\[\[TOOL:/g) || []).length,
+                PARAM: (output.match(/\[\[PARAM:/g) || []).length,
+                REQUIRE: (output.match(/\[\[REQUIRE:/g) || []).length,
+                ENFORCE: (output.match(/\[\[ENFORCE:/g) || []).length,
+                VALIDATE: (output.match(/\[\[VALIDATE:/g) || []).length,
+                APPLY: (output.match(/\[\[APPLY:/g) || []).length
+            };
+
+            const totalSyntax = Object.values(syntaxElements).reduce((a, b) => a + b, 0);
+
+            // Update metrics
+            if (type === 'warmup') {
+                document.getElementById('warmupTokens').textContent = warmupTokens || '-';
+                document.getElementById('warmupLength').textContent = length;
+                document.getElementById('warmupSyntax').textContent = totalSyntax;
+                document.getElementById('warmupSyntax').className = totalSyntax > 10 ? 'metric-value good' : 'metric-value';
+            } else {
+                document.getElementById('singleShotTokens').textContent = singleShotTokens || '-';
+                document.getElementById('singleShotLength').textContent = length;
+                document.getElementById('singleShotSyntax').textContent = totalSyntax;
+                document.getElementById('singleShotSyntax').className = totalSyntax > 10 ? 'metric-value good' : 'metric-value';
+            }
+
+            log(`${type} output analysis:`, 'info');
+            log(`  Length: ${length} chars`, 'info');
+            log(`  Syntax elements: ${JSON.stringify(syntaxElements)}`, 'info');
+            log(`  Total syntax count: ${totalSyntax}`, 'info');
+        }
+
+        function setRating(type, rating) {
+            ratings[type] = rating;
+            const container = document.getElementById(`${type}Rating`);
+            const buttons = container.querySelectorAll('button');
+            buttons.forEach((btn, idx) => {
+                btn.classList.toggle('active', idx < rating);
+            });
+            log(`${type} quality rating: ${rating}/5`, 'info');
+        }
+
+        function resetTest() {
+            warmupConversation = [];
+            warmupTokens = 0;
+            singleShotTokens = 0;
+            warmupOutput = '';
+            singleShotOutput = '';
+            ratings = { warmup: 0, singleShot: 0 };
+
+            document.getElementById('warmupOutput').value = '';
+            document.getElementById('singleShotOutput').value = '';
+            document.getElementById('warmupTokens').textContent = '-';
+            document.getElementById('singleShotTokens').textContent = '-';
+            document.getElementById('warmupLength').textContent = '-';
+            document.getElementById('singleShotLength').textContent = '-';
+            document.getElementById('warmupSyntax').textContent = '-';
+            document.getElementById('singleShotSyntax').textContent = '-';
+
+            warmupMessages.forEach(msg => {
+                updateStepStatus(msg.step, 'pending');
+                warmupMessages[msg.step - 1].assistant = null;
+            });
+
+            document.querySelectorAll('.quality-rating button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            updateProgress(0, 1, 'Ready to start');
+            log('Test reset', 'warn');
+        }
+
+        function toggleCollapse(element) {
+            element.classList.toggle('collapsed');
+            const content = element.nextElementSibling;
+            content.classList.toggle('collapsed');
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', initUI);
+    </script>
+</body>
+</html>
