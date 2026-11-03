@@ -2,7 +2,7 @@ name: Deploy UCL Builder
 
 on:
   push:
-    branches: ["local/ucl-builder-full"]
+    branches: [main]
     paths:
       - "UCL_LINTER/ucl-builder/**"
       - ".github/workflows/pages.yml"
