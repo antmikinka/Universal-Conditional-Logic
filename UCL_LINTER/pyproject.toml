@@ -42,4 +42,21 @@ ucl-analyze = "prompt_analyzer:main"
 ucl-demo = "ucl_demo:main"
 
 [tool.setuptools]
-py-modules = ["core", "domains", "builder", "prompt_analyzer", "ucl_demo", "__init__"]
+py-modules = [
+    "core",
+    "domains",
+    "builder",
+    "prompt_analyzer",
+    "ucl_demo",
+    "tool_domains",
+    "tool_comparison",
+    "tool_export",
+    # tool_importer is intentionally not packaged yet: it imports mcp_stdio,
+    # which is not in the repository, so it fails to import when installed.
+]
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
