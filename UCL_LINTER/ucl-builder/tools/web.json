@@ -1,0 +1,61 @@
+{
+  "name": "web",
+  "description": "Web operations: HTTP requests, search, and downloads",
+  "category": "original",
+  "icon": "🌐",
+  "keywords": ["http", "web", "url", "request", "fetch", "search", "download"],
+  "tools": {
+    "http_get": {
+      "name": "http_get",
+      "description": "Send an HTTP GET request",
+      "parameters": [
+        { "name": "url", "type": "string", "required": true, "description": "Request URL" },
+        { "name": "headers", "type": "object", "required": false, "description": "HTTP headers" }
+      ],
+      "keywords": ["get", "fetch", "request"],
+      "return_type": "object",
+      "examples": [{ "input": "http_get('https://api.example.com/data')", "output": "{\"status\": 200, \"body\": ...}" }]
+    },
+    "http_post": {
+      "name": "http_post",
+      "description": "Send an HTTP POST request",
+      "parameters": [
+        { "name": "url", "type": "string", "required": true, "description": "Request URL" },
+        { "name": "body", "type": "string", "required": true, "description": "Request body" },
+        { "name": "headers", "type": "object", "required": false, "description": "HTTP headers" }
+      ],
+      "keywords": ["post", "send", "submit"],
+      "return_type": "object"
+    },
+    "web_search": {
+      "name": "web_search",
+      "description": "Search the web for information",
+      "parameters": [
+        { "name": "query", "type": "string", "required": true, "description": "Search query" },
+        { "name": "max_results", "type": "integer", "required": false, "description": "Maximum results", "default": "10" }
+      ],
+      "keywords": ["search", "find", "query"],
+      "return_type": "array",
+      "examples": [{ "input": "web_search('UCL paper')", "output": "arXiv:2601.00880 - Universal Conditional Logic..." }]
+    },
+    "fetch_url": {
+      "name": "fetch_url",
+      "description": "Fetch content from a URL",
+      "parameters": [
+        { "name": "url", "type": "string", "required": true, "description": "URL to fetch" }
+      ],
+      "keywords": ["fetch", "download", "retrieve"],
+      "return_type": "string"
+    },
+    "download_file": {
+      "name": "download_file",
+      "description": "Download a file from a URL to local disk",
+      "parameters": [
+        { "name": "url", "type": "string", "required": true, "description": "URL of the file" },
+        { "name": "dest", "type": "string", "required": false, "description": "Local destination path" }
+      ],
+      "keywords": ["download", "save"],
+      "return_type": "string"
+    }
+  }
+}

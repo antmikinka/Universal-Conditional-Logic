@@ -1,0 +1,50 @@
+{
+  "name": "shell",
+  "description": "Shell operations: commands, scripts, and environment",
+  "category": "original",
+  "icon": "💻",
+  "keywords": ["shell", "command", "execute", "script", "env", "terminal"],
+  "tools": {
+    "run_command": {
+      "name": "run_command",
+      "description": "Execute a shell command",
+      "parameters": [
+        { "name": "command", "type": "string", "required": true, "description": "Command to execute" },
+        { "name": "cwd", "type": "string", "required": false, "description": "Working directory" },
+        { "name": "timeout", "type": "integer", "required": false, "description": "Timeout in seconds", "default": "30" }
+      ],
+      "keywords": ["command", "execute", "run", "shell"],
+      "return_type": "object",
+      "examples": [{ "input": "run_command('ls -la /tmp')", "output": "total 8\ndrwxrwxrwt..." }]
+    },
+    "run_script": {
+      "name": "run_script",
+      "description": "Execute a script file",
+      "parameters": [
+        { "name": "path", "type": "string", "required": true, "description": "Path to the script" },
+        { "name": "args", "type": "array", "required": false, "description": "Script arguments" }
+      ],
+      "keywords": ["script", "execute", "run"],
+      "return_type": "object"
+    },
+    "get_env": {
+      "name": "get_env",
+      "description": "Get an environment variable value",
+      "parameters": [
+        { "name": "name", "type": "string", "required": true, "description": "Variable name" }
+      ],
+      "keywords": ["env", "environment", "variable", "get"],
+      "return_type": "string"
+    },
+    "set_env": {
+      "name": "set_env",
+      "description": "Set an environment variable",
+      "parameters": [
+        { "name": "name", "type": "string", "required": true, "description": "Variable name" },
+        { "name": "value", "type": "string", "required": true, "description": "Variable value" }
+      ],
+      "keywords": ["env", "set", "environment"],
+      "return_type": "boolean"
+    }
+  }
+}

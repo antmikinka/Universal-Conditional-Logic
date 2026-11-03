@@ -1,0 +1,52 @@
+{
+  "name": "api",
+  "description": "API operations: REST, GraphQL, webhooks, and authentication",
+  "category": "original",
+  "icon": "🔌",
+  "keywords": ["api", "rest", "graphql", "webhook", "endpoint", "request"],
+  "tools": {
+    "rest_call": {
+      "name": "rest_call",
+      "description": "Make a REST API call",
+      "parameters": [
+        { "name": "method", "type": "enum", "required": true, "description": "HTTP method", "constraints": ["GET", "POST", "PUT", "DELETE", "PATCH"] },
+        { "name": "url", "type": "string", "required": true, "description": "API endpoint URL" },
+        { "name": "body", "type": "object", "required": false, "description": "Request body" },
+        { "name": "headers", "type": "object", "required": false, "description": "HTTP headers" }
+      ],
+      "keywords": ["api", "rest", "call", "endpoint"],
+      "return_type": "object",
+      "examples": [{ "input": "rest_call('GET', 'https://api.example.com/users')", "output": "{\"users\": [...]}" }]
+    },
+    "graphql_query": {
+      "name": "graphql_query",
+      "description": "Execute a GraphQL query",
+      "parameters": [
+        { "name": "query", "type": "string", "required": true, "description": "GraphQL query string" },
+        { "name": "variables", "type": "object", "required": false, "description": "Query variables" }
+      ],
+      "keywords": ["graphql", "query", "mutation"],
+      "return_type": "object"
+    },
+    "webhook_send": {
+      "name": "webhook_send",
+      "description": "Send a webhook notification",
+      "parameters": [
+        { "name": "url", "type": "string", "required": true, "description": "Webhook URL" },
+        { "name": "payload", "type": "object", "required": true, "description": "Webhook payload" }
+      ],
+      "keywords": ["webhook", "notify", "callback"],
+      "return_type": "boolean"
+    },
+    "auth_token": {
+      "name": "auth_token",
+      "description": "Obtain an authentication token",
+      "parameters": [
+        { "name": "provider", "type": "string", "required": true, "description": "Auth provider name" },
+        { "name": "scopes", "type": "array", "required": false, "description": "Requested scopes" }
+      ],
+      "keywords": ["auth", "token", "login", "credential"],
+      "return_type": "string"
+    }
+  }
+}

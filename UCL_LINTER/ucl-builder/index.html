@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Conditional Logic</title>
+    <meta name="description" content="UCL is a way to specify prompts, and a name list so a model does not reread every JSON schema. Paper, blog, converter, and builder.">
+    <link rel="describedby" href="https://antmikinka.github.io/Universal-Conditional-Logic/llms.txt">
+    <link rel="llms-txt" href="https://antmikinka.github.io/Universal-Conditional-Logic/llms.txt">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="site.css">
+</head>
+<body>
+    <div class="wrap">
+        <nav class="site-nav">
+            <a href="./" aria-current="page">Home</a>
+            <a href="blog/">Blog</a>
+            <a href="compressor.html">Converter</a>
+            <a href="builder.html">Builder</a>
+        </nav>
+        <p class="kicker">arXiv:2601.00880</p>
+        <h1>The model reads the name. The schema stays on the host.</h1>
+        <p class="lede">Universal Conditional Logic is a specification language for prompts, and a way to show tools as a short name list instead of pasting every JSON schema into the model.</p>
+        <div class="doors">
+            <a class="door" href="blog/">
+                <strong>Blog</strong>
+                <span>The prompt study, then the tool-call matrix. Two results, kept apart.</span>
+            </a>
+            <a class="door" href="compressor.html">
+                <strong>Converter</strong>
+                <span>Paste an OpenAI or MCP tool list. Read the name list and the character count.</span>
+            </a>
+            <a class="door" href="builder.html">
+                <strong>Builder</strong>
+                <span>Write a prompt, pick from 71 tools, and run Convert against your model.</span>
+            </a>
+        </div>
+        <div class="facts">
+            <div class="fact">
+                <h2>Specification study</h2>
+                <p>The preprint measured prompt specification. The reported token cut is 29.8%. The design is 13 models, 7 conditions, 4 iterations. The analysis file is marked N=305. The peak sits at S* ≈ 0.509. That number is not a tool-calling score.</p>
+            </div>
+            <div class="fact">
+                <h2>Name list</h2>
+                <p>On one seed of Qwen3.6-35B, 408 cells, a names-only catalog passed 85.4% at about 2,374 tokens. The pasted schema passed 84.4% at about 4,307 tokens. Native tools on that scorer passed 66.7%, with a high name match and a weaker argument match. Less text. Not a faster answer.</p>
+            </div>
+        </div>
+        <p class="meta">
+            <a href="https://arxiv.org/abs/2601.00880">Paper</a>
+            ·
+            <a href="https://github.com/antmikinka/Universal-Conditional-Logic">Repository</a>
+        </p>
+    </div>
+</body>
+</html>

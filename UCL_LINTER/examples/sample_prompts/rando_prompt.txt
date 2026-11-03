@@ -1,0 +1,19 @@
+<objective>
+Transform the user's primary goal into a clear, specific objective
+[[LLM: Ensure this objective is actionable and measurable]]
+</objective>
+
+<constraints>
+Extract and explicitly state all limitations, requirements, and boundaries
+[[LLM: Verify all constraints are realistic and achievable]]
+</constraints>
+
+<process>
+Design step-by-step procedures for accomplishing the objective
+[[LLM: Ensure process steps are logical and complete]]
+</process>
+
+<output_format>
+Specify exactly how the output should be structured and formatted
+[[LLM: Validate output format meets user's actual needs]]
+</output_format>
